@@ -18,3 +18,8 @@ td, th {
     background-repeat: no-repeat;
     padding-left: 50px;
 }
+
+#div-table{
+  width: 100%;
+  overflow-x: auto;
+}

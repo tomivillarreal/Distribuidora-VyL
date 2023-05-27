@@ -23,6 +23,19 @@ const NOMBRES: string[] = [
   'Lavandina 1L',
   'Lavandina 2L',
   'Lavandina 3L',
+  'Perfume 1',
+  'Perfume 2',
+  'Perfume 3',
+  'Cloro p/ Pileta',
+  'Shampoo para Auto',
+  'Jabon liquido',
+  'Higienizador manos',
+  'Suavizante ropa',
+  'Jabon ropa',
+
+
+
+
 ];
 
 const ESTANTES: string[] = [
@@ -45,7 +58,16 @@ const CATEGORIA: string[] = [
 
 
 const FOTOS: string[] = [
-  '../../assets/images/logo.png'
+  '../../assets/images/1.jpg',
+  '../../assets/images/2.jpg',
+  '../../assets/images/3.jpg',
+  '../../assets/images/4.jpg',
+  '../../assets/images/5.jpg',
+  '../../assets/images/6.jpg',
+  '../../assets/images/7.jpg',
+  '../../assets/images/8.jpg',
+  '../../assets/images/9.jpg',
+
 ];
 
 const ACCIONES: string[] = [
@@ -116,10 +138,10 @@ function createNewUser(id: number): UserData {
     NOMBRES[Math.round(Math.random() * (NOMBRES.length - 1))];
 
   const descripcion = 
-    nombre + Math.round(Math.random() * 100).toString();
+    nombre + " #"+Math.round(Math.random() * 100).toString();
 
   const foto =
-      FOTOS[0];
+    FOTOS[Math.round(Math.random() * (FOTOS.length - 1))];
 
   const acciones = ACCIONES;
 
