@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { TablaComponent } from './tabla/tabla.component';
-import { AgregarProductoComponent } from './agregar-producto/agregar-producto.component';
 
 
 @Component({
@@ -10,8 +8,17 @@ import { AgregarProductoComponent } from './agregar-producto/agregar-producto.co
 })
 
 export class InventarioComponent {
-
+  num: number = 0;
   constructor(){
   }
+
+  setNum() {
+    return this.num = 1;
+  };
+
+  escucharTabla() {
+    // Lógica de la función del componente padre
+    console.log('Función del componente inventario');
+  };
 
 }

@@ -1,11 +1,15 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component,EventEmitter, ViewChild, Output} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { Action } from 'rxjs/internal/scheduler/Action';
-
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
+import { ButtonComponent } from '../button/button.component';
+import { ButtonAgregarProductoComponent } from '../button-agregar-producto/button-agregar-producto.component';
 export interface UserData {
   id: string;
   foto: string;
@@ -15,7 +19,6 @@ export interface UserData {
   estante: string,
   stock: string;
   precio: string;
-  acciones: string[];
 }
 
 // Constantes de la base de datos
@@ -88,21 +91,24 @@ const ACCIONES: string[] = [
   templateUrl: './tabla.component.html',
   styleUrls: ['./tabla.component.css'],
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule],
+  imports: [ButtonAgregarProductoComponent, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatMenuModule, MatButtonModule, ButtonComponent],
 })
 
 export class TablaComponent {
-  
   displayedColumns: string[] = ['id','foto','nombre','descripcion','categoria','estante','stock','precio','acciones'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  @Output() eventoModal = new EventEmitter();
+  
+  llamarFuncionModal() {
+    this.eventoModal.emit();
+    console.log("tabla");
+  }
 
   aplicarRecorte: boolean =false;
-
-
 
   esResponsive(){
     const ancho = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -154,6 +160,5 @@ function createNewUser(id: number): UserData {
     estante: ESTANTES[Math.round(Math.random() * (ESTANTES.length - 1))],
     stock: Math.round(Math.random() * 100).toString(),
     precio: "$" + Math.round(Math.random() * 100).toString(),
-    acciones: acciones,
   };
 }

@@ -13,6 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SideBar2Component } from './side-bar2/side-bar2.component';
 import { TablaComponent } from './inventario/tabla/tabla.component';
 import { AgregarProductoComponent } from './inventario/agregar-producto/agregar-producto.component';
+import { ButtonComponent } from './inventario/button/button.component';
+import { ButtonAgregarProductoComponent } from './inventario/button-agregar-producto/button-agregar-producto.component';
 
 
 @NgModule({
