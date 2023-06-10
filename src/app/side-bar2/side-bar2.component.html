@@ -19,7 +19,7 @@
             <div class="div2">
                 <ul class="w-full mt-6 space-y-2 tracking-wide">
                     <!-- Inventario -->
-                    <li class="w-full h-14 hover:bg-zinc-500">
+                    <li class="w-full h-14 hover:bg-zinc-500" (click)="[esInventario(), cambiarEstilos()]">
                         <a class="h-full flex items-center text-white justify-center">
                             <span class="font-sans text-base">Inventario</span>
                         </a>
@@ -27,7 +27,7 @@
             
                     <!-- Listadoss -->
             
-                    <li class="w-full h-14 hover:bg-zinc-500">
+                    <li class="w-full h-14 hover:bg-zinc-500" (click)="[esListado(), cambiarEstilos()]">
                         <a class="h-full flex items-center text-white justify-center">
                         <span class="font-sans text-base">Listados</span>
                         </a>
@@ -50,7 +50,7 @@
 
         <!-- Inventario -->
 
-            <li class="w-full h-14 hover:bg-zinc-500">
+            <li class="w-full h-14 hover:bg-zinc-500" (click)="esInventario()">
                 <a class="h-full flex items-center text-white justify-center">
                     <span class="font-sans text-xl">Inventario</span>
                 </a>
@@ -58,7 +58,7 @@
 
         <!-- Listadoss -->
 
-            <li class="w-full h-14 hover:bg-zinc-500">
+            <li class="w-full h-14 hover:bg-zinc-500" (click)="esListado()">
                 <a class="h-full flex items-center text-white justify-center">
                     <span class="font-sans text-xl">Listados</span>
                 </a>

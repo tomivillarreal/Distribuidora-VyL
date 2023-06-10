@@ -1,24 +1,71 @@
 
-<div id="modal">
-    <div class="flex flex-row h-full w-full">
-        <div class="imagen">
+<div class="flex flex-col h-full w-full bg-white border-2 md:h-max md:w-[1000px]">
+
+    <div class="w-full flex justify-center items-center h-20 ">
+        <h1>Agregar Producto</h1>
+    </div>
+
+    <div class="flex flex-col md:flex-row m-6 ">
+
+        <div class="h-fit flex flex-col items-center w-full ">
             <div class="w-[300px] h-[300px] bg-orange-600"></div>
+            <input class="w-fit h-fit" type="file" value="">
         </div>
-        <div class="datos flex flex-row flex-wrap m-5 w-full items-">
-            <form class="example-form">
-                <mat-form-field class="example-full-width">
-                  <mat-label>Favorite food</mat-label>
-                  <input matInput placeholder="Ex. Pizza" value="Sushi">
+    
+        <div class="flex mt-10 flex-row flex-wrap justify-between w-full ">
+    
+            <form>
+                <mat-form-field class="w-52">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput placeholder="" value="">
                 </mat-form-field>
             </form>
-              
-            <!-- <input class="w-[300px] h-[45px] mb-4">
-            <input class="w-[300px] h-[45px] mb-4">
-            <input class="w-[300px] h-[45px] mb-4">
-            <input class="w-[300px] h-[45px] mb-4">
-            <input class="w-[300px] h-[45px] mb-4">
-            <input class="w-[300px] h-[45px] mb-4"> -->
-
+    
+            <mat-form-field class="h-20 w-52">
+                <mat-label>Categoria</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let food of foods" [value]="food.value">
+                    {{food.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+    
+    
+            <form >
+                <mat-form-field class="h-20 w-52">
+                    <mat-label>Descripcion</mat-label>
+                    <input matInput placeholder="" value="">
+                </mat-form-field>
+            </form>
+    
+            <mat-form-field class="h-20 w-52">
+                <mat-label>Estante</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let estante of estantes" [value]="estante.value">
+                    {{estante.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+    
         </div>
+
     </div>
+
+    
+               
+    <div class="flex flex-row w-full h-max mt-10 mb-10 justify-evenly ">
+
+        <div class="w-32 h-14 flex items-center justify-center bg-color1 rounded">
+            <button (click)="cerrarModal()" class="text-white">Cancelar</button>
+        </div>
+
+        <div class="w-32 h-14 flex items-center justify-center bg-color1 rounded">
+            <button (click)="cerrarModal()" class="text-white">Guardar</button>
+        </div>
+
+
+
+    </div>
+      
+
 </div>

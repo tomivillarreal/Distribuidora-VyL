@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Output } from '@angular/core';
+import {EventEmitter} from '@angular/core';
+
 
 @Component({
   selector: 'app-side-bar2',
@@ -9,12 +12,20 @@ import { Component } from '@angular/core';
 
 export class SideBar2Component {
 
+  @Output() eventoListado = new EventEmitter();
+  @Output() eventoInventario = new EventEmitter();
+
+  esInventario(){
+    this.eventoInventario.emit();
+  }
+
+  esListado(){
+    this.eventoListado.emit();
+  }
+
   aplicarTransicion: boolean =false;
 
   cambiarEstilos() {
-    // this.estilos = {
-    //   'display': 'block',
-    // };
     this.aplicarTransicion = !this.aplicarTransicion;
   }
 }

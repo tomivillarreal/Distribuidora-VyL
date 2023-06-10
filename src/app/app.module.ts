@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InventarioComponent } from './inventario/inventario.component';
-import { SideBarComponent } from './side-bar/side-bar.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,14 +14,15 @@ import { TablaComponent } from './inventario/tabla/tabla.component';
 import { AgregarProductoComponent } from './inventario/agregar-producto/agregar-producto.component';
 import { ButtonComponent } from './inventario/button/button.component';
 import { ButtonAgregarProductoComponent } from './inventario/button-agregar-producto/button-agregar-producto.component';
-
+import { SidenavAngularComponent } from './sidenav-angular/sidenav-angular.component';
+import { ListadosComponent } from './listados/listados.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InventarioComponent,
-    SideBarComponent,
     SideBar2Component,
+    ListadosComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +34,8 @@ import { ButtonAgregarProductoComponent } from './inventario/button-agregar-prod
     MatSortModule,
     BrowserAnimationsModule,
     TablaComponent,
+    AgregarProductoComponent,
+    SidenavAngularComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
