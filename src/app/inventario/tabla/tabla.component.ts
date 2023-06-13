@@ -1,4 +1,4 @@
-import {AfterViewInit, Component,EventEmitter, ViewChild, Output} from '@angular/core';
+import {AfterViewInit, Component,EventEmitter, ViewChild, Output, OnInit} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -10,15 +10,18 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { ButtonComponent } from '../button/button.component';
 import { ButtonAgregarProductoComponent } from '../button-agregar-producto/button-agregar-producto.component';
+import { Producto } from 'src/app/interfaces/producto.interface';
+import { getAll } from 'src/app/services/producto.service';
+
 export interface UserData {
-  id: string;
-  foto: string;
-  nombre: string;
+  id: string,
+  foto: string,
+  nombre: string,
   descripcion: string,
   categoria: string,
   estante: string,
-  stock: string;
-  precio: string;
+  stock: string,
+  precio: string,
 }
 
 // Constantes de la base de datos
@@ -35,10 +38,6 @@ const NOMBRES: string[] = [
   'Higienizador manos',
   'Suavizante ropa',
   'Jabon ropa',
-
-
-
-
 ];
 
 const ESTANTES: string[] = [
@@ -94,7 +93,14 @@ const ACCIONES: string[] = [
   imports: [ButtonAgregarProductoComponent, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatMenuModule, MatButtonModule, ButtonComponent],
 })
 
-export class TablaComponent {
+export class TablaComponent implements OnInit{
+  productos: Producto[] = []
+
+  ngOnInit(): void {
+      this.productos = getAll()
+  }
+
+
   displayedColumns: string[] = ['id','foto','nombre','descripcion','categoria','estante','stock','precio','acciones'];
   dataSource: MatTableDataSource<UserData>;
 
