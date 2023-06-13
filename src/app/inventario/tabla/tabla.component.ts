@@ -4,7 +4,6 @@ import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { Action } from 'rxjs/internal/scheduler/Action';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
@@ -12,73 +11,6 @@ import { ButtonComponent } from '../button/button.component';
 import { ButtonAgregarProductoComponent } from '../button-agregar-producto/button-agregar-producto.component';
 import { Producto } from 'src/app/interfaces/producto.interface';
 import { ProductoService } from 'src/app/services/producto.service';
-
-export interface UserData {
-  id: string,
-  foto: string,
-  nombre: string,
-  descripcion: string,
-  categoria: string,
-  estante: string,
-  stock: number,
-  precio: string,
-}
-
-// Constantes de la base de datos
-const NOMBRES: string[] = [
-  'Lavandina 1L',
-  'Lavandina 2L',
-  'Lavandina 3L',
-  'Perfume 1',
-  'Perfume 2',
-  'Perfume 3',
-  'Cloro p/ Pileta',
-  'Shampoo para Auto',
-  'Jabon liquido',
-  'Higienizador manos',
-  'Suavizante ropa',
-  'Jabon ropa',
-];
-
-const ESTANTES: string[] = [
-  'Estante 1',
-  'Estante 2',
-  'Estante 3',
-  'Estante 4',
-  'Estante 5',
-  'Estante 6',
-  'Estante 7',
-
-];
-
-const CATEGORIA: string[] = [
-  'Limpieza',
-  'Automotor',
-  'Piscina',
-  'Perfumeria',
-];
-
-
-const FOTOS: string[] = [
-  '../../assets/images/1.jpg',
-  '../../assets/images/2.jpg',
-  '../../assets/images/3.jpg',
-  '../../assets/images/4.jpg',
-  '../../assets/images/5.jpg',
-  '../../assets/images/6.jpg',
-  '../../assets/images/7.jpg',
-  '../../assets/images/8.jpg',
-  '../../assets/images/9.jpg',
-
-];
-
-const ACCIONES: string[] = [
-  '../../assets/images/edit.png',
-  '../../assets/images/delete.png',
-  '../../assets/images/more.png'
-];
-
-
 
 /**
  * @title Data table with sorting, pagination, and filtering.
@@ -98,15 +30,13 @@ export class TablaComponent{
   constructor(private productService: ProductoService) {
     this.productos = this.productService.getAll()
     console.log(this.productos)
-    const users = Array.from({length: this.productos.length}, (_, k) => createNewUser(this.productos[k]));
-    this.dataSource = new MatTableDataSource(users);
+    const productos = Array.from({length: this.productos.length}, (_, k) => this.productos[k]);
+    this.dataSource = new MatTableDataSource(productos);
     console.log(this.dataSource)
   }
 
-
-
   displayedColumns: string[] = ['id','foto','nombre','descripcion','categoria','estante','stock','precio','acciones'];
-  dataSource: MatTableDataSource<UserData>;
+  dataSource: MatTableDataSource<Producto>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -124,9 +54,7 @@ export class TablaComponent{
     const ancho = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     if(ancho > 768){
       this.aplicarRecorte = !this.aplicarRecorte;
-
     }
-
   }
 
   ngAfterViewInit() {
@@ -142,31 +70,4 @@ export class TablaComponent{
       this.dataSource.paginator.firstPage();
     }
   }
-}
-
-// Crear productos
-function createNewUser(producto: Producto): UserData {
-  const nombre =
-    /* NOMBRES[Math.round(Math.random() * (NOMBRES.length - 1))] */
-    producto.nombre;
-
-  const descripcion = 
-    nombre + " #"+Math.round(Math.random() * 100).toString();
-
-  const foto =
-    /* FOTOS[Math.round(Math.random() * (FOTOS.length - 1))] */
-    producto.foto;
-
-  const acciones = ACCIONES;
-
-  return {
-    id: producto.id.toString(),
-    foto: foto,
-    nombre: nombre,
-    descripcion: descripcion,
-    categoria: producto.categoria.nombre,
-    estante: producto.estante.nombre,
-    stock: producto.stock,
-    precio: "$" + producto.precio,
-  };
 }
