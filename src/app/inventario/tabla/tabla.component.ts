@@ -1,4 +1,4 @@
-import {AfterViewInit, Component,EventEmitter, ViewChild, Output, OnInit} from '@angular/core';
+import {AfterViewInit, Component,EventEmitter, ViewChild, Output} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -11,7 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { ButtonComponent } from '../button/button.component';
 import { ButtonAgregarProductoComponent } from '../button-agregar-producto/button-agregar-producto.component';
 import { Producto } from 'src/app/interfaces/producto.interface';
-import { getAll } from 'src/app/services/producto.service';
+import { ProductoService } from 'src/app/services/producto.service';
 
 export interface UserData {
   id: string,
@@ -20,7 +20,7 @@ export interface UserData {
   descripcion: string,
   categoria: string,
   estante: string,
-  stock: string,
+  stock: number,
   precio: string,
 }
 
@@ -93,12 +93,16 @@ const ACCIONES: string[] = [
   imports: [ButtonAgregarProductoComponent, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatMenuModule, MatButtonModule, ButtonComponent],
 })
 
-export class TablaComponent implements OnInit{
+export class TablaComponent{
   productos: Producto[] = []
-
-  ngOnInit(): void {
-      this.productos = getAll()
+  constructor(private productService: ProductoService) {
+    this.productos = this.productService.getAll()
+    console.log(this.productos)
+    const users = Array.from({length: this.productos.length}, (_, k) => createNewUser(this.productos[k]));
+    this.dataSource = new MatTableDataSource(users);
+    console.log(this.dataSource)
   }
+
 
 
   displayedColumns: string[] = ['id','foto','nombre','descripcion','categoria','estante','stock','precio','acciones'];
@@ -124,10 +128,6 @@ export class TablaComponent implements OnInit{
     }
 
   }
-  constructor() {
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-    this.dataSource = new MatTableDataSource(users);
-  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -145,26 +145,28 @@ export class TablaComponent implements OnInit{
 }
 
 // Crear productos
-function createNewUser(id: number): UserData {
+function createNewUser(producto: Producto): UserData {
   const nombre =
-    NOMBRES[Math.round(Math.random() * (NOMBRES.length - 1))];
+    /* NOMBRES[Math.round(Math.random() * (NOMBRES.length - 1))] */
+    producto.nombre;
 
   const descripcion = 
     nombre + " #"+Math.round(Math.random() * 100).toString();
 
   const foto =
-    FOTOS[Math.round(Math.random() * (FOTOS.length - 1))];
+    /* FOTOS[Math.round(Math.random() * (FOTOS.length - 1))] */
+    producto.foto;
 
   const acciones = ACCIONES;
 
   return {
-    id: id.toString(),
+    id: producto.id.toString(),
     foto: foto,
     nombre: nombre,
     descripcion: descripcion,
-    categoria: CATEGORIA[Math.round(Math.random() * (CATEGORIA.length - 1))],
-    estante: ESTANTES[Math.round(Math.random() * (ESTANTES.length - 1))],
-    stock: Math.round(Math.random() * 100).toString(),
-    precio: "$" + Math.round(Math.random() * 100).toString(),
+    categoria: producto.categoria.nombre,
+    estante: producto.estante.nombre,
+    stock: producto.stock,
+    precio: "$" + producto.precio,
   };
 }

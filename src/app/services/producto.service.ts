@@ -1,6 +1,13 @@
-import { Producto } from "../interfaces/producto.interface";
+import { Injectable } from '@angular/core';
+import { Producto } from '../interfaces/producto.interface';
 
-const productos:Producto[] = [
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductoService {
+  
+  constructor() { }
+  productos:Producto[] = [
     {
         id: '1',
         nombre: 'Lavandina 1L',
@@ -58,6 +65,8 @@ const productos:Producto[] = [
 
 ]
 
-export function getAll () {
-    return productos;
+  getAll () {
+    return this.productos;
+}
+  
 }
