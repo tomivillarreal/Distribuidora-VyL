@@ -24,19 +24,30 @@ export class AgregarProductoComponent {
   @Output() eventoCerrarModal = new EventEmitter();
   categorias: Categoria[] = []
   estantes: Estante[] = []
+  
+  
 
   constructor(private categoriaService:CategoriaService, private estanteService: EstanteService, private productService: ProductoService){
     this.categorias = categoriaService.getAll()
     this.estantes = estanteService.getAll()
   }
 
-
+  
 
   cerrarModal(){
     this.eventoCerrarModal.emit();
   };
 
-  guardarProducto(producto: Producto){
-    this.productService.crearProducto(producto);
+  guardarProducto(nombreProducto: string, descripcionProducto: string, estanteProducto: Estante, categoriaProducto: Categoria, fotoProducto: string){
+    const producto: Producto = {
+      nombre: nombreProducto,
+      descripcion: descripcionProducto,
+      estante: estanteProducto,
+      categoria: categoriaProducto,
+      foto: fotoProducto
+    }
+    this.productService.crearProducto(producto)
+
+    this.cerrarModal()
   }
 }
