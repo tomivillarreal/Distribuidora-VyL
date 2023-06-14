@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Producto } from '../interfaces/producto.interface';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -68,5 +69,8 @@ export class ProductoService {
   getAll () {
     return this.productos;
 }
+    crearProducto(producto:Producto){
+        this.productos.push(producto)
+    }
   
 }

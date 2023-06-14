@@ -4,16 +4,13 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import {NgFor} from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
+import { Categoria } from 'src/app/interfaces/categoria.interface';
+import { CategoriaService } from 'src/app/services/categoria.service';
+import { EstanteService } from 'src/app/services/estante.service';
+import { Estante } from 'src/app/interfaces/estante.interface';
+import { ProductoService } from 'src/app/services/producto.service';
+import { Producto } from 'src/app/interfaces/producto.interface';
 
-interface Food {
-  value: string;
-  viewValue: string;
-}
-
-interface Estante {
-  value: string;
-  viewValue: string;
-}
 
 @Component({
   selector: 'app-agregar-producto',
@@ -25,21 +22,21 @@ interface Estante {
 
 export class AgregarProductoComponent {
   @Output() eventoCerrarModal = new EventEmitter();
+  categorias: Categoria[] = []
+  estantes: Estante[] = []
 
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Limpieza'},
-    {value: 'pizza-1', viewValue: 'Piscina'},
-    {value: 'tacos-2', viewValue: 'Automotor'},
-  ];
+  constructor(private categoriaService:CategoriaService, private estanteService: EstanteService, private productService: ProductoService){
+    this.categorias = categoriaService.getAll()
+    this.estantes = estanteService.getAll()
+  }
 
-  estantes: Estante[] = [
-    {value: 'steak-0', viewValue: 'Estante 1'},
-    {value: 'pizza-1', viewValue: 'Estante 2'},
-    {value: 'tacos-2', viewValue: 'Estante 3'},
-  ];
 
 
   cerrarModal(){
     this.eventoCerrarModal.emit();
   };
+
+  guardarProducto(producto: Producto){
+    this.productService.crearProducto(producto);
+  }
 }

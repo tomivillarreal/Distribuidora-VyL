@@ -24,8 +24,8 @@
             <mat-form-field class="h-20 w-52">
                 <mat-label>Categoria</mat-label>
                 <mat-select>
-                    <mat-option *ngFor="let food of foods" [value]="food.value">
-                    {{food.viewValue}}
+                    <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
+                    {{categoria.nombre}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -41,8 +41,8 @@
             <mat-form-field class="h-20 w-52">
                 <mat-label>Estante</mat-label>
                 <mat-select>
-                    <mat-option *ngFor="let estante of estantes" [value]="estante.value">
-                    {{estante.viewValue}}
+                    <mat-option *ngFor="let estante of estantes" [value]="estante.id">
+                    {{estante.nombre}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -60,10 +60,9 @@
         </div>
 
         <div class="w-32 h-14 flex items-center justify-center bg-color1 rounded">
-            <button (click)="cerrarModal()" class="text-white">Guardar</button>
+            <button (click)="cerrarModal()"  class="text-white">Guardar</button>
         </div>
-
-
+            <!-- falta el (click)="guardarProducto(producto) pero no creamos el objeto producto todavia" -->
 
     </div>
       

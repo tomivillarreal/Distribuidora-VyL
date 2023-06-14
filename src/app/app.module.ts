@@ -16,6 +16,7 @@ import { ButtonComponent } from './inventario/button/button.component';
 import { ButtonAgregarProductoComponent } from './inventario/button-agregar-producto/button-agregar-producto.component';
 import { SidenavAngularComponent } from './sidenav-angular/sidenav-angular.component';
 import { ListadosComponent } from './listados/listados.component';
+import { ProductoService } from './services/producto.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { ListadosComponent } from './listados/listados.component';
     AgregarProductoComponent,
     SidenavAngularComponent
   ],
-  providers: [],
+  providers: [ProductoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
