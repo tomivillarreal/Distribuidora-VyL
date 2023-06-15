@@ -21,6 +21,7 @@ export class InventarioComponent {
     this.num = 2;
     this.tipoModal = "Modificar";
     this.productoRecibido = producto;
+    console.log(this.productoRecibido);
   };
 
   cerrarModal () {

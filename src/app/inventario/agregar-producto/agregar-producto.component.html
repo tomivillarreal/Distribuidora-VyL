@@ -25,8 +25,8 @@
     
             <mat-form-field class="h-20 w-52">
                 <mat-label>Categoria</mat-label>
-                <mat-select #categoriaProducto [(value)]="producto.categoria">
-                    <mat-option *ngFor="let categoria of categorias" [value]="producto.categoria">
+                <mat-select #categoriaProducto [(value)]="producto.categoria.nombre">
+                    <mat-option *ngFor="let categoria of categorias" value="{{categoria.nombre}}">
                     {{categoria.nombre}}
                     </mat-option>
                 </mat-select>
@@ -42,8 +42,8 @@
     
             <mat-form-field class="h-20 w-52">
                 <mat-label>Estante</mat-label>
-                <mat-select #estanteProducto [(value)]="producto.estante">
-                    <mat-option *ngFor="let estante of estantes">
+                <mat-select #estanteProducto [(value)]="producto.estante.nombre">
+                    <mat-option *ngFor="let estante of estantes" value="{{estante.nombre}}">
                     {{estante.nombre}}
                     </mat-option>
                 </mat-select>

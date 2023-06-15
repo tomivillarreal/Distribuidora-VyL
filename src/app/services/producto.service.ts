@@ -8,6 +8,7 @@ import { Producto } from '../interfaces/producto.interface';
 export class ProductoService {
   
   constructor() { }
+  
   productos:Producto[] = [
     {
         id: '1',
@@ -20,8 +21,8 @@ export class ProductoService {
         },
         categoria: {
             id: '1', 
-            nombre: 'Categoria 1',
-            descripcion: 'Categoria 1'
+            nombre: 'Limpieza',
+            descripcion: 'Limpieza'
         },
         stock: 30,
         precio: 50,
@@ -32,14 +33,14 @@ export class ProductoService {
         nombre: 'Perfume',
         descripcion: 'Perfume',
         estante: {
-            id: '1',
-            nombre: 'Estante 1',
-            descripcion: 'Estante 1'
+            id: '2', 
+            nombre: 'Estante 2',
+            descripcion: 'Estante 2'
         },
         categoria: {
-            id: '2', 
-            nombre: 'Categoria 2',
-            descripcion: 'Categoria 2'
+            id: '3', 
+            nombre: 'Automotor',
+            descripcion: 'Automotor'
         },
         stock: 30,
         precio: 50,
@@ -50,9 +51,9 @@ export class ProductoService {
         nombre: 'Cloro p/ Pileta',
         descripcion: 'Cloro',
         estante: {
-            id: '1',
-            nombre: 'Estante 1',
-            descripcion: 'Estante1'
+            id: '3', 
+            nombre: 'Estante 3',
+            descripcion: 'Estante 3'
         },
         categoria: {
             id: '3', 

@@ -36,12 +36,10 @@ export class AgregarProductoComponent {
     this.producto = {
       nombre: "",
       descripcion: "",
-      estante: this.categorias[0],
-      categoria: this.estantes[0],
+      estante: this.estantes[0],
+      categoria: this.categorias[0],
       foto: "" ,
     } 
-
-    
   }
 
   cerrarModal(){
