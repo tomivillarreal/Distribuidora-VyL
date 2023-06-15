@@ -43,6 +43,9 @@ export class TablaComponent{
   modificarProducto (id:number){
     this.eventoModificarProducto.emit(this.productos[id-1]);
   }
+  eliminarProducto (id:string){
+    this.productService.eliminarProducto(id)
+  }
 
   aplicarRecorte: boolean =false;
 

@@ -87,9 +87,10 @@ export class ProductoService {
           });   
         this.productos = nuevoProductos;
     }
-  
-    // modificarProducto(producto:Producto){
-    //     this.productos.find(producto);
-    //     this.productos[a] = producto
-    // }
+
+    eliminarProducto (id: string){
+        const nuevaTablaProductos = this.productos.filter((producto) => producto.id !== id)
+        this.productos = nuevaTablaProductos
+    }
+
 }
