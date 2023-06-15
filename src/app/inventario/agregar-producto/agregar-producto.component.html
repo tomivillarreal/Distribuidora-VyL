@@ -9,7 +9,7 @@
 
         <div class="h-fit flex flex-col items-center w-full ">
             <div class="w-[300px] h-[300px] bg-orange-600">
-                <img [src]="producto.foto" alt="">
+                <img [src]="producto?.foto ?? ''" alt="">
             </div>
             <input class="w-fit h-fit" type="file" value="" #fotoProducto>
         </div>
@@ -19,13 +19,13 @@
             <form>
                 <mat-form-field class="w-52">
                     <mat-label>Nombre</mat-label>
-                    <input matInput placeholder="" #nombreProducto [value]="producto.nombre">
+                    <input matInput placeholder="" #nombreProducto [value]="producto?.nombre ?? ''">
                 </mat-form-field>
             </form>
     
             <mat-form-field class="h-20 w-52">
                 <mat-label>Categoria</mat-label>
-                <mat-select #categoriaProducto [(value)]="producto.categoria.nombre">
+                <mat-select #categoriaProducto [(value)]="producto?.categoria.nombre">
                     <mat-option *ngFor="let categoria of categorias" value="{{categoria.nombre}}">
                     {{categoria.nombre}}
                     </mat-option>
@@ -36,13 +36,13 @@
             <form >
                 <mat-form-field class="h-20 w-52">
                     <mat-label>Descripcion</mat-label>
-                    <input matInput placeholder="" [value]="producto.nombre" #descripcionProducto>
+                    <input matInput placeholder="" [value]="producto?.descripcion ?? ''" #descripcionProducto>
                 </mat-form-field>
             </form>
     
             <mat-form-field class="h-20 w-52">
                 <mat-label>Estante</mat-label>
-                <mat-select #estanteProducto [(value)]="producto.estante.nombre">
+                <mat-select #estanteProducto [(value)]="producto?.estante.nombre">
                     <mat-option *ngFor="let estante of estantes" value="{{estante.nombre}}">
                     {{estante.nombre}}
                     </mat-option>
@@ -61,7 +61,8 @@
         </div>
 
         <div class="w-32 h-14 flex items-center justify-center bg-color1 rounded">
-            <button (click)="guardarProducto(nombreProducto.value, descripcionProducto.value, estanteProducto.value, categoriaProducto.value, fotoProducto.value)" class="text-white">Guardar</button>
+            <button *ngIf="!producto" (click)="guardarProducto(nombreProducto.value, descripcionProducto.value, estanteProducto.value, categoriaProducto.value, fotoProducto.value)" class="text-white">Guardar</button>
+            <button *ngIf="producto" (click)="modificarProducto(nombreProducto.value, descripcionProducto.value, estanteProducto.value, categoriaProducto.value, fotoProducto.value)" class="text-white">Guardar</button>
         </div>
 
     </div>

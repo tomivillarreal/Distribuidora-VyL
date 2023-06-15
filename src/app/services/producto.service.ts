@@ -77,6 +77,10 @@ export class ProductoService {
     getProducto (num:number) {
         return this.productos[num];
     }
+
+    modificarProducto (id: string, productoModificado: Producto) {
+        
+    }
   
     // modificarProducto(producto:Producto){
     //     this.productos.find(producto);
