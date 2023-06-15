@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Categoria } from '../interfaces/categoria.interface';
+import { Estante } from '../interfaces/estante.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -28,4 +29,12 @@ export class CategoriaService {
   getAll () {
     return this.categorias;
   }
+
+  // getCategoria (id: string){
+  //   const selectCat = this.categorias.map((categoria) => {
+  //     if (categoria.id === id) {
+
+  //       return ;
+  //   });   
+  // }
 }

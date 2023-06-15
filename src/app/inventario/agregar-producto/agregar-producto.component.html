@@ -2,7 +2,7 @@
 <div class="flex flex-col h-full w-full bg-white border-2 md:h-max md:w-[1000px]">
 
     <div class="w-full flex justify-center items-center h-20 ">
-        <h1>{{valor}} Producto  </h1>
+        <h1>{{valor}} Producto </h1>
     </div>
 
     <div class="flex flex-col md:flex-row m-6 ">
@@ -25,7 +25,7 @@
     
             <mat-form-field class="h-20 w-52">
                 <mat-label>Categoria</mat-label>
-                <mat-select #categoriaProducto [(value)]="producto?.categoria.nombre">
+                <mat-select #categoriaProducto [value]="producto?.categoria.nombre">
                     <mat-option *ngFor="let categoria of categorias" value="{{categoria.nombre}}">
                     {{categoria.nombre}}
                     </mat-option>
@@ -42,7 +42,7 @@
     
             <mat-form-field class="h-20 w-52">
                 <mat-label>Estante</mat-label>
-                <mat-select #estanteProducto [(value)]="producto?.estante.nombre">
+                <mat-select #estanteProducto [value]="producto?.estante.nombre ">
                     <mat-option *ngFor="let estante of estantes" value="{{estante.nombre}}">
                     {{estante.nombre}}
                     </mat-option>

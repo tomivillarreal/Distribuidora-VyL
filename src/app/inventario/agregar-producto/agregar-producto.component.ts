@@ -48,6 +48,7 @@ export class AgregarProductoComponent {
       categoria: categoriaProducto,
       foto: fotoProducto
     }
+    console.log(nuevoProducto)
     this.productService.crearProducto(nuevoProducto)
     this.cerrarModal()
   }
@@ -60,6 +61,8 @@ export class AgregarProductoComponent {
       categoria: categoriaProducto,
       foto: fotoProducto
     }
+    console.log(productoModificado)
     this.productService.modificarProducto(this.producto.id, productoModificado)
+    this.cerrarModal()
   }
 }

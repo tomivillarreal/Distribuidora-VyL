@@ -74,12 +74,18 @@ export class ProductoService {
         this.productos.push(producto)
     }
 
-    getProducto (num:number) {
-        return this.productos[num];
-    }
+    // getProducto (num:number) {
+    //     return this.productos[num];
+    // }
 
     modificarProducto (id: string, productoModificado: Producto) {
-        
+        const nuevoProductos = this.productos.map((producto) => {
+            if (producto.id === id) {
+              return productoModificado;
+            }
+            return producto;
+          });   
+        this.productos = nuevoProductos;
     }
   
     // modificarProducto(producto:Producto){
