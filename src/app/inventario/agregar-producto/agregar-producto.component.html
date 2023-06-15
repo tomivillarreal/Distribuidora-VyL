@@ -2,13 +2,15 @@
 <div class="flex flex-col h-full w-full bg-white border-2 md:h-max md:w-[1000px]">
 
     <div class="w-full flex justify-center items-center h-20 ">
-        <h1>Agregar Producto</h1>
+        <h1>{{valor}} Producto  </h1>
     </div>
 
     <div class="flex flex-col md:flex-row m-6 ">
 
         <div class="h-fit flex flex-col items-center w-full ">
-            <div class="w-[300px] h-[300px] bg-orange-600"></div>
+            <div class="w-[300px] h-[300px] bg-orange-600">
+                <img [src]="producto.foto" alt="">
+            </div>
             <input class="w-fit h-fit" type="file" value="" #fotoProducto>
         </div>
     
@@ -17,14 +19,14 @@
             <form>
                 <mat-form-field class="w-52">
                     <mat-label>Nombre</mat-label>
-                    <input matInput placeholder="" #nombreProducto>
+                    <input matInput placeholder="" #nombreProducto [value]="producto.nombre">
                 </mat-form-field>
             </form>
     
             <mat-form-field class="h-20 w-52">
                 <mat-label>Categoria</mat-label>
-                <mat-select #categoriaProducto>
-                    <mat-option *ngFor="let categoria of categorias" [value]="categoria">
+                <mat-select #categoriaProducto [(value)]="producto.categoria">
+                    <mat-option *ngFor="let categoria of categorias" [value]="producto.categoria">
                     {{categoria.nombre}}
                     </mat-option>
                 </mat-select>
@@ -34,14 +36,14 @@
             <form >
                 <mat-form-field class="h-20 w-52">
                     <mat-label>Descripcion</mat-label>
-                    <input matInput placeholder="" value="" #descripcionProducto>
+                    <input matInput placeholder="" [value]="producto.nombre" #descripcionProducto>
                 </mat-form-field>
             </form>
     
             <mat-form-field class="h-20 w-52">
                 <mat-label>Estante</mat-label>
-                <mat-select #estanteProducto>
-                    <mat-option *ngFor="let estante of estantes" [value]="estante">
+                <mat-select #estanteProducto [(value)]="producto.estante">
+                    <mat-option *ngFor="let estante of estantes">
                     {{estante.nombre}}
                     </mat-option>
                 </mat-select>
@@ -54,7 +56,6 @@
     
                
     <div class="flex flex-row w-full h-max mt-10 mb-10 justify-evenly ">
-
         <div class="w-32 h-14 flex items-center justify-center bg-color1 rounded">
             <button (click)="cerrarModal()" class="text-white">Cancelar</button>
         </div>

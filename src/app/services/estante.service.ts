@@ -12,17 +12,17 @@ export class EstanteService {
     {
       id: '1', 
       nombre: 'Estante 1',
-      descripcion: 'Estante1'
+      descripcion: 'Estante 1'
     },
     {
       id: '2', 
       nombre: 'Estante 2',
-      descripcion: 'Estante2'
+      descripcion: 'Estante 2'
     },
     {
       id: '3', 
       nombre: 'Estante 3',
-      descripcion: 'Estante3'
+      descripcion: 'Estante 3'
     }
   ]
 

@@ -1,4 +1,4 @@
-import { Component,  EventEmitter, Output } from '@angular/core';
+import { Component,  EventEmitter, Output, Input } from '@angular/core';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -11,7 +11,6 @@ import { Estante } from 'src/app/interfaces/estante.interface';
 import { ProductoService } from 'src/app/services/producto.service';
 import { Producto } from 'src/app/interfaces/producto.interface';
 
-
 @Component({
   selector: 'app-agregar-producto',
   templateUrl: './agregar-producto.component.html',
@@ -21,18 +20,29 @@ import { Producto } from 'src/app/interfaces/producto.interface';
 })
 
 export class AgregarProductoComponent {
+  
   @Output() eventoCerrarModal = new EventEmitter();
+  @Input() valor: string;
+  @Input() producto: Producto;
+
+
   categorias: Categoria[] = []
   estantes: Estante[] = []
   
   
-
   constructor(private categoriaService:CategoriaService, private estanteService: EstanteService, private productService: ProductoService){
     this.categorias = categoriaService.getAll()
     this.estantes = estanteService.getAll()
-  }
+    this.producto = {
+      nombre: "",
+      descripcion: "",
+      estante: this.categorias[0],
+      categoria: this.estantes[0],
+      foto: "" ,
+    } 
 
-  
+    
+  }
 
   cerrarModal(){
     this.eventoCerrarModal.emit();
@@ -47,7 +57,6 @@ export class AgregarProductoComponent {
       foto: fotoProducto
     }
     this.productService.crearProducto(producto)
-
     this.cerrarModal()
   }
 }

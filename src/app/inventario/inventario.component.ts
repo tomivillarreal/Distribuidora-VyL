@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Producto } from '../interfaces/producto.interface';
 
 @Component({
   selector: 'app-inventario',
@@ -9,17 +9,21 @@ import { Component } from '@angular/core';
 
 export class InventarioComponent {
   num: number = 0;
+  tipoModal: string;
+  productoRecibido:Producto;
 
   escucharTabla() {
-    // Lógica de la función del componente padre
-    console.log(this.num);
-    console.log('Función del componente inventario');
     this.num = 1;
-    console.log(this.num);
+    this.tipoModal = "Agregar";
+  };
+
+  modificarProducto(producto:Producto) {
+    this.num = 2;
+    this.tipoModal = "Modificar";
+    this.productoRecibido = producto;
   };
 
   cerrarModal () {
-
     this.num = 0;
   }
 

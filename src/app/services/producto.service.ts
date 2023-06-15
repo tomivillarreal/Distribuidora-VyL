@@ -16,12 +16,12 @@ export class ProductoService {
         estante: {
             id: '1',
             nombre: 'Estante 1',
-            descripcion: 'Estante1'
+            descripcion: 'Estante 1'
         },
         categoria: {
             id: '1', 
             nombre: 'Categoria 1',
-            descripcion: 'Categoria1'
+            descripcion: 'Categoria 1'
         },
         stock: 30,
         precio: 50,
@@ -34,12 +34,12 @@ export class ProductoService {
         estante: {
             id: '1',
             nombre: 'Estante 1',
-            descripcion: 'Estante1'
+            descripcion: 'Estante 1'
         },
         categoria: {
-            id: '1', 
-            nombre: 'Categoria 1',
-            descripcion: 'Categoria1'
+            id: '2', 
+            nombre: 'Categoria 2',
+            descripcion: 'Categoria 2'
         },
         stock: 30,
         precio: 50,
@@ -55,9 +55,9 @@ export class ProductoService {
             descripcion: 'Estante1'
         },
         categoria: {
-            id: '1', 
-            nombre: 'Categoria 1',
-            descripcion: 'Categoria1'
+            id: '3', 
+            nombre: 'Categoria 3',
+            descripcion: 'Categoria 3'
         },
         stock: 50,
         precio: 30,
@@ -72,5 +72,13 @@ export class ProductoService {
     crearProducto(producto:Producto){
         this.productos.push(producto)
     }
+
+    getProducto (num:number) {
+        return this.productos[num];
+    }
   
+    // modificarProducto(producto:Producto){
+    //     this.productos.find(producto);
+    //     this.productos[a] = producto
+    // }
 }

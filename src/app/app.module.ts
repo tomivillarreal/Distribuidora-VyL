@@ -12,9 +12,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SideBar2Component } from './side-bar2/side-bar2.component';
 import { TablaComponent } from './inventario/tabla/tabla.component';
 import { AgregarProductoComponent } from './inventario/agregar-producto/agregar-producto.component';
-import { ButtonComponent } from './inventario/button/button.component';
-import { ButtonAgregarProductoComponent } from './inventario/button-agregar-producto/button-agregar-producto.component';
-import { SidenavAngularComponent } from './sidenav-angular/sidenav-angular.component';
 import { ListadosComponent } from './listados/listados.component';
 import { ProductoService } from './services/producto.service';
 
@@ -36,7 +33,6 @@ import { ProductoService } from './services/producto.service';
     BrowserAnimationsModule,
     TablaComponent,
     AgregarProductoComponent,
-    SidenavAngularComponent
   ],
   providers: [ProductoService],
   bootstrap: [AppComponent]
