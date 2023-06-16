@@ -1,11 +1,28 @@
-<div class="m-6">
+<div class="m-6 h-full w-full">
     <div class="flex items-center w-full justify-center">
         <h1>Listados</h1>
     </div>
+    <div class="flex flex-row justifty-center content-center h-full w-full">
+        <div class=" justify-center text-center h-4/5 bg-gray-400 ml-16 w-52">
+            <h1 class="pt-6 text-white"> Estantes </h1>
+            <div class="flex justify-center text-center bg-orange-400 w-full h-16 mt-3" *ngFor="let estante of estantes">
+                <button class="text-white text-lg ">{{estante.nombre}}</button>
+            </div>
+        </div>
 
-    <div class="content h-full w-full bg-orange-500">
-        
+        <div class="justify-center text-center h-4/5 bg-gray-400 ml-16 w-52">
+            <h1 class="pt-6 text-white"> Categorias </h1>
+            <div class="flex items-center justify-center text-center bg-orange-400 w-full h-16 mt-3" *ngFor="let categoria of categorias">
+                <button class="text-white text-lg">{{categoria.nombre}}</button>
+            </div>
+        </div>
+ 
+        <div class="h-full">
+            <div class="h-4/5">
+                <div class="justify-center items-center h-10 bg-orange-400 ml-20 w-52">
+                <button> inventario </button>
+            </div>
+            </div>
+        </div>
     </div>
-
-
 </div>
