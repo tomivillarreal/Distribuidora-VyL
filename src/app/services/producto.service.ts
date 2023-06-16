@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Producto } from '../interfaces/producto.interface';
+import { trigger } from '@angular/animations';
 
 
 @Injectable({
@@ -66,12 +67,14 @@ export class ProductoService {
     },
 
 ]
+listeners: ((p:Producto[])=>void)[] = []
 
   getAll () {
     return this.productos;
 }
     crearProducto(producto:Producto){
-        this.productos.push(producto)
+        this.productos = [...this.productos,(producto)]
+        this.triggerUpdate()
     }
 
     // getProducto (num:number) {
@@ -86,11 +89,23 @@ export class ProductoService {
             return producto;
           });   
         this.productos = nuevoProductos;
+        this.triggerUpdate()
+
     }
 
     eliminarProducto (id: string){
         const nuevaTablaProductos = this.productos.filter((producto) => producto.id !== id)
         this.productos = nuevaTablaProductos
+        this.triggerUpdate()
+
+    }
+
+    agregarListener(fn: (p:Producto[])=>void) {
+        this.listeners.push(fn)
+    }
+
+    triggerUpdate() {
+        this.listeners.forEach(l => l(this.productos))
     }
 
 }
