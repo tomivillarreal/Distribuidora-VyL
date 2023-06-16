@@ -1,13 +1,13 @@
-<div class="w-100 h-screen m-5">
+<div class="w-100 h-screen p-5">
     <div class="mt-20">
         <app-tabla (eventoModal)="escucharTabla()" (eventoModificarProducto)="modificarProducto($event)" ></app-tabla>
     </div>
 </div>
 
-<div class="absolute w-full h-full top-0 z-50 flex items-center justify-center bg-slate-600 bg-opacity-70" *ngIf="num === 1" >
+<div class="fixed w-screen h-screen left-0 top-0 z-50 flex items-center justify-center bg-slate-600 bg-opacity-70" *ngIf="num === 1" >
     <app-agregar-producto [valor]="tipoModal" (eventoCerrarModal)="cerrarModal()"></app-agregar-producto>
 </div>
-<div class="absolute w-full h-full top-0 z-50 flex items-center justify-center bg-slate-600 bg-opacity-70" *ngIf="num === 2" >
+<div class="fixed w-screen h-screen left-0 top-0 z-50 flex items-center justify-center bg-slate-600 bg-opacity-70" *ngIf="num === 2" >
     <app-agregar-producto [valor]="tipoModal" (eventoCerrarModal)="cerrarModal()" [producto]="productoRecibido"></app-agregar-producto>
 </div>
 <!-- <app-agregar-producto></app-agregar-producto> -->

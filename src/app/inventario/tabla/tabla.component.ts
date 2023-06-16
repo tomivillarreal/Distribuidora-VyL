@@ -22,9 +22,12 @@ import { ProductoService } from 'src/app/services/producto.service';
 export class TablaComponent{
   productos: Producto[] = []
   constructor(private productService: ProductoService) {
-    this.productos = this.productService.getAll()
-    const productos = Array.from({length: this.productos.length}, (_, k) => this.productos[k]);
-    this.dataSource = new MatTableDataSource(productos);
+    productService.agregarListener((p)=>{
+      this.productos = p
+      const productos = Array.from({length: this.productos.length}, (_, k) => this.productos[k]);
+      this.dataSource = new MatTableDataSource(productos);
+    })
+    productService.triggerUpdate()
   }
 
   displayedColumns: string[] = ['id','foto','nombre','descripcion','categoria','estante','stock','precio','acciones'];

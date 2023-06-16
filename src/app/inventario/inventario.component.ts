@@ -15,16 +15,20 @@ export class InventarioComponent {
   escucharTabla() {
     this.num = 1;
     this.tipoModal = "Agregar";
+    document.body.classList.toggle("overflow-hidden", true)
   };
 
   modificarProducto(producto:Producto) {
     this.num = 2;
     this.tipoModal = "Modificar";
     this.productoRecibido = producto;
+    document.body.classList.toggle("overflow-hidden", true)
   };
 
   cerrarModal () {
     this.num = 0;
+    document.body.classList.toggle("overflow-hidden", false)
+
   }
 
 }
