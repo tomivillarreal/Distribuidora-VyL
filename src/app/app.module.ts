@@ -14,13 +14,14 @@ import { TablaComponent } from './inventario/tabla/tabla.component';
 import { AgregarProductoComponent } from './inventario/agregar-producto/agregar-producto.component';
 import { ListadosComponent } from './listados/listados.component';
 import { ProductoService } from './services/producto.service';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     InventarioComponent,
     SideBar2Component,
-    ListadosComponent,
+    ListadosComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +34,7 @@ import { ProductoService } from './services/producto.service';
     BrowserAnimationsModule,
     TablaComponent,
     AgregarProductoComponent,
+    CommonModule
   ],
   providers: [ProductoService],
   bootstrap: [AppComponent]
