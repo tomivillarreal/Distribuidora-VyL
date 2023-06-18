@@ -10,7 +10,6 @@ import {MatButtonModule} from '@angular/material/button';
 import { Producto } from 'src/app/interfaces/producto.interface';
 import { ProductoService } from 'src/app/services/producto.service';
 
-
 @Component({
   selector: 'app-tabla',
   templateUrl: './tabla.component.html',
@@ -33,21 +32,24 @@ export class TablaComponent{
   displayedColumns: string[] = ['id','foto','nombre','descripcion','categoria','estante','stock','precio','acciones'];
   dataSource: MatTableDataSource<Producto>;
 
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @Output() eventoModificarProducto: EventEmitter<Producto> = new EventEmitter<Producto>();
   @Output() eventoModal = new EventEmitter();
   
-
   llamarFuncionModal() {
     this.eventoModal.emit();
   }
 
   modificarProducto (id:number){
     this.eventoModificarProducto.emit(this.productos[id-1]);
+    this.actualizarNumPaginas()
   }
   eliminarProducto (id:string){
     this.productService.eliminarProducto(id)
+    this.actualizarNumPaginas()
+
   }
 
   aplicarRecorte: boolean =false;
@@ -67,9 +69,12 @@ export class TablaComponent{
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  actualizarNumPaginas(){
+    this.paginator.length = this.productos.length;
   }
 }

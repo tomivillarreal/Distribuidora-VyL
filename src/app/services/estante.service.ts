@@ -5,9 +5,7 @@ import { Estante } from '../interfaces/estante.interface';
   providedIn: 'root'
 })
 export class EstanteService {
-
   constructor() { }
-
   estantes: Estante[] = [
     {
       id: '1', 
@@ -29,4 +27,17 @@ export class EstanteService {
   getAll () {
     return this.estantes;
   }
+
+  getEstanteByNombre (nombre: string) {
+    this.estantes.forEach(estante => {
+      if(estante.nombre === nombre){
+        return estante
+      }
+      return null
+    });
+
+  }
+
+
+
 }

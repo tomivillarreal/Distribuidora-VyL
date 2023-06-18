@@ -28,7 +28,7 @@ export class AgregarProductoComponent {
 
   categorias: Categoria[] = []
   estantes: Estante[] = []
-  
+
   
   constructor(private categoriaService:CategoriaService, private estanteService: EstanteService, private productService: ProductoService){
     this.categorias = categoriaService.getAll()
@@ -53,16 +53,22 @@ export class AgregarProductoComponent {
     this.cerrarModal()
   }
 
-  modificarProducto(nombreProducto: string, descripcionProducto: string, estanteProducto: Estante, categoriaProducto: Categoria, fotoProducto: string){
+  modificarProducto(nombreProducto: string, descripcionProducto: string, estanteProducto: string, categoriaProducto: Categoria, fotoProducto: string){
+    
     const productoModificado: Producto = {
       nombre: nombreProducto,
       descripcion: descripcionProducto,
-      estante: estanteProducto,
+      estante: {
+        id: '3', 
+        nombre: 'Estante 3',
+        descripcion: 'Estante 3'
+      },
       categoria: categoriaProducto,
       foto: fotoProducto
     }
     console.log(productoModificado)
     this.productService.modificarProducto(this.producto.id, productoModificado)
+    console.log(productoModificado.estante)
     this.cerrarModal()
   }
 }

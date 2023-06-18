@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Producto } from '../interfaces/producto.interface';
 import { trigger } from '@angular/animations';
+import { Categoria } from '../interfaces/categoria.interface';
+import { Estante } from '../interfaces/estante.interface';
 
 
 @Injectable({
