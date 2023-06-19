@@ -12,7 +12,7 @@ export class InventarioComponent {
   tipoModal: string;
   productoRecibido:Producto;
 
-  escucharTabla() {
+  agregarProducto() {
     this.num = 1;
     this.tipoModal = "Agregar";
     document.body.classList.toggle("overflow-hidden", true)
@@ -22,14 +22,12 @@ export class InventarioComponent {
     this.num = 2;
     this.tipoModal = "Modificar";
     this.productoRecibido = producto;
-    console.log(producto)
     document.body.classList.toggle("overflow-hidden", true)
   };
 
   cerrarModal () {
     this.num = 0;
     document.body.classList.toggle("overflow-hidden", false)
-
-  }
+  };
 
 }

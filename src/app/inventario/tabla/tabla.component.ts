@@ -38,8 +38,9 @@ export class TablaComponent{
   @Output() eventoModificarProducto: EventEmitter<Producto> = new EventEmitter<Producto>();
   @Output() eventoModal = new EventEmitter();
   
-  llamarFuncionModal() {
+  agregarProducto() {
     this.eventoModal.emit();
+    this.actualizarNumPaginas()
   }
 
   modificarProducto (id:number){
@@ -49,7 +50,6 @@ export class TablaComponent{
   eliminarProducto (id:string){
     this.productService.eliminarProducto(id)
     this.actualizarNumPaginas()
-
   }
 
   aplicarRecorte: boolean =false;

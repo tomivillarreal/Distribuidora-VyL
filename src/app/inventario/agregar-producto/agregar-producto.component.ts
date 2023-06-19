@@ -1,4 +1,4 @@
-import { Component,  EventEmitter, Output, Input } from '@angular/core';
+import { Component,  EventEmitter, Output, Input, ElementRef  } from '@angular/core';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -28,34 +28,41 @@ export class AgregarProductoComponent {
 
   categorias: Categoria[] = []
   estantes: Estante[] = []
+  elementRef: ElementRef
 
-  
   constructor(private categoriaService:CategoriaService, private estanteService: EstanteService, private productService: ProductoService){
     this.categorias = categoriaService.getAll()
-    this.estantes = estanteService.getAll()
-                               
+    this.estantes = estanteService.getAll()                 
   }
 
   cerrarModal(){
     this.eventoCerrarModal.emit();
   };
 
-  guardarProducto(nombreProducto: string, descripcionProducto: string, estanteProducto: Estante, categoriaProducto: Categoria, fotoProducto: string){
+  guardarProducto(nombreProducto: string, descripcionProducto: string, estanteProducto: Estante, categoriaProducto: Categoria, fotoProducto:string){
     const nuevoProducto: Producto = {
+      id: (this.productService.productos.length + 1).toString(),
       nombre: nombreProducto,
       descripcion: descripcionProducto,
       estante: estanteProducto,
       categoria: categoriaProducto,
       foto: fotoProducto
     }
-    console.log(nuevoProducto)
     this.productService.crearProducto(nuevoProducto)
     this.cerrarModal()
   }
 
-  modificarProducto(nombreProducto: string, descripcionProducto: string, estanteProducto: string, categoriaProducto: Categoria, fotoProducto: string){
+  // onFileChange(event: any) {
+  //   const inputElement = this.elementRef.nativeElement.querySelector('#tuInputFile');
+  //   const file = event.target.files[0];
+  //   const path = file ? file.path : inputElement.value; 
+  //   console.log(path)
     
+  // }
+
+  modificarProducto(nombreProducto: string, descripcionProducto: string, estanteProducto: string, categoriaProducto: Categoria, imagensubida: string){
     const productoModificado: Producto = {
+      id:this.producto.id,
       nombre: nombreProducto,
       descripcion: descripcionProducto,
       estante: {
@@ -64,11 +71,10 @@ export class AgregarProductoComponent {
         descripcion: 'Estante 3'
       },
       categoria: categoriaProducto,
-      foto: fotoProducto
+      foto: imagensubida
     }
-    console.log(productoModificado)
+    console.log(imagensubida)
     this.productService.modificarProducto(this.producto.id, productoModificado)
-    console.log(productoModificado.estante)
     this.cerrarModal()
   }
 }

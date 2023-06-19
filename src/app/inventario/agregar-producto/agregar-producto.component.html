@@ -1,21 +1,19 @@
 
 <div class="flex flex-col h-full w-full bg-white border-2 md:h-max md:w-[1000px]">
-
     <div class="w-full flex justify-center items-center h-20 ">
         <h1>{{valor}} Producto </h1>
     </div>
 
     <div class="flex flex-col md:flex-row m-6 ">
 
-        <div class="h-fit flex flex-col items-center w-full ">
-            <div class="w-[300px] h-[300px] bg-orange-600">
-                <img [src]="producto?.foto ?? ''" alt="">
+        <div class="h-fit flex flex-col items-center w-full" id="div-fotoProducto">
+            <div class="w-[150px] h-[150px] md:w-[300px] md:h-[300px] border-solid border-2">
+                <img [src]="producto?.foto ?? '../../assets/images/logo.png'" alt="" autocomplete="off">
             </div>
-            <input class="w-fit h-fit" type="file" value="" #fotoProducto>
+            <input class="w-fit h-fit" type="file" value="" alt="" #fotoProducto>
         </div>
     
-        <div class="flex mt-10 flex-row flex-wrap justify-between w-full ">
-    
+        <div class="flex flex-col md:flex-row md:flex-wrap md:mt-10 justify-center md:justify-between w-full">
             <form>
                 <mat-form-field class="w-52">
                     <mat-label>Nombre</mat-label>
@@ -33,7 +31,7 @@
             </mat-form-field>
     
     
-            <form >
+            <form class="">
                 <mat-form-field class="h-20 w-52">
                     <mat-label>Descripcion</mat-label>
                     <input matInput placeholder="" [value]="producto?.descripcion ?? ''" #descripcionProducto>
@@ -54,9 +52,9 @@
     </div> 
                
     <div class="flex flex-row w-full h-max mt-10 mb-10 justify-evenly ">
-            <button (click)="cerrarModal()" class="w-32 h-14 flex items-center justify-center bg-color1 rounded text-white">Cancelar</button>
-            <button *ngIf="!producto" (click)="guardarProducto(nombreProducto.value, descripcionProducto.value, estanteProducto.value, categoriaProducto.value, fotoProducto.value)" class="text-white w-32 h-14 flex items-center justify-center bg-color1 rounded">Guardar</button>
-            <button *ngIf="producto" (click)="modificarProducto(nombreProducto.value, descripcionProducto.value, estanteProducto.value, categoriaProducto.value, fotoProducto.value)" class="text-white w-32 h-14 flex items-center justify-center bg-color1 rounded">Guardar</button>
+            <button (click)="cerrarModal()" class="w-32 h-14 flex items-center justify-center border-solid border-black rounded text-black border-2 text-lg">Cancelar</button>
+            <button *ngIf="!producto" (click)="guardarProducto(nombreProducto.value, descripcionProducto.value, estanteProducto.value, categoriaProducto.value, fotoProducto.value)" class="text-lg text-white w-32 h-14 flex items-center justify-center bg-color1 rounded">Guardar</button>
+            <button *ngIf="producto" (click)="modificarProducto(nombreProducto.value, descripcionProducto.value, estanteProducto.value, categoriaProducto.value, fotoProducto.value)" class="text-lg text-white w-32 h-14 flex items-center justify-center bg-color1 rounded">Guardar</button>
 
     </div>
       
