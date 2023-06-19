@@ -15,6 +15,12 @@ import { AgregarProductoComponent } from './inventario/agregar-producto/agregar-
 import { ListadosComponent } from './listados/listados.component';
 import { ProductoService } from './services/producto.service';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+  {path:'inventario', component: InventarioComponent},
+  {path:'listado', component: ListadosComponent}
+]
 
 @NgModule({
   declarations: [
@@ -24,6 +30,7 @@ import { CommonModule } from '@angular/common';
     ListadosComponent
   ],
   imports: [
+    RouterModule.forRoot(routes),
     BrowserModule,
     AppRoutingModule,
     MatTableModule,
