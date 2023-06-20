@@ -96,10 +96,8 @@ listeners: ((p:Producto[])=>void)[] = []
     }
 
     eliminarProducto (id: string){
-        console.log(this.productos)
         const nuevaTablaProductos = this.productos.filter((producto) => producto.id !== id)
         this.productos = nuevaTablaProductos
-        console.log(nuevaTablaProductos)
         this.triggerUpdate()
 
     }
