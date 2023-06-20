@@ -1,4 +1,4 @@
-import {Component,EventEmitter, ViewChild, Output} from '@angular/core';
+import {Component,EventEmitter, ViewChild, Output, Input} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -19,40 +19,38 @@ import { ProductoService } from 'src/app/services/producto.service';
 })
 
 export class TablaComponent{
-  productos: Producto[] = []
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  @Output() eventoModificarProducto: EventEmitter<Producto> = new EventEmitter<Producto>();
+  @Output() eventoModal = new EventEmitter();
+  @Input() actualizarTabla: any;
+  displayedColumns: string[] = ['id','foto','nombre','descripcion','categoria','estante','stock','precio','acciones'];
+  dataSource: MatTableDataSource<Producto>;
+  productos: Producto[] = [];
+  aplicarRecorte: boolean =false;
+
   constructor(private productService: ProductoService) {
     productService.agregarListener((p)=>{
       this.productos = p
       const productos = Array.from({length: this.productos.length}, (_, k) => this.productos[k]);
       this.dataSource = new MatTableDataSource(productos);
+      
     })
-    productService.triggerUpdate()
+    productService.triggerUpdate();
   }
 
-  displayedColumns: string[] = ['id','foto','nombre','descripcion','categoria','estante','stock','precio','acciones'];
-  dataSource: MatTableDataSource<Producto>;
 
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  @Output() eventoModificarProducto: EventEmitter<Producto> = new EventEmitter<Producto>();
-  @Output() eventoModal = new EventEmitter();
-  
   agregarProducto() {
     this.eventoModal.emit();
-    this.actualizarNumPaginas()
   }
 
   modificarProducto (id:number){
     this.eventoModificarProducto.emit(this.productos[id-1]);
-    this.actualizarNumPaginas()
   }
   eliminarProducto (id:string){
     this.productService.eliminarProducto(id)
-    this.actualizarNumPaginas()
+    this.actualizarNumPaginas();
   }
-
-  aplicarRecorte: boolean =false;
 
   esResponsive(){
     const ancho = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;

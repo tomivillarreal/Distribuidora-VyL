@@ -96,8 +96,10 @@ listeners: ((p:Producto[])=>void)[] = []
     }
 
     eliminarProducto (id: string){
+        console.log(this.productos)
         const nuevaTablaProductos = this.productos.filter((producto) => producto.id !== id)
         this.productos = nuevaTablaProductos
+        console.log(nuevaTablaProductos)
         this.triggerUpdate()
 
     }
@@ -108,6 +110,11 @@ listeners: ((p:Producto[])=>void)[] = []
 
     triggerUpdate() {
         this.listeners.forEach(l => l(this.productos))
+    }
+
+    calcularProximoID(): string | undefined {
+        const nuevoID = this.productos.length > 0 ? +(this.productos[this.productos.length - 1].id ?? 0) + 1: 0;
+        return nuevoID.toString()
     }
 
 }

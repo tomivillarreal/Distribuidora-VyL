@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Producto } from '../interfaces/producto.interface';
+import { TablaComponent} from './tabla/tabla.component';
 
 @Component({
   selector: 'app-inventario',
@@ -8,6 +9,7 @@ import { Producto } from '../interfaces/producto.interface';
 })
 
 export class InventarioComponent {
+  @ViewChild(TablaComponent) tabla: TablaComponent;
   num: number = 0;
   tipoModal: string;
   productoRecibido:Producto;
@@ -28,6 +30,7 @@ export class InventarioComponent {
   cerrarModal () {
     this.num = 0;
     document.body.classList.toggle("overflow-hidden", false)
+    this.tabla.actualizarNumPaginas();
   };
 
 }

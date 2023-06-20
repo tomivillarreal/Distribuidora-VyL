@@ -37,4 +37,16 @@ export class CategoriaService {
   //       return ;
   //   });   
   // }
+
+  getCategoria(nombre: string): Categoria | null {
+    for (const categoria of this.categorias) {
+      if (categoria.nombre === nombre) {
+        return categoria;
+      }
+    }
+    return null;
+  }
+  getID (cat:Categoria){
+    return cat.id
+  }
 }

@@ -22,6 +22,7 @@ import { Producto } from 'src/app/interfaces/producto.interface';
 export class AgregarProductoComponent {
   
   @Output() eventoCerrarModal = new EventEmitter();
+  @Output() eventoActualizarTabla = new EventEmitter();
   @Input() valor: string;
   @Input() producto: any;
 
@@ -39,17 +40,32 @@ export class AgregarProductoComponent {
     this.eventoCerrarModal.emit();
   };
 
-  guardarProducto(nombreProducto: string, descripcionProducto: string, estanteProducto: Estante, categoriaProducto: Categoria, fotoProducto:string){
+  guardarProducto(nombreProducto: string, descripcionProducto: string, estanteProducto: string, categoriaProducto: string, fotoProducto:string, precioProducto:string){
+    const cat = this.categoriaService.getCategoria(categoriaProducto);
+    const est = this.estanteService.getEstante(estanteProducto);
+    const nuevoid = this.productService.calcularProximoID();
+
     const nuevoProducto: Producto = {
-      id: (this.productService.productos.length + 1).toString(),
+      id: nuevoid,
       nombre: nombreProducto,
       descripcion: descripcionProducto,
-      estante: estanteProducto,
-      categoria: categoriaProducto,
-      foto: fotoProducto
+      estante: {
+        id:est?.id ?? "",
+        nombre:est?.nombre ?? "",
+        descripcion:est?.descripcion ?? ""
+      },
+      categoria: {
+        id:cat?.id ?? "",
+        nombre:cat?.nombre ?? "",
+        descripcion:cat?.descripcion ?? ""
+      },
+      foto: '../../assets/images/logo.png',
+      precio: +precioProducto,
+      stock: 0
     }
     this.productService.crearProducto(nuevoProducto)
     this.cerrarModal()
+
   }
 
   // onFileChange(event: any) {
@@ -60,20 +76,28 @@ export class AgregarProductoComponent {
     
   // }
 
-  modificarProducto(nombreProducto: string, descripcionProducto: string, estanteProducto: string, categoriaProducto: Categoria, imagensubida: string){
+  modificarProducto(nombreProducto: string, descripcionProducto: string, estanteProducto: string, categoriaProducto: string, imagensubida: string, precioProducto:string){
+    const cat = this.categoriaService.getCategoria(categoriaProducto);
+    const est = this.estanteService.getEstante(estanteProducto);
+
     const productoModificado: Producto = {
       id:this.producto.id,
       nombre: nombreProducto,
       descripcion: descripcionProducto,
       estante: {
-        id: '3', 
-        nombre: 'Estante 3',
-        descripcion: 'Estante 3'
+        id:est?.id ?? "",
+        nombre:est?.nombre ?? "",
+        descripcion:est?.descripcion ?? ""
       },
-      categoria: categoriaProducto,
-      foto: imagensubida
+      categoria: {
+        id:cat?.id ?? "",
+        nombre:cat?.nombre ?? "",
+        descripcion:cat?.descripcion ?? ""
+      },
+      foto: this.producto.foto,
+      precio: +precioProducto,
+      stock: this.producto.stock
     }
-    console.log(imagensubida)
     this.productService.modificarProducto(this.producto.id, productoModificado)
     this.cerrarModal()
   }

@@ -1,5 +1,5 @@
 
-<div class="flex flex-col h-full w-full bg-white border-2 md:h-max md:w-[1000px]">
+<div class="flex flex-col h-screen w-screen bg-white border-2 md:h-max md:w-[1000px]">
     <div class="w-full flex justify-center items-center h-20 ">
         <h1>{{valor}} Producto </h1>
     </div>
@@ -13,7 +13,7 @@
             <input class="w-fit h-fit" type="file" value="" alt="" #fotoProducto>
         </div>
     
-        <div class="flex flex-col md:flex-row md:flex-wrap md:mt-10 justify-center md:justify-between w-full">
+        <div class="flex flex-col md:flex-row md:flex-wrap md:mt-10 items-center md:justify-between w-full">
             <form>
                 <mat-form-field class="w-52">
                     <mat-label>Nombre</mat-label>
@@ -47,14 +47,21 @@
                 </mat-select>
             </mat-form-field>
     
+            <form class="">
+                <mat-form-field class="h-20 w-52">
+                    <mat-label>Precio</mat-label>
+                    <input matInput placeholder="" [value]="producto?.precio ?? ''" #precioProducto>
+                </mat-form-field>
+            </form>
+
         </div>
 
     </div> 
                
     <div class="flex flex-row w-full h-max mt-10 mb-10 justify-evenly ">
             <button (click)="cerrarModal()" class="w-32 h-14 flex items-center justify-center border-solid border-black rounded text-black border-2 text-lg">Cancelar</button>
-            <button *ngIf="!producto" (click)="guardarProducto(nombreProducto.value, descripcionProducto.value, estanteProducto.value, categoriaProducto.value, fotoProducto.value)" class="text-lg text-white w-32 h-14 flex items-center justify-center bg-color1 rounded">Guardar</button>
-            <button *ngIf="producto" (click)="modificarProducto(nombreProducto.value, descripcionProducto.value, estanteProducto.value, categoriaProducto.value, fotoProducto.value)" class="text-lg text-white w-32 h-14 flex items-center justify-center bg-color1 rounded">Guardar</button>
+            <button *ngIf="!producto" (click)="guardarProducto(nombreProducto.value, descripcionProducto.value, estanteProducto.value, categoriaProducto.value, fotoProducto.value, precioProducto.value)" class="text-lg text-white w-32 h-14 flex items-center justify-center bg-color1 rounded">Guardar</button>
+            <button *ngIf="producto" (click)="modificarProducto(nombreProducto.value, descripcionProducto.value, estanteProducto.value, categoriaProducto.value, fotoProducto.value, precioProducto.value)" class="text-lg text-white w-32 h-14 flex items-center justify-center bg-color1 rounded">Guardar</button>
 
     </div>
       

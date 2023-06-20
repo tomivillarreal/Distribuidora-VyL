@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,17 +15,13 @@ export class AppComponent {
   title = 'Distribuidora';
 
   renderInventario(){
-
     this.boolInventario = true;
     this.boolListado = false;
-
   }
 
   renderListado(){
-
     this.boolInventario = false;
     this.boolListado = true;
-
   }
 
   

@@ -28,14 +28,13 @@ export class EstanteService {
     return this.estantes;
   }
 
-  getEstanteByNombre (nombre: string) {
-    this.estantes.forEach(estante => {
-      if(estante.nombre === nombre){
-        return estante
+  getEstante(nombre: string): Estante | null {
+    for (const estante of this.estantes) {
+      if (estante.nombre === nombre) {
+        return estante;
       }
-      return null
-    });
-
+    }
+    return null;
   }
 
 
