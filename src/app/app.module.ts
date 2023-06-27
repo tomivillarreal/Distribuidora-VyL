@@ -16,6 +16,7 @@ import { ListadosComponent } from './listados/listados.component';
 import { ProductoService } from './services/producto.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   {path:'inventario', component: InventarioComponent},
@@ -41,7 +42,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     TablaComponent,
     AgregarProductoComponent,
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ],
   providers: [ProductoService],
   bootstrap: [AppComponent]

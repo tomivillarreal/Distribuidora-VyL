@@ -30,13 +30,12 @@ export class TablaComponent{
   aplicarRecorte: boolean =false;
 
   constructor(private productService: ProductoService) {
-    productService.agregarListener((p)=>{
-      this.productos = p
+    this.productService.getAll().subscribe(listaProductos => {
+      this.productos = Object.values(listaProductos)
+      console.log(this.productos)
       const productos = Array.from({length: this.productos.length}, (_, k) => this.productos[k]);
       this.dataSource = new MatTableDataSource(productos);
-      
     })
-    productService.triggerUpdate();
   }
 
 

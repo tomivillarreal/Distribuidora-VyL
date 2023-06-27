@@ -3,6 +3,7 @@ import { Producto } from '../interfaces/producto.interface';
 import { trigger } from '@angular/animations';
 import { Categoria } from '../interfaces/categoria.interface';
 import { Estante } from '../interfaces/estante.interface';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -10,8 +11,8 @@ import { Estante } from '../interfaces/estante.interface';
 })
 export class ProductoService {
   
-  constructor() { }
-  
+  constructor(private httpClient: HttpClient) { }
+  url: string = 'http://localhost:8000/productos'
   productos:Producto[] = [
     {
         id: '1',
@@ -69,21 +70,32 @@ export class ProductoService {
     },
 
 ]
-listeners: ((p:Producto[])=>void)[] = []
+    listeners: ((p:Producto[])=>void)[] = []
 
-  getAll () {
-    return this.productos;
-}
+    //getAll () {
+    //    return this.productos;
+    //}
+    getAll () {
+        return this.httpClient.get(this.url)
+    }
+
+    //crearProducto(producto:Producto){
+    //    this.productos = [...this.productos,(producto)]
+    //    this.triggerUpdate()
+    //}
+
     crearProducto(producto:Producto){
-        this.productos = [...this.productos,(producto)]
-        this.triggerUpdate()
+        this.httpClient.post(this.url, producto).subscribe(
+            response => console.log('Se ha guardado el producto: ' + response),
+            error => console.log(error)
+        )
     }
 
     // getProducto (num:number) {
     //     return this.productos[num];
     // }
 
-    modificarProducto (id: string, productoModificado: Producto) {
+    /*modificarProducto (id: string, productoModificado: Producto) {
         const nuevoProductos = this.productos.map((producto) => {
             if (producto.id === id) {
               return productoModificado;
@@ -92,14 +104,25 @@ listeners: ((p:Producto[])=>void)[] = []
           });   
         this.productos = nuevoProductos;
         this.triggerUpdate()
-
+    }*/
+    modificarProducto (id: string, productoModificado: Producto) {
+        this.httpClient.put(this.url + '/' + id, productoModificado).subscribe(
+            response => console.log('Se ha modificado el producto: ' + response),
+            error => console.log(error)
+        )
     }
 
-    eliminarProducto (id: string){
+    /*eliminarProducto (id: string){
         const nuevaTablaProductos = this.productos.filter((producto) => producto.id !== id)
         this.productos = nuevaTablaProductos
         this.triggerUpdate()
 
+    }*/
+    eliminarProducto (id: string){
+        this.httpClient.delete(this.url + '/' +id).subscribe(
+            response => console.log('Se ha eliminado el producto: ' + response),
+            error => console.log(error)
+        )
     }
 
     agregarListener(fn: (p:Producto[])=>void) {
@@ -108,11 +131,6 @@ listeners: ((p:Producto[])=>void)[] = []
 
     triggerUpdate() {
         this.listeners.forEach(l => l(this.productos))
-    }
-
-    calcularProximoID(): string | undefined {
-        const nuevoID = this.productos.length > 0 ? +(this.productos[this.productos.length - 1].id ?? 0) + 1: 0;
-        return nuevoID.toString()
     }
 
 }
