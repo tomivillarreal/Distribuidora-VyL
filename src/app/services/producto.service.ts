@@ -10,72 +10,74 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ProductoService {
-  
   constructor(private httpClient: HttpClient) { }
-  url: string = 'http://localhost:8000/productos'
-  productos:Producto[] = [
-    {
-        id: '1',
-        nombre: 'Lavandina 1L',
-        descripcion: 'Lavandina',
-        estante: {
-            id: '1',
-            nombre: 'Estante 1',
-            descripcion: 'Estante 1'
-        },
-        categoria: {
-            id: '1', 
-            nombre: 'Limpieza',
-            descripcion: 'Limpieza'
-        },
-        stock: 30,
-        precio: 50,
-        foto: '../../assets/images/1.jpg'
-    },
-    {
-        id: '2',
-        nombre: 'Perfume',
-        descripcion: 'Perfume',
-        estante: {
-            id: '2', 
-            nombre: 'Estante 2',
-            descripcion: 'Estante 2'
-        },
-        categoria: {
-            id: '3', 
-            nombre: 'Automotor',
-            descripcion: 'Automotor'
-        },
-        stock: 30,
-        precio: 50,
-        foto: '../../assets/images/2.jpg'
-    },
-    {
-        id: '3',
-        nombre: 'Cloro p/ Pileta',
-        descripcion: 'Cloro',
-        estante: {
-            id: '3', 
-            nombre: 'Estante 3',
-            descripcion: 'Estante 3'
-        },
-        categoria: {
-            id: '3', 
-            nombre: 'Categoria 3',
-            descripcion: 'Categoria 3'
-        },
-        stock: 50,
-        precio: 30,
-        foto: '../../assets/images/3.jpg'
-    },
+  url: string = 'http://localhost:8000/producto'
+  productos:Producto[] = []
+  
+//   [
+//     {
+//         id: '1',
+//         nombre: 'Lavandina 1L',
+//         descripcion: 'Lavandina',
+//         estante: {
+//             id: '1',
+//             nombre: 'Estante 1',
+//             descripcion: 'Estante 1'
+//         },
+//         categoria: {
+//             id: '1', 
+//             nombre: 'Limpieza',
+//             descripcion: 'Limpieza'
+//         },
+//         stock: 30,
+//         precio: 50,
+//         foto: '../../assets/images/1.jpg'
+//     },
+//     {
+//         id: '2',
+//         nombre: 'Perfume',
+//         descripcion: 'Perfume',
+//         estante: {
+//             id: '2', 
+//             nombre: 'Estante 2',
+//             descripcion: 'Estante 2'
+//         },
+//         categoria: {
+//             id: '3', 
+//             nombre: 'Automotor',
+//             descripcion: 'Automotor'
+//         },
+//         stock: 30,
+//         precio: 50,
+//         foto: '../../assets/images/2.jpg'
+//     },
+//     {
+//         id: '3',
+//         nombre: 'Cloro p/ Pileta',
+//         descripcion: 'Cloro',
+//         estante: {
+//             id: '3', 
+//             nombre: 'Estante 3',
+//             descripcion: 'Estante 3'
+//         },
+//         categoria: {
+//             id: '3', 
+//             nombre: 'Categoria 3',
+//             descripcion: 'Categoria 3'
+//         },
+//         stock: 50,
+//         precio: 30,
+//         foto: '../../assets/images/3.jpg'
+//     },
 
-]
+// ]
     listeners: ((p:Producto[])=>void)[] = []
 
     //getAll () {
     //    return this.productos;
     //}
     getAll () {
+        console.log(this.httpClient.get(this.url))
         return this.httpClient.get(this.url)
     }
 
@@ -85,8 +87,9 @@ export class ProductoService {
     //}
 
     crearProducto(producto:Producto){
+        console.log(producto);
         this.httpClient.post(this.url, producto).subscribe(
-            response => console.log('Se ha guardado el producto: ' + response),
+            response => console.log('Se ha guardado el producto: ', response),
             error => console.log(error)
         )
     }
@@ -106,7 +109,7 @@ export class ProductoService {
         this.triggerUpdate()
     }*/
     modificarProducto (id: string, productoModificado: Producto) {
-        this.httpClient.put(this.url + '/' + id, productoModificado).subscribe(
+        this.httpClient.patch(this.url + '/' + id, productoModificado).subscribe(
             response => console.log('Se ha modificado el producto: ' + response),
             error => console.log(error)
         )

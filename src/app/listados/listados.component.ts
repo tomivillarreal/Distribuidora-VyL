@@ -17,11 +17,7 @@ export class ListadosComponent {
   constructor(private productService:ProductoService,
     private categoriaService: CategoriaService, 
     private estanteService: EstanteService){
-      this.categorias = this.categoriaService.getAll()
-      this.estantes = this.estanteService.getAll()
+      this.categoriaService.getAll().subscribe(categoria => this.categorias = Object.values(categoria))
+      this.estanteService.getAll().subscribe(estante => this.estantes = Object.values(estante))
     }
-
-
-
-
 }
