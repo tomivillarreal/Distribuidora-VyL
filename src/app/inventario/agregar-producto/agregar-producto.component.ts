@@ -10,6 +10,7 @@ import { EstanteService } from 'src/app/services/estante.service';
 import { Estante } from 'src/app/interfaces/estante.interface';
 import { ProductoService } from 'src/app/services/producto.service';
 import { Producto, ProductoVacio } from 'src/app/interfaces/producto.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agregar-producto',
@@ -30,7 +31,7 @@ export class AgregarProductoComponent {
   estantes: Estante[] = []
   elementRef: ElementRef
 
-  constructor(private categoriaService:CategoriaService, private estanteService: EstanteService, private productService: ProductoService){
+  constructor(private categoriaService:CategoriaService, private estanteService: EstanteService, private productService: ProductoService, private router:Router){
     this.categoriaService.getAll().subscribe(categoria => this.categorias = Object.values(categoria))
     this.estanteService.getAll().subscribe(estante => this.estantes = Object.values(estante))
 }
@@ -47,8 +48,9 @@ export class AgregarProductoComponent {
       categoria: +producto.categoria.id,
       estante: +producto.estante.id
     }
-    this.productService.crearProducto(nuevoProducto as any)
-    this.cerrarModal()
+    this.productService.crearProducto(nuevoProducto as any).subscribe(res =>{
+      this.cerrarModal()
+    })
   }
 
   modificarProducto(producto:Producto){
@@ -57,40 +59,8 @@ export class AgregarProductoComponent {
       categoria: +producto.categoria.id,
       estante: +producto.estante.id
     }
-    this.productService.modificarProducto(producto.id as any, nuevoProducto as any)
-    this.cerrarModal()
+    this.productService.modificarProducto(producto.id as any, nuevoProducto as any).subscribe(res =>{
+      this.cerrarModal()
+    })
   }
-  // onFileChange(event: any) {
-  //   const inputElement = this.elementRef.nativeElement.querySelector('#tuInputFile');
-  //   const file = event.target.files[0];
-  //   const path = file ? file.path : inputElement.value; 
-  //   console.log(path)
-    
-  // }
-
-  // modificarProducto(nombreProducto: string, descripcionProducto: string, estanteProducto: string, categoriaProducto: string, imagensubida: string, precioProducto:string){
-  //   const cat = this.categoriaService.getCategoria(categoriaProducto);
-  //   const est = this.estanteService.getEstante(estanteProducto);
-
-  //   const productoModificado: Producto = {
-  //     id:this.producto.id,
-  //     nombre: nombreProducto,
-  //     descripcion: descripcionProducto,
-  //     estante: {
-  //       id:est?.id ?? "",
-  //       nombre:est?.nombre ?? "",
-  //       descripcion:est?.descripcion ?? ""
-  //     },
-  //     categoria: {
-  //       id:cat?.id ?? "",
-  //       nombre:cat?.nombre ?? "",
-  //       descripcion:cat?.descripcion ?? ""
-  //     },
-  //     foto: this.producto.foto,
-  //     precio: +precioProducto,
-  //     stock: this.producto.stock
-  //   }
-  //   this.productService.modificarProducto(this.producto.id, productoModificado)
-  //   this.cerrarModal()
-  // }
 }

@@ -10,52 +10,14 @@ export class CategoriaService {
 
   constructor(private httpCliente: HttpClient) { }
   url: string = 'http://localhost:8000/categoria'
-  categorias: Categoria[] = [
-    // {
-    //   id: '1', 
-    //   nombre: 'Limpieza',
-    //   descripcion: 'Limpieza'
-    // },
-    // {
-    //   id: '2', 
-    //   nombre: 'Piscina',
-    //   descripcion: 'Piscina'
-    // },
-    // {
-    //   id: '3', 
-    //   nombre: 'Automotor',
-    //   descripcion: 'Automotor'
-    // }
-  ]
+  categorias: Categoria[] = []
 
   getAll () {
-    // return this.categorias;
     return this.httpCliente.get(this.url)
   }
-
-  // getCategoria (id: string){
-  //   const selectCat = this.categorias.map((categoria) => {
-  //     if (categoria.id === id) {
-
-  //       return ;
-  //   });   
-  // }
-
-  // getCategoria(nombre: string): Categoria | null {
-  //   for (const categoria of this.categorias) {
-  //     if (categoria.nombre === nombre) {
-  //       return categoria;
-  //     }
-  //   }
-  //   return null;
-  // }
-
-
   getCategoria(nombre: string){
     return this.httpCliente.get(this.url + '/' + 'name' + '/' + nombre)
   }
-
-
   getID (cat:Categoria){
     return cat.id
   }
