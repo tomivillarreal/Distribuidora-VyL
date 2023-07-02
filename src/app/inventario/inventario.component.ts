@@ -31,7 +31,7 @@ export class InventarioComponent {
   cerrarModal () {
     this.num = 0;
     document.body.classList.toggle("overflow-hidden", false)
-    this.tabla.actualizarNumPaginas();
+    this.tabla.actualizaTabla()
   };
 
 }

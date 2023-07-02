@@ -1,4 +1,4 @@
-import {Component,EventEmitter, ViewChild, Output, Input} from '@angular/core';
+import {Component,EventEmitter, ViewChild, Output, Input, OnInit} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -9,6 +9,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { Producto } from 'src/app/interfaces/producto.interface';
 import { ProductoService } from 'src/app/services/producto.service';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tabla',
@@ -18,7 +19,7 @@ import { ProductoService } from 'src/app/services/producto.service';
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatMenuModule, MatButtonModule],
 })
 
-export class TablaComponent{
+export class TablaComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @Output() eventoModificarProducto: EventEmitter<Producto> = new EventEmitter<Producto>();
@@ -26,18 +27,26 @@ export class TablaComponent{
   @Input() actualizarTabla: any;
   displayedColumns: string[] = ['id','foto','nombre','descripcion','categoria','estante','stock','precio','acciones'];
   dataSource: MatTableDataSource<Producto>;
-  productos: Producto[] = [];
+  productos: Producto[];
   aplicarRecorte: boolean =false;
+  suscripcion: Subscription;
 
   constructor(private productService: ProductoService) {
-    this.productService.getAll().subscribe (listaProductos => {
-      this.productos = Object.values(listaProductos)
-      const productos = Array.from({length: this.productos.length}, (_, k) => this.productos[k]);
-      this.dataSource = new MatTableDataSource(productos);
-      this.setPaginator();
-    })
+
+  }
+  ngOnInit():void {
+    this.actualizaTabla();
   }
 
+  actualizaTabla(){
+    this.productService.getAll()
+      .subscribe(listaProductos => {
+        this.productos = listaProductos
+        const productos = Array.from({length: this.productos.length}, (_, k) => this.productos[k]);
+        this.dataSource = new MatTableDataSource(productos);
+        this.setPaginator();
+  })
+  }
 
   agregarProducto() {
     this.eventoModal.emit();
@@ -51,8 +60,9 @@ export class TablaComponent{
 }
 
   eliminarProducto (id:number){
-    this.productService.eliminarProducto(id)
-    this.actualizarNumPaginas();
+    this.productService.eliminarProducto(id).subscribe(res => {
+      this.actualizaTabla();
+    })
   }
 
   esResponsive(){
@@ -75,7 +85,4 @@ export class TablaComponent{
     }
   }
 
-  actualizarNumPaginas(){
-    this.paginator.length = this.productos.length;
-  }
 }
