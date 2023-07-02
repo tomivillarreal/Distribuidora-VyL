@@ -44,9 +44,13 @@ export class TablaComponent{
   }
 
   modificarProducto (id:number){
-    this.eventoModificarProducto.emit(this.productos[id-1]);
+    const productoEncontrado = this.productos.find(producto => producto.id === id)
+    if (productoEncontrado) {
+      this.eventoModificarProducto.emit(productoEncontrado);
   }
-  eliminarProducto (id:string){
+}
+
+  eliminarProducto (id:number){
     this.productService.eliminarProducto(id)
     this.actualizarNumPaginas();
   }

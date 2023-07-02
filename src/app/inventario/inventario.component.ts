@@ -9,7 +9,8 @@ import { TablaComponent} from './tabla/tabla.component';
 })
 
 export class InventarioComponent {
-  @ViewChild(TablaComponent) tabla: TablaComponent;
+  @ViewChild(TablaComponent) 
+  tabla: TablaComponent;
   num: number = 0;
   tipoModal: string;
   productoRecibido:Producto;

@@ -35,6 +35,4 @@ export class EstanteService {
     return this.httpCliente.get(this.url + '/' + 'name' + '/' + nombre)
   }
 
-
-
 }

@@ -32,12 +32,11 @@ export class AgregarProductoComponent {
 
   constructor(private categoriaService:CategoriaService, private estanteService: EstanteService, private productService: ProductoService){
     this.categoriaService.getAll().subscribe(categoria => this.categorias = Object.values(categoria))
-    this.estanteService.getAll().subscribe(estante => this.estantes = Object.values(estante))             
-  }
+    this.estanteService.getAll().subscribe(estante => this.estantes = Object.values(estante))
+}
 
   cerrarModal(){
     this.producto = ProductoVacio();
-    console.log(this.producto)
     this.eventoCerrarModal.emit();
   };
 
@@ -45,11 +44,20 @@ export class AgregarProductoComponent {
     const nuevoProducto = {
     ...producto,
       id: undefined, 
-      categoria: producto.categoria.id,
-      estante: producto.estante.id
+      categoria: +producto.categoria.id,
+      estante: +producto.estante.id
     }
     this.productService.crearProducto(nuevoProducto as any)
+    this.cerrarModal()
+  }
 
+  modificarProducto(producto:Producto){
+    const nuevoProducto = {
+    ...producto,
+      categoria: +producto.categoria.id,
+      estante: +producto.estante.id
+    }
+    this.productService.modificarProducto(producto.id as any, nuevoProducto as any)
     this.cerrarModal()
   }
   // onFileChange(event: any) {

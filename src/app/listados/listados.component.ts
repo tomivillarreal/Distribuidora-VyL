@@ -14,9 +14,9 @@ import { Estante } from '../interfaces/estante.interface';
 export class ListadosComponent {
   categorias: Categoria[] = []
   estantes: Estante[] = []
-  constructor(private productService:ProductoService,
-    private categoriaService: CategoriaService, 
-    private estanteService: EstanteService){
+  constructor(private productService:ProductoService,private categoriaService: CategoriaService, private estanteService: EstanteService)
+  
+  {
       this.categoriaService.getAll().subscribe(categoria => this.categorias = Object.values(categoria))
       this.estanteService.getAll().subscribe(estante => this.estantes = Object.values(estante))
     }

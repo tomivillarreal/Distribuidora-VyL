@@ -77,9 +77,12 @@ export class ProductoService {
     //    return this.productos;
     //}
     getAll () {
-        console.log(this.httpClient.get(this.url))
         return this.httpClient.get(this.url)
     }
+    getOne (id:number) {
+        return this.httpClient.get(this.url + '/' + id)
+    }
+
 
     //crearProducto(producto:Producto){
     //    this.productos = [...this.productos,(producto)]
@@ -87,7 +90,6 @@ export class ProductoService {
     //}
 
     crearProducto(producto:Producto){
-        console.log(producto);
         this.httpClient.post(this.url, producto).subscribe(
             response => console.log('Se ha guardado el producto: ', response),
             error => console.log(error)
@@ -108,8 +110,10 @@ export class ProductoService {
         this.productos = nuevoProductos;
         this.triggerUpdate()
     }*/
-    modificarProducto (id: string, productoModificado: Producto) {
-        this.httpClient.patch(this.url + '/' + id, productoModificado).subscribe(
+
+
+    modificarProducto (id: number, productoModificado: Producto) {
+        this.httpClient.put(this.url + '/' + id, productoModificado).subscribe(
             response => console.log('Se ha modificado el producto: ' + response),
             error => console.log(error)
         )
@@ -121,7 +125,7 @@ export class ProductoService {
         this.triggerUpdate()
 
     }*/
-    eliminarProducto (id: string){
+    eliminarProducto (id: number){
         this.httpClient.delete(this.url + '/' +id).subscribe(
             response => console.log('Se ha eliminado el producto: ' + response),
             error => console.log(error)

@@ -6,22 +6,16 @@
     <div class="flex flex-row flex-wrap gap-5 md:flex-row justify-around items-start max-h-full w-full">
         <div class="flex flex-col justify-start items-center bg-gray-300 shadow-xl w-52">
             <h1 class="text-white pt-3"> Estantes </h1>
-            <div class="flex justify-center  bg-orange-400 w-full h-16 mb-5" *ngFor="let estante of estantes">
-                <button class="text-white text-lg ">{{estante.nombre}}</button>
-            </div>
+            <button class="text-white text-lg flex items-center justify-center bg-orange-400 w-full h-16 mb-5" *ngFor="let estante of estantes">{{estante.nombre}}</button>
         </div>
 
         <div class="flex flex-col justify-start items-center bg-gray-300 shadow-xl w-52">
             <h1 class=" text-white pt-3"> Categorias </h1>
-            <div class="flex items-center justify-center bg-green-500 w-full h-16 mb-5" *ngFor="let categoria of categorias">
-                <button class="text-white text-lg">{{categoria.nombre}}</button>
-            </div>
+            <button *ngFor="let categoria of categorias" class="text-white text-lg flex items-center justify-center bg-green-500 w-full h-16 mb-5">{{categoria.nombre}}</button>
         </div>
  
         <div class="flex flex-col justify-start items-center bg-gray-300 shadow-xl w-52">
-            <div class="flex items-center justify-center bg-red-500 w-full h-16">
-                <button class="text-white text-lg"> Inventario </button>
-            </div>
+            <button class="text-white text-lg flex items-center justify-center bg-red-500 w-full h-16"> Inventario </button>
         </div>
     </div>
 </div>
