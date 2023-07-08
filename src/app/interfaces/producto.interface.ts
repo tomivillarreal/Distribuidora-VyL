@@ -1,3 +1,4 @@
+import { CambioPrecio, CambioPrecioVacio } from "./cambio-precio.interface"
 import { Categoria, CategoriaVacio } from "./categoria.interface"
 import { Estante, EstanteVacio } from "./estante.interface"
 
@@ -13,7 +14,7 @@ export interface Producto {
     // categoria: number,
     // categoria: string,
     stock: number,
-    // precio: number,
+    precio: CambioPrecio,
     foto: string
   }
 
@@ -25,6 +26,7 @@ export const ProductoVacio = ():Producto => ({
   categoria: CategoriaVacio(),
   stock: 0,
   // precio: 0,
-  foto: '../../assets/images/logo.png'
+  foto: '../../assets/images/logo.png',
   // estante: number,
+  precio: CambioPrecioVacio()
 })

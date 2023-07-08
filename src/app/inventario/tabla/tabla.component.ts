@@ -9,7 +9,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { Producto } from 'src/app/interfaces/producto.interface';
 import { ProductoService } from 'src/app/services/producto.service';
-import { Subject, Subscription } from 'rxjs';
+// import { CambioPrecio } from 'src/app/services/cambio-precio.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tabla',
@@ -31,9 +32,9 @@ export class TablaComponent implements OnInit {
   aplicarRecorte: boolean =false;
   suscripcion: Subscription;
 
-  constructor(private productService: ProductoService) {
-
-  }
+  constructor(private productService: ProductoService, 
+    // private precioService: CambioPrecio
+    ) {}
   ngOnInit():void {
     this.actualizaTabla();
   }
@@ -71,6 +72,11 @@ export class TablaComponent implements OnInit {
       this.aplicarRecorte = !this.aplicarRecorte;
     }
   }
+
+  // buscarPrecio(id: number){
+  //   const precio = this.precioService.getUltimoCambio(id);
+  //   return precio
+  // }
 
   setPaginator() {
     this.dataSource.paginator = this.paginator;

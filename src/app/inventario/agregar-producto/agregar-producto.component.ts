@@ -46,7 +46,8 @@ export class AgregarProductoComponent {
     ...producto,
       id: undefined, 
       categoria: +producto.categoria.id,
-      estante: +producto.estante.id
+      estante: +producto.estante.id,
+      precio: +producto.precio,
     }
     this.productService.crearProducto(nuevoProducto as any).subscribe(res =>{
       this.cerrarModal()
@@ -57,7 +58,8 @@ export class AgregarProductoComponent {
     const nuevoProducto = {
     ...producto,
       categoria: +producto.categoria.id,
-      estante: +producto.estante.id
+      estante: +producto.estante.id,
+      precio: +producto.precio
     }
     this.productService.modificarProducto(producto.id as any, nuevoProducto as any).subscribe(res =>{
       this.cerrarModal()
