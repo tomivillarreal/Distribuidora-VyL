@@ -15,4 +15,8 @@ export class CambioPrecioService {
     return this.httpCliente.get(this.url + '/' + 'producto' + '/' + id)
   }
 
+  crearCambioPrecio (cambioPrecio:CambioPrecio) {
+    return this.httpCliente.post(this.url, cambioPrecio)
+}
+
 }

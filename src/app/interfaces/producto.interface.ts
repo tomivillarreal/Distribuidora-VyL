@@ -14,7 +14,7 @@ export interface Producto {
     // categoria: number,
     // categoria: string,
     stock: number,
-    precio: CambioPrecio,
+    cambioPrecio: [CambioPrecio],
     foto: string
   }
 
@@ -28,5 +28,5 @@ export const ProductoVacio = ():Producto => ({
   // precio: 0,
   foto: '../../assets/images/logo.png',
   // estante: number,
-  precio: CambioPrecioVacio()
+  cambioPrecio: [CambioPrecioVacio()]
 })
