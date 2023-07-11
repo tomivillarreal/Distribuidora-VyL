@@ -41,6 +41,7 @@ export class AgregarProductoComponent {
   @Output() eventoActualizarTabla = new EventEmitter();
   @Input() valor: string;
   @Input() producto: Producto = ProductoVacio();
+  @Input() precio: number;
 
   categorias: Categoria[] = [];
   estantes: Estante[] = [];
@@ -50,7 +51,6 @@ export class AgregarProductoComponent {
     private categoriaService: CategoriaService,
     private estanteService: EstanteService,
     private productService: ProductoService,
-    private router: Router,
     private cambioPrecioService: CambioPrecioService
   ) {
     this.categoriaService
@@ -77,7 +77,7 @@ export class AgregarProductoComponent {
 
     this.productService.crearProducto(nuevoProducto as any).subscribe((res) => {
       const cambioPrecio = {
-        precio: producto.cambioPrecio[0].precio,
+        precio: producto.cambioPrecio[producto.cambioPrecio.length - 1].precio,
         producto: res,
       };
 
@@ -91,17 +91,31 @@ export class AgregarProductoComponent {
   }
 
   modificarProducto(producto: Producto) {
+    console.log('Modificar');
+    const cambioPrecio = {
+      precio: producto.cambioPrecio[producto.cambioPrecio.length - 1].precio,
+      producto: producto,
+    };
     const nuevoProducto = {
       ...producto,
       categoria: +producto.categoria.id,
       estante: +producto.estante.id,
-      cambioPrecio: producto.cambioPrecio[0].precio,
+      cambioPrecio: undefined,
     };
-    console.log(producto.cambioPrecio[0].precio);
+
     this.productService
       .modificarProducto(producto.id as any, nuevoProducto as any)
-      .subscribe((res) => {
-        this.cerrarModal();
-      });
+      .subscribe();
+
+    if (cambioPrecio.precio != this.precio) {
+      this.cambioPrecioService
+        .crearCambioPrecio(cambioPrecio as any)
+        .subscribe((res) => {
+          console.log('Se registro cambio precio');
+          this.cerrarModal();
+        });
+    } else {
+      this.cerrarModal();
+    }
   }
 }

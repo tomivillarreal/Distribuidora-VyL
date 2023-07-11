@@ -1,4 +1,4 @@
-  <!-- <div class="w-full flex flex-colum flex-col md:flex-row justify-between md:h-20">
+<!-- <div class="w-full flex flex-colum flex-col md:flex-row justify-between md:h-20">
     <mat-form-field class="md:w-96">
       <mat-label>Buscar</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
@@ -6,97 +6,165 @@
     <button class="flex justify-center items-center w-full md:w-56 h-14 bg-orange-700 text-white">Agregar Producto</button>  
   </div> -->
 
-  <div class="w-full flex flex-colum flex-col gap-3 justify-between pb-3 md:flex-row md:h-20">
-      <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input class="text-base w-100 h-14 md:w-96 md:text-lg input border-b-2">
-      <!-- <app-button-agregar-producto (eventoBoton)="llamarFuncionModal()" ></app-button-agregar-producto> -->
-      <button (click)="agregarProducto()" class="flex justify-center items-center text-white w-full h-14 text-base bg-color1 md:w-56 md:text-lg">Agregar Producto</button>  
-  </div>
+<div
+  class="w-full flex flex-colum flex-col gap-3 justify-between pb-3 md:flex-row md:h-20"
+>
+  <input
+    matInput
+    (keyup)="applyFilter($event)"
+    placeholder="Buscar"
+    #input
+    class="text-base w-100 h-14 md:w-96 md:text-lg input border-b-2"
+  />
+  <!-- <app-button-agregar-producto (eventoBoton)="llamarFuncionModal()" ></app-button-agregar-producto> -->
+  <button
+    (click)="agregarProducto()"
+    class="flex justify-center items-center text-white w-full h-14 text-base bg-color1 md:w-56 md:text-lg"
+  >
+    Agregar Producto
+  </button>
+</div>
 
-  <div class="mat-elevation-z8 h-full" id="div-table">
-    <table mat-table [dataSource]="dataSource" matSort>
-  
-      <!-- ID Column -->
-      <ng-container matColumnDef="id">
-        <th class= "hidden md:table-cell" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-        <td class= "hidden md:table-cell" mat-cell *matCellDef="let row"> {{row.id}} </td>
-      </ng-container>
+<div class="mat-elevation-z8 h-full" id="div-table">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th
+        class="hidden md:table-cell"
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+      >
+        ID
+      </th>
+      <td class="hidden md:table-cell" mat-cell *matCellDef="let row">
+        {{ row.id }}
+      </td>
+    </ng-container>
 
-      <!-- Columna Stock -->
-      <ng-container matColumnDef="foto">
-        <th class= "md:table-cell" mat-header-cell *matHeaderCellDef> Foto </th>
-        <td class= "md:table-cell" mat-cell *matCellDef="let row"> <img src="{{row.foto}}" class="aspect-square min-h-[56px] min-w-[56px] max-w-14 max-h-14"> </td>
-        
-      </ng-container>
-  
-      <!-- Name Column -->
-      <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-        <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
-      </ng-container>
+    <!-- Columna Stock -->
+    <ng-container matColumnDef="foto">
+      <th class="md:table-cell" mat-header-cell *matHeaderCellDef>Foto</th>
+      <td class="md:table-cell" mat-cell *matCellDef="let row">
+        <img
+          src="{{ row.foto }}"
+          class="aspect-square min-h-[56px] min-w-[56px] max-w-14 max-h-14"
+        />
+      </td>
+    </ng-container>
 
-       <!-- Name Column -->
-       <ng-container matColumnDef="descripcion">
-        <th class= "hidden md:table-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Descripcion </th>
-        <td class= "hidden md:table-cell" mat-cell *matCellDef="let row"> {{row.descripcion}} </td>
-      </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+      <td mat-cell *matCellDef="let row">{{ row.nombre }}</td>
+    </ng-container>
 
-       <!-- Name Column -->
-       <ng-container matColumnDef="categoria">
-        <th class= "md:table-cell" mat-header-cell *matHeaderCellDef mat-sort-header aplicarRecorte> Categoria </th>
-        <td class= "md:table-cell" mat-cell *matCellDef="let row"> {{row.categoria.nombre}} </td>
-      </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="descripcion">
+      <th
+        class="hidden md:table-cell"
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+      >
+        Descripcion
+      </th>
+      <td class="hidden md:table-cell" mat-cell *matCellDef="let row">
+        {{ row.descripcion }}
+      </td>
+    </ng-container>
 
-       <!-- Name Column -->
-       <ng-container matColumnDef="estante">
-        <th class= "hidden md:table-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estante </th>
-        <td class= "hidden md:table-cell" mat-cell *matCellDef="let row"> {{row.estante.nombre}} </td>
-      </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="categoria">
+      <th
+        class="md:table-cell"
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        aplicarRecorte
+      >
+        Categoria
+      </th>
+      <td class="md:table-cell" mat-cell *matCellDef="let row">
+        {{ row.categoria.nombre }}
+      </td>
+    </ng-container>
 
+    <!-- Name Column -->
+    <ng-container matColumnDef="estante">
+      <th
+        class="hidden md:table-cell"
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+      >
+        Estante
+      </th>
+      <td class="hidden md:table-cell" mat-cell *matCellDef="let row">
+        {{ row.estante.nombre }}
+      </td>
+    </ng-container>
 
-      <!-- Columna Cantidad-->
-      <ng-container matColumnDef="stock">
-        <th class= "md:table-cell" mat-header-cell *matHeaderCellDef mat-sort-header>  Cantitdad </th>
-        <td class= "md:table-cell" mat-cell *matCellDef="let row"> {{row.stock}} </td>
-      </ng-container>
-  
-      <!-- Fruit Column -->
-      <ng-container matColumnDef="precio">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
-        <!-- <td mat-cell *matCellDef="let row"> {{buscarPrecio(row.id)}} </td> -->
-        <td mat-cell *matCellDef="let row"> {{row.cambioPrecio[0].precio}} </td>
+    <!-- Columna Cantidad-->
+    <ng-container matColumnDef="stock">
+      <th
+        class="md:table-cell"
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+      >
+        Cantitdad
+      </th>
+      <td class="md:table-cell" mat-cell *matCellDef="let row">
+        {{ row.stock }}
+      </td>
+    </ng-container>
 
-      </ng-container>
+    <!-- Fruit Column -->
+    <ng-container matColumnDef="precio">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
+      <!-- <td mat-cell *matCellDef="let row"> {{buscarPrecio(row.id)}} </td> -->
+      <td mat-cell *matCellDef="let row">
+        {{ row.cambioPrecio[row.cambioPrecio.length - 1].precio }}
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="acciones">
-        <th  mat-header-cell *matHeaderCellDef class= "md:table-cell"> Acciones </th>
-        <td  mat-cell *matCellDef="let row">
-          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-            <mat-icon>more_vert</mat-icon>
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef class="md:table-cell">Acciones</th>
+      <td mat-cell *matCellDef="let row">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="Example icon-button with a menu"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="modificarProducto(row.id)">
+            <span>Modificar</span>
           </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="modificarProducto(row.id)">
-              <span>Modificar</span>
-            </button>
-            <button mat-menu-item (click)="eliminarProducto(row.id)">
-              <span>Eliminar</span>
-            </button>
-          </mat-menu>
-            <!-- <img src="{{row.acciones[0]}}" class="w-10 h-10"> 
+          <button mat-menu-item (click)="eliminarProducto(row.id)">
+            <span>Eliminar</span>
+          </button>
+        </mat-menu>
+        <!-- <img src="{{row.acciones[0]}}" class="w-10 h-10"> 
             <img src="{{row.acciones[1]}}" class="w-8 h-8"> -->
+      </td>
+    </ng-container>
 
-        </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
-      <!-- Row shown when there is no matching data. -->
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">No hay datos que coincidan con el filtro "{{input.value}}"</td>
-      </tr>
-    </table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10]" aria-label="Select page of users"></mat-paginator>
-  </div>
-  
-  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">
+        No hay datos que coincidan con el filtro "{{ input.value }}"
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10]"
+    aria-label="Select page of users"
+  ></mat-paginator>
+</div>

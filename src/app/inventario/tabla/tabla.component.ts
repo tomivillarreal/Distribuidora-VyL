@@ -20,6 +20,7 @@ import { ProductoService } from 'src/app/services/producto.service';
 import { Subscription, toArray } from 'rxjs';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 import { CambioPrecio } from 'src/app/interfaces/cambio-precio.interface';
+import { CambioPrecioService } from 'src/app/services/cambio-precio.service';
 
 @Component({
   selector: 'app-tabla',
@@ -61,9 +62,9 @@ export class TablaComponent implements OnInit {
   suscripcion: Subscription;
 
   constructor(
-    private productService: ProductoService
-  ) // private precioService: CambioPrecio
-  {}
+    private productService: ProductoService,
+    private cambioPrecioService: CambioPrecioService
+  ) {}
   ngOnInit(): void {
     this.actualizaTabla();
   }
@@ -77,6 +78,7 @@ export class TablaComponent implements OnInit {
       );
       this.dataSource = new MatTableDataSource(productos);
       this.setPaginator();
+      console.log('Se actualizo la tabla');
     });
   }
 
@@ -95,7 +97,12 @@ export class TablaComponent implements OnInit {
   }
 
   eliminarProducto(id: number) {
+    console.log('Eliminar');
+    this.cambioPrecioService.borrarCambioPreciosProducto(id).subscribe(() => {
+      console.log('Se elimino');
+    });
     this.productService.eliminarProducto(id).subscribe((res) => {
+      console.log('Se elimino');
       this.actualizaTabla();
     });
   }
@@ -109,12 +116,6 @@ export class TablaComponent implements OnInit {
       this.aplicarRecorte = !this.aplicarRecorte;
     }
   }
-
-  // buscarPrecio(id: number){
-  //   const precio = this.precioService.getUltimoCambio(id);
-  //   return precio
-  // }
-
   setPaginator() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

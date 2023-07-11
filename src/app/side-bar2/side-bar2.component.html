@@ -1,66 +1,110 @@
-
 <!-- Caja negra, que contiene toda la side-bar -->
 <div class="w-full h-16 bg-color1 md:h-full md:w-80 md:bg-zinc-800">
-        <!-- Side Bar Dinamica-->
+  <!-- Side Bar Dinamica-->
 
-        <!-- Opciones -->
+  <!-- Opciones -->
 
-        <div class="flex justify-center items-center h-16 w-20 absolute md:hidden">
-            <img (click)="cambiarEstilos()" src= "../../assets/images/options.png" class="w-6 h-6 z-50" alt="">
-        </div>
-        
-        <!-- Menu desplegable -->
+  <div class="flex justify-center items-center h-16 w-20 absolute md:hidden">
+    <img
+      (click)="cambiarEstilos()"
+      src="../../assets/images/options.png"
+      class="w-6 h-6 z-50"
+      alt=""
+    />
+  </div>
 
-        <div [class]="aplicarTransicion ? 'mi-componente estilos-transicion': 'mi-componente'" class="h-auto absolute bg-zinc-800" >
-            <!-- <div class="flex justify-center items-center h-16 w-20 absolute">
+  <!-- Menu desplegable -->
+
+  <div
+    [class]="
+      aplicarTransicion ? 'mi-componente estilos-transicion' : 'mi-componente'
+    "
+    class="h-auto absolute bg-zinc-800"
+  >
+    <!-- <div class="flex justify-center items-center h-16 w-20 absolute">
                 <img (click)="cambiarEstilos()" src= "../../assets/images/options.png" class="w-6 h-6" alt="">
             </div> -->
-            <div class="div2">
-                <ul class="w-full mt-6 space-y-2 tracking-wide">
-                    <!-- Inventario -->
-                    <li class="w-full h-14 hover:bg-zinc-500" (click)="[esInventario(), cambiarEstilos()]">
-                        <a class="h-full flex items-center text-white justify-center" routerLink="/inventario">
-                            <span class="font-sans text-base">Inventario</span>
-                        </a>
-                    </li>
-            
-                    <!-- Listadoss -->
-            
-                    <li class="w-full h-14 hover:bg-zinc-500" (click)="[esListado(), cambiarEstilos()]">
-                        <a class="h-full flex items-center text-white justify-center" routerLink="/listado">
-                        <span class="font-sans text-base">Listados</span>
-                        </a>
-                    </li>
-                    </ul>
-            </div>
-          
-        </div>
-
-        
-        <!-- Side Bar Estatica -->
-
-        <!-- Logo -->
-
-        <div class="flex justify-center items-center h-full w-screen md:bg-color1 md:h-80 md:w-full">
-            <img src= "../../assets/images/logo.png" class="h-12 md:w-56 md:h-56" alt="">
-        </div>
-
-        <ul class="hidden md:flex md:items-center md:justify-center md:mt-6 md:flex-col gap-1">
-
+    <div class="div2">
+      <ul class="w-full mt-6 space-y-2 tracking-wide">
         <!-- Inventario -->
-
-            <li class="w-full h-14 hover:bg-zinc-500" (click)="esInventario()">
-                <a class="h-full flex items-center text-white justify-center" routerLink="/inventario">
-                    <span class="font-sans text-xl">Inventario</span>
-                </a>
-            </li>
+        <li class="w-full h-14 hover:bg-zinc-500" (click)="[cambiarEstilos()]">
+          <a
+            class="h-full flex items-center text-white justify-center"
+            routerLink="/inventario"
+          >
+            <span class="font-sans text-base">Inventario</span>
+          </a>
+        </li>
 
         <!-- Listadoss -->
 
-            <li class="w-full h-14 hover:bg-zinc-500" (click)="esListado()">
-                <a class="h-full flex items-center text-white justify-center" routerLink="/listado">
-                    <span class="font-sans text-xl">Listados</span>
-                </a>
-            </li>
-        </ul>
+        <li class="w-full h-14 hover:bg-zinc-500" (click)="[cambiarEstilos()]">
+          <a
+            class="h-full flex items-center text-white justify-center"
+            routerLink="/listado"
+          >
+            <span class="font-sans text-base">Listados</span>
+          </a>
+        </li>
+
+        <li class="w-full h-14 hover:bg-zinc-500" (click)="[cambiarEstilos()]">
+          <a
+            class="h-full flex items-center text-white justify-center"
+            routerLink="/utilidades"
+          >
+            <span class="font-sans text-base">Utilidades</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Side Bar Estatica -->
+
+  <!-- Logo -->
+
+  <div
+    class="flex justify-center items-center h-full w-screen md:bg-color1 md:h-80 md:w-full"
+  >
+    <img
+      src="../../assets/images/logo.png"
+      class="h-12 md:w-56 md:h-56"
+      alt=""
+    />
+  </div>
+
+  <ul
+    class="hidden md:flex md:items-center md:justify-center md:mt-6 md:flex-col gap-1"
+  >
+    <!-- Inventario -->
+
+    <li class="w-full h-14 hover:bg-zinc-500">
+      <a
+        class="h-full flex items-center text-white justify-center"
+        routerLink="/inventario"
+      >
+        <span class="font-sans text-xl">Inventario</span>
+      </a>
+    </li>
+
+    <!-- Listadoss -->
+
+    <li class="w-full h-14 hover:bg-zinc-500">
+      <a
+        class="h-full flex items-center text-white justify-center"
+        routerLink="/listado"
+      >
+        <span class="font-sans text-xl">Listados</span>
+      </a>
+    </li>
+
+    <li class="w-full h-14 hover:bg-zinc-500">
+      <a
+        class="h-full flex items-center text-white justify-center"
+        routerLink="/utilidades"
+      >
+        <span class="font-sans text-xl">Utilidades</span>
+      </a>
+    </li>
+  </ul>
 </div>

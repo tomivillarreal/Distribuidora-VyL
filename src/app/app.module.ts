@@ -3,8 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InventarioComponent } from './inventario/inventario.component';
-import {MatTableModule} from '@angular/material/table';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
@@ -17,18 +17,24 @@ import { ProductoService } from './services/producto.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { UtilidadesComponent } from './utilidades/utilidades.component';
+import { ModalComponent } from './utilidades/modal/modal.component';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
-  {path:'inventario', component: InventarioComponent},
-  {path:'listado', component: ListadosComponent}
-]
+  { path: 'inventario', component: InventarioComponent },
+  { path: 'listado', component: ListadosComponent },
+  { path: 'utilidades', component: UtilidadesComponent },
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     InventarioComponent,
     SideBar2Component,
-    ListadosComponent
+    ListadosComponent,
+    UtilidadesComponent,
+    ModalComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -43,9 +49,10 @@ const routes: Routes = [
     TablaComponent,
     AgregarProductoComponent,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
   ],
   providers: [ProductoService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,15 +1,30 @@
 <div class="w-100 h-screen p-5">
-    <div class="mt-20">
-        <app-tabla (eventoModal)="agregarProducto()" (eventoModificarProducto)="modificarProducto($event)"></app-tabla>
-    </div>
+  <div class="mt-20">
+    <app-tabla
+      (eventoModal)="agregarProducto()"
+      (eventoModificarProducto)="modificarProducto($event)"
+    ></app-tabla>
+  </div>
 </div>
 
-<div class="fixed h-full w-full md:w-screen md:h-screen left-0 top-0 z-50 flex items-center justify-center bg-gray-600 backdrop-blur-sm bg-opacity-70" *ngIf="num === 1" >
-    <app-agregar-producto [valor]="tipoModal" (eventoCerrarModal)="cerrarModal()"></app-agregar-producto>
+<div
+  class="fixed h-full w-full md:w-screen md:h-screen left-0 top-0 z-50 flex items-center justify-center bg-gray-600 backdrop-blur-sm bg-opacity-70"
+  *ngIf="num === 1"
+>
+  <app-agregar-producto
+    [valor]="tipoModal"
+    (eventoCerrarModal)="cerrarModal()"
+  ></app-agregar-producto>
 </div>
-<div class="fixed h-full w-full md:w-screen md:h-screen left-0 top-0 z-50 flex items-center justify-center bg-gray-600 backdrop-blur-sm bg-opacity-70" *ngIf="num === 2" >
-    <app-agregar-producto [valor]="tipoModal" (eventoCerrarModal)="cerrarModal()" [producto]="productoRecibido"></app-agregar-producto>
+<div
+  class="fixed h-full w-full md:w-screen md:h-screen left-0 top-0 z-50 flex items-center justify-center bg-gray-600 backdrop-blur-sm bg-opacity-70"
+  *ngIf="num === 2"
+>
+  <app-agregar-producto
+    [valor]="tipoModal"
+    (eventoCerrarModal)="cerrarModal()"
+    [producto]="productoRecibido"
+    [precio]="precio"
+  ></app-agregar-producto>
 </div>
 <!-- <app-agregar-producto></app-agregar-producto> -->
-
-

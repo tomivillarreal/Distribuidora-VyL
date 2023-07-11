@@ -1,0 +1,38 @@
+<div class="p-6 h-screen w-full">
+  <div class="flex items-center w-full justify-center p-4">
+    <h1>Utilidades</h1>
+  </div>
+
+  <div
+    class="flex flex-row flex-wrap gap-5 md:flex-row justify-evenly items-start max-h-full w-full"
+  >
+    <div
+      class="flex flex-col justify-start items-center bg-gray-300 shadow-xl w-52"
+    >
+      <button
+        class="text-white text-lg flex items-center justify-center bg-orange-400 w-full h-16"
+        (click)="crearEstante()"
+      >
+        Crear Estante
+      </button>
+    </div>
+
+    <div
+      class="flex flex-col justify-start items-center bg-gray-300 shadow-xl w-52"
+    >
+      <button
+        class="text-white text-lg flex items-center justify-center bg-green-500 w-full h-16"
+        (click)="crearCategoria()"
+      >
+        Crear Categoria
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  class="fixed h-full w-full md:w-screen md:h-screen left-0 top-0 z-50 flex items-center justify-center bg-gray-600 backdrop-blur-sm bg-opacity-70"
+  *ngIf="num === 1"
+>
+  <app-modal [tipoModal]="tipoModal" [objeto]="objeto"></app-modal>
+</div>

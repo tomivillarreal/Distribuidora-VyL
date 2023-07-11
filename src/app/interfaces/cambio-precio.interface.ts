@@ -1,8 +1,7 @@
-
 export interface CambioPrecio {
-    precio: number,
+  precio: number;
 }
 
-export const CambioPrecioVacio = ():CambioPrecio => ({
-    precio: 0,
-})
+export const CambioPrecioVacio = (): CambioPrecio => ({
+  precio: 0,
+});

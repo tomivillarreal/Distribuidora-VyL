@@ -1,0 +1,64 @@
+<div
+  class="flex flex-col h-max w-screen bg-white border-2 md:h-max md:w-[500px]"
+>
+  <div class="w-full flex justify-center items-center h-20">
+    <!-- <h1>Crear {{ valor }}</h1> -->
+    <h1>Crear {{ tipoModal }}</h1>
+  </div>
+
+  <div class="flex flex-col m-6">
+    <!-- <div class="h-fit flex flex-col items-center w-full" id="div-fotoProducto">
+      <div
+        class="w-[150px] h-[150px] md:w-[300px] md:h-[300px] border-solid border-2"
+      >
+        <img [src]="producto.foto" alt="" autocomplete="off" />
+      </div>
+      <input class="w-fit h-fit" type="file" value="" alt="" #fotoProducto />
+    </div> -->
+
+    <div
+      class="flex flex-col md:flex-row md:flex-wrap md:mt-10 items-center md:justify-between w-full"
+    >
+      <form>
+        <mat-form-field class="w-52">
+          <mat-label>Nombre</mat-label>
+          <input
+            matInput
+            placeholder=""
+            [(ngModel)]="objeto.nombre"
+            name="nombre"
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </form>
+
+      <form class="">
+        <mat-form-field class="h-20 w-52">
+          <mat-label>Descripcion</mat-label>
+          <input
+            matInput
+            placeholder=""
+            [(ngModel)]="objeto.descripcion"
+            name="descripcion"
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+
+  <div class="flex flex-row w-full h-max mt-10 mb-10 justify-evenly">
+    <button
+      (click)="cerrarModalModal()"
+      class="w-32 h-14 flex items-center justify-center border-solid border-black rounded text-black border-2 text-lg"
+    >
+      Cancelar
+    </button>
+    <button
+      (click)="guardar()"
+      class="text-lg text-white w-32 h-14 flex items-center justify-center bg-color1 rounded"
+    >
+      Guardar
+    </button>
+  </div>
+</div>
