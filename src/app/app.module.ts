@@ -20,11 +20,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { UtilidadesComponent } from './utilidades/utilidades.component';
 import { ModalComponent } from './utilidades/modal/modal.component';
 import { FormsModule } from '@angular/forms';
+import { CompraComponent } from './compra/compra.component';
+import { VentaComponent } from './venta/venta.component';
+import { NuevaVentaComponent } from './venta/nueva-venta/nueva-venta.component';
 
 const routes: Routes = [
   { path: 'inventario', component: InventarioComponent },
   { path: 'listado', component: ListadosComponent },
   { path: 'utilidades', component: UtilidadesComponent },
+  { path: 'venta', component: VentaComponent },
+  { path: 'compra', component: CompraComponent },
+
 ];
 
 @NgModule({
@@ -35,6 +41,9 @@ const routes: Routes = [
     ListadosComponent,
     UtilidadesComponent,
     ModalComponent,
+    CompraComponent,
+    VentaComponent,
+    NuevaVentaComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

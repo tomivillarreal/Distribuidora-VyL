@@ -19,6 +19,7 @@ import { Producto, ProductoVacio } from 'src/app/interfaces/producto.interface';
 import { Router } from '@angular/router';
 import { CambioPrecio } from 'src/app/interfaces/cambio-precio.interface';
 import { CambioPrecioService } from 'src/app/services/cambio-precio.service';
+import { InventarioComponent } from '../inventario.component';
 
 @Component({
   selector: 'app-agregar-producto',
@@ -40,7 +41,7 @@ export class AgregarProductoComponent {
   @Output() eventoCerrarModal = new EventEmitter();
   @Output() eventoActualizarTabla = new EventEmitter();
   @Input() valor: string;
-  @Input() producto: Producto = ProductoVacio();
+  @Input() producto: Producto;
   @Input() precio: number;
 
   categorias: Categoria[] = [];
@@ -50,8 +51,7 @@ export class AgregarProductoComponent {
   constructor(
     private categoriaService: CategoriaService,
     private estanteService: EstanteService,
-    private productService: ProductoService,
-    private cambioPrecioService: CambioPrecioService
+    private inventario: InventarioComponent
   ) {
     this.categoriaService
       .getAll()
@@ -62,60 +62,14 @@ export class AgregarProductoComponent {
   }
 
   cerrarModal() {
-    this.producto = ProductoVacio();
-    this.eventoCerrarModal.emit();
+    this.inventario.cerrarModal()
   }
 
   guardarProducto(producto: Producto) {
-    const nuevoProducto = {
-      ...producto,
-      id: undefined,
-      categoria: +producto.categoria.id,
-      estante: +producto.estante.id,
-      // cambioPrecio: producto.cambioPrecio[0].precio,
-    };
-
-    this.productService.crearProducto(nuevoProducto as any).subscribe((res) => {
-      const cambioPrecio = {
-        precio: producto.cambioPrecio[producto.cambioPrecio.length - 1].precio,
-        producto: res,
-      };
-
-      this.cambioPrecioService
-        .crearCambioPrecio(cambioPrecio as any)
-        .subscribe((res) => {
-          this.cerrarModal();
-          console.log('Se registro cambio precio');
-        });
-    });
-  }
-
-  modificarProducto(producto: Producto) {
-    console.log('Modificar');
-    const cambioPrecio = {
-      precio: producto.cambioPrecio[producto.cambioPrecio.length - 1].precio,
-      producto: producto,
-    };
-    const nuevoProducto = {
-      ...producto,
-      categoria: +producto.categoria.id,
-      estante: +producto.estante.id,
-      cambioPrecio: undefined,
-    };
-
-    this.productService
-      .modificarProducto(producto.id as any, nuevoProducto as any)
-      .subscribe();
-
-    if (cambioPrecio.precio != this.precio) {
-      this.cambioPrecioService
-        .crearCambioPrecio(cambioPrecio as any)
-        .subscribe((res) => {
-          console.log('Se registro cambio precio');
-          this.cerrarModal();
-        });
-    } else {
-      this.cerrarModal();
+    if(this.valor === "Modificar"){
+      this.inventario.postModificacionProducto(producto)
+    }else if (this.valor === "Agregar"){
+      this.inventario.postProducto(producto)
     }
   }
 }

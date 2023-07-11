@@ -1,11 +1,11 @@
 <div
   class="flex flex-col h-screen w-screen bg-white border-2 md:h-max md:w-[1000px]"
 >
-  <div class="w-full flex justify-center items-center h-20">
+  <!-- <div class="w-full flex justify-center items-center h-20">
     <h1>{{ valor }} Producto</h1>
-  </div>
+  </div> -->
 
-  <div class="flex flex-col md:flex-row m-6">
+  <!-- <div class="flex flex-col md:flex-row m-6">
     <div class="h-fit flex flex-col items-center w-full" id="div-fotoProducto">
       <div
         class="w-[150px] h-[150px] md:w-[300px] md:h-[300px] border-solid border-2"
@@ -13,12 +13,12 @@
         <img [src]="producto.foto" alt="" autocomplete="off" />
       </div>
       <input class="w-fit h-fit" type="file" value="" alt="" #fotoProducto />
-    </div>
+    </div> -->
 
     <div
       class="flex flex-col md:flex-row md:flex-wrap md:mt-10 items-center md:justify-between w-full"
     >
-      <form>
+      <!-- <form>
         <mat-form-field class="w-52">
           <mat-label>Nombre</mat-label>
           <input
@@ -30,9 +30,9 @@
             autocomplete="off"
           />
         </mat-form-field>
-      </form>
+      </form> -->
 
-      <mat-form-field class="h-20 w-52">
+      <!-- <mat-form-field class="h-20 w-52">
         <mat-label>Categoria</mat-label>
         <mat-select #categoriaProducto [(ngModel)]="producto.categoria.id">
           <mat-option
@@ -42,8 +42,8 @@
             {{ categoria.nombre }}
           </mat-option>
         </mat-select>
-      </mat-form-field>
-
+      </mat-form-field> -->
+<!-- 
       <form class="">
         <mat-form-field class="h-20 w-52">
           <mat-label>Descripcion</mat-label>
@@ -56,18 +56,18 @@
             autocomplete="off"
           />
         </mat-form-field>
-      </form>
+      </form> -->
 
-      <mat-form-field class="h-20 w-52">
+      <!-- <mat-form-field class="h-20 w-52">
         <mat-label>Estante</mat-label>
         <mat-select #estanteProducto [(ngModel)]="producto.estante.id">
           <mat-option *ngFor="let estante of estantes" [value]="estante.id">
             {{ estante.nombre }}
           </mat-option>
         </mat-select>
-      </mat-form-field>
+      </mat-form-field> -->
 
-      <form class="">
+      <!-- <form class="">
         <mat-form-field class="h-20 w-52">
           <mat-label>Precio</mat-label>
           <input
@@ -83,11 +83,11 @@
             autocomplete="off"
           />
         </mat-form-field>
-      </form>
+      </form> -->
     </div>
   </div>
 
-  <div class="flex flex-row w-full h-max mt-10 mb-10 justify-evenly">
+  <!-- <div class="flex flex-row w-full h-max mt-10 mb-10 justify-evenly">
     <button
       (click)="cerrarModal()"
       class="w-32 h-14 flex items-center justify-center border-solid border-black rounded text-black border-2 text-lg"
@@ -100,5 +100,5 @@
     >
       Guardar
     </button>
-  </div>
-</div>
+  </div> -->
+<!-- </div> -->

@@ -125,7 +125,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
       <!-- <td mat-cell *matCellDef="let row"> {{buscarPrecio(row.id)}} </td> -->
       <td mat-cell *matCellDef="let row">
-        {{ row.cambioPrecio[row.cambioPrecio.length - 1].precio }}
+        ${{ row.cambioPrecio[row.cambioPrecio.length - 1].precio }}
       </td>
     </ng-container>
 

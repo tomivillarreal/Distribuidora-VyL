@@ -21,9 +21,6 @@
     "
     class="h-auto absolute bg-zinc-800"
   >
-    <!-- <div class="flex justify-center items-center h-16 w-20 absolute">
-                <img (click)="cambiarEstilos()" src= "../../assets/images/options.png" class="w-6 h-6" alt="">
-            </div> -->
     <div class="div2">
       <ul class="w-full mt-6 space-y-2 tracking-wide">
         <!-- Inventario -->
@@ -55,6 +52,25 @@
             <span class="font-sans text-base">Utilidades</span>
           </a>
         </li>
+
+        <li class="w-full h-14 hover:bg-zinc-500" (click)="[cambiarEstilos()]">
+          <a
+            class="h-full flex items-center text-white justify-center"
+            routerLink="/compra"
+          >
+            <span class="font-sans text-base">Compra</span>
+          </a>
+        </li>
+
+        <li class="w-full h-14 hover:bg-zinc-500" (click)="[cambiarEstilos()]">
+          <a
+            class="h-full flex items-center text-white justify-center"
+            routerLink="/venta"
+          >
+            <span class="font-sans text-base">Venta</span>
+          </a>
+        </li>
+
       </ul>
     </div>
   </div>
@@ -104,6 +120,26 @@
         routerLink="/utilidades"
       >
         <span class="font-sans text-xl">Utilidades</span>
+      </a>
+    </li>
+
+    
+    <li class="w-full h-14 hover:bg-zinc-500">
+      <a
+        class="h-full flex items-center text-white justify-center"
+        routerLink="/compra"
+      >
+        <span class="font-sans text-xl">Compra</span>
+      </a>
+    </li>
+
+    
+    <li class="w-full h-14 hover:bg-zinc-500">
+      <a
+        class="h-full flex items-center text-white justify-center"
+        routerLink="/venta"
+      >
+        <span class="font-sans text-xl">Venta</span>
       </a>
     </li>
   </ul>
