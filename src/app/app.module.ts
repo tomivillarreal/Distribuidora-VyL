@@ -14,15 +14,16 @@ import { TablaComponent } from './inventario/tabla/tabla.component';
 import { AgregarProductoComponent } from './inventario/agregar-producto/agregar-producto.component';
 import { ListadosComponent } from './listados/listados.component';
 import { ProductoService } from './services/producto.service';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule, NgFor } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { UtilidadesComponent } from './utilidades/utilidades.component';
 import { ModalComponent } from './utilidades/modal/modal.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompraComponent } from './compra/compra.component';
 import { VentaComponent } from './venta/venta.component';
 import { NuevaVentaComponent } from './venta/nueva-venta/nueva-venta.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const routes: Routes = [
   { path: 'inventario', component: InventarioComponent },
@@ -30,7 +31,6 @@ const routes: Routes = [
   { path: 'utilidades', component: UtilidadesComponent },
   { path: 'venta', component: VentaComponent },
   { path: 'compra', component: CompraComponent },
-
 ];
 
 @NgModule({
@@ -60,6 +60,14 @@ const routes: Routes = [
     CommonModule,
     HttpClientModule,
     FormsModule,
+    MatAutocompleteModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    NgFor,
+    AsyncPipe,
   ],
   providers: [ProductoService],
   bootstrap: [AppComponent],
