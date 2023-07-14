@@ -6,7 +6,7 @@ import { Venta } from '../interfaces/venta.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class ProductoService {
+export class VentaService {
   private url: string = 'http://localhost:8000/venta';
 
   constructor(private httpClient: HttpClient) {}

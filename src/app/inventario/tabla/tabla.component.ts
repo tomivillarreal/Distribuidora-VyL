@@ -16,10 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { Producto } from 'src/app/interfaces/producto.interface';
 import { ProductoService } from 'src/app/services/producto.service';
-// import { CambioPrecio } from 'src/app/services/cambio-precio.service';
 import { Subscription, toArray } from 'rxjs';
-import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
-import { CambioPrecio } from 'src/app/interfaces/cambio-precio.interface';
 import { CambioPrecioService } from 'src/app/services/cambio-precio.service';
 
 @Component({

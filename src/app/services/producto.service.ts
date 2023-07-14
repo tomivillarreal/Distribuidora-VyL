@@ -8,18 +8,18 @@ import { CambioPrecioService } from './cambio-precio.service';
   providedIn: 'root',
 })
 export class ProductoService {
-  private productos: Producto[];
-  private productos$: Subject<Producto[]>;
   private url: string = 'http://localhost:8000/producto';
   cambioPrecioService: CambioPrecioService;
 
-  constructor(private httpClient: HttpClient) {
-    this.productos = [];
-    this.productos$ = new Subject();
-  }
+  constructor(private httpClient: HttpClient) {}
   getAll(): Observable<Producto[]> {
     return this.httpClient.get<Producto[]>(this.url);
   }
+
+  getAllVenta(): Observable<Producto[]> {
+    return this.httpClient.get<Producto[]>(this.url + '/venta');
+  }
+
   getOne(id: number) {
     return this.httpClient.get(this.url + '/' + id);
   }
@@ -30,7 +30,6 @@ export class ProductoService {
     return this.httpClient.put(this.url + '/' + id, productoModificado);
   }
   eliminarProducto(id: number) {
-    console.log('Eliminar Producto');
     return this.httpClient.delete(this.url + '/' + id);
   }
 }

@@ -20,7 +20,6 @@ export class CambioPrecioService {
   }
 
   borrarCambioPreciosProducto(id: number) {
-    console.log('Borrar cambip precios');
     return this.httpCliente.delete(this.url + '/' + 'producto' + '/' + id);
   }
 }

@@ -24,6 +24,7 @@ import { CompraComponent } from './compra/compra.component';
 import { VentaComponent } from './venta/venta.component';
 import { NuevaVentaComponent } from './venta/nueva-venta/nueva-venta.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { TablaVentaComponent } from './venta/tabla-venta/tabla-venta.component';
 
 const routes: Routes = [
   { path: 'inventario', component: InventarioComponent },
@@ -44,6 +45,7 @@ const routes: Routes = [
     CompraComponent,
     VentaComponent,
     NuevaVentaComponent,
+    TablaVentaComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -69,7 +71,7 @@ const routes: Routes = [
     NgFor,
     AsyncPipe,
   ],
-  providers: [ProductoService],
+  providers: [ProductoService, TablaVentaComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

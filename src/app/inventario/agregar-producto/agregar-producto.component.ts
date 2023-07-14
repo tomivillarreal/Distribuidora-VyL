@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Output,
-  Input,
-  ElementRef,
-} from '@angular/core';
+import { Component, Input, ElementRef } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -38,8 +32,6 @@ import { InventarioComponent } from '../inventario.component';
   ],
 })
 export class AgregarProductoComponent {
-  @Output() eventoCerrarModal = new EventEmitter();
-  @Output() eventoActualizarTabla = new EventEmitter();
   @Input() valor: string;
   @Input() producto: Producto;
   @Input() precio: number;
@@ -62,14 +54,14 @@ export class AgregarProductoComponent {
   }
 
   cerrarModal() {
-    this.inventario.cerrarModal()
+    this.inventario.cerrarModal();
   }
 
   guardarProducto(producto: Producto) {
-    if(this.valor === "Modificar"){
-      this.inventario.postModificacionProducto(producto)
-    }else if (this.valor === "Agregar"){
-      this.inventario.postProducto(producto)
+    if (this.valor === 'Modificar') {
+      this.inventario.postModificacionProducto(producto);
+    } else if (this.valor === 'Agregar') {
+      this.inventario.postProducto(producto);
     }
   }
 }

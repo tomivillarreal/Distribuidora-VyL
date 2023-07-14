@@ -1,5 +1,5 @@
 <div
-  class="flex flex-col h-screen w-screen bg-slate-400 border-2 md:h-[1000px] md:w-[1000px] border-2"
+  class="flex flex-col h-screen w-screen bg-slate-400 border-2 md:h-[500px] md:w-[1000px]"
 >
   <div
     class="w-full flex justify-center items-center h-20 border-solid border-red-600 border-2"
@@ -9,20 +9,21 @@
 
   <div class="flex flex-row w-full gap-3 border-solid border-red-600 border-2">
     <form class="example-form">
-      <mat-form-field [(ngModel)]="detallesVenta[0]">
-        <mat-label>Seleccionar Producto</mat-label>
+      <mat-form-field class="example-full-width">
+        <mat-label>Seleccione Producto</mat-label>
         <input
+          [(ngModel)]="productoSeleccionado"
+          (ngModelChange)="[setPrecio(), calcularSubtotal()]"
+          name="Producto"
           type="text"
-          placeholder="Pick one"
-          aria-label="Number"
           matInput
           [formControl]="myControl"
           [matAutocomplete]="auto"
         />
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
           <mat-option
             *ngFor="let producto of filteredProductos | async"
-            [value]="producto.nombre"
+            [value]="producto"
           >
             {{ producto.nombre }}
           </mat-option>
@@ -33,24 +34,35 @@
     <form>
       <mat-form-field class="w-52">
         <mat-label> Precio</mat-label>
-        <input matInput [value]="buscarPrecio()" />
+        <input
+          autocomplete="off"
+          matInput
+          placeholder=""
+          name="precioProducto"
+          [(ngModel)]="precio"
+          (ngModelChange)="calcularSubtotal()"
+        />
       </mat-form-field>
     </form>
 
     <form>
       <mat-form-field class="w-52">
         <mat-label>Cantidad</mat-label>
-        <input matInput [value]="cantidad" />
+        <input
+          matInput
+          name="cantidad"
+          [(ngModel)]="cantidad"
+          (ngModelChange)="calcularSubtotal()"
+        />
       </mat-form-field>
     </form>
-
     <form>
       <mat-form-field class="w-52">
         <mat-label>Subtotal</mat-label>
-        <input matInput />
+        <input matInput [(ngModel)]="subtotal" name="subTotal" />
       </mat-form-field>
     </form>
 
-    <button class="w-11 h-11" (click)="print()">asdsad</button>
+    <button class="w-20 h-11 bg-green-50" (click)="print()">Agregar</button>
   </div>
 </div>
