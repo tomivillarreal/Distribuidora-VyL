@@ -9,7 +9,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,6 +30,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { TablaVentaComponent } from './venta/tabla-venta/tabla-venta.component';
 import { VentaGeneradaComponent } from './venta/venta-generada/venta-generada.component';
 import { ModalVentaComponent } from './venta/modal-venta/modal-venta.component';
+import { ModalAgregarProductoComponent } from './inventario/modal-agregar-producto/modal-agregar-producto.component';
+import { MatSelectModule } from '@angular/material/select';
 
 const routes: Routes = [
   { path: 'inventario', component: InventarioComponent },
@@ -46,6 +47,7 @@ const routes: Routes = [
     InventarioComponent,
     SideBar2Component,
     ListadosComponent,
+    ModalAgregarProductoComponent,
     UtilidadesComponent,
     ModalComponent,
     CompraComponent,
@@ -54,6 +56,8 @@ const routes: Routes = [
     TablaVentaComponent,
     VentaGeneradaComponent,
     ModalVentaComponent,
+    ModalAgregarProductoComponent,
+    
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -79,6 +83,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatSelectModule,
     NgFor,
     AsyncPipe,
   ],

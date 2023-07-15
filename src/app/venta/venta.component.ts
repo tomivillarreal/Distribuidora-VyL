@@ -20,7 +20,6 @@ export class VentaComponent {
     private table: TablaVentaComponent,
     private ventaService: VentaService,
     public dialog: MatDialog,
-    private formBuilder: FormBuilder
   ) {}
 
   open() {

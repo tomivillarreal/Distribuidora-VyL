@@ -4,18 +4,24 @@
     <form class="example-form">
       <mat-form-field class="example-full-width">
         <mat-label>Seleccione Producto</mat-label>
-        <input name="Producto" type="text" matInput />
-        <!-- <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option
-              *ngFor="let producto of filteredProductos | async"
-              [value]="producto"
-            >
-              {{ producto.nombre }}
-            </mat-option>
-          </mat-autocomplete> -->
+        <input
+          [(ngModel)]="productoSeleccionado"
+          name="Producto"
+          type="text"
+          matInput
+          [formControl]="myControl"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option
+            *ngFor="let producto of filteredProductos | async"
+            [value]="producto"
+          >
+            {{ producto.nombre }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
     </form>
-
     <form>
       <mat-form-field class="w-52">
         <mat-label>Precio</mat-label>
@@ -27,7 +33,6 @@
         />
       </mat-form-field>
     </form>
-
     <form>
       <mat-form-field class="w-52">
         <mat-label>Cantidad</mat-label>

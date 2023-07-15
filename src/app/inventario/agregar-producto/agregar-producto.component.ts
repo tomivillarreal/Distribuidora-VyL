@@ -8,11 +8,7 @@ import { Categoria } from 'src/app/interfaces/categoria.interface';
 import { CategoriaService } from 'src/app/services/categoria.service';
 import { EstanteService } from 'src/app/services/estante.service';
 import { Estante } from 'src/app/interfaces/estante.interface';
-import { ProductoService } from 'src/app/services/producto.service';
-import { Producto, ProductoVacio } from 'src/app/interfaces/producto.interface';
-import { Router } from '@angular/router';
-import { CambioPrecio } from 'src/app/interfaces/cambio-precio.interface';
-import { CambioPrecioService } from 'src/app/services/cambio-precio.service';
+import { Producto } from 'src/app/interfaces/producto.interface';
 import { InventarioComponent } from '../inventario.component';
 
 @Component({

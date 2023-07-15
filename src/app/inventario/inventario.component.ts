@@ -3,6 +3,9 @@ import { Producto, ProductoVacio } from '../interfaces/producto.interface';
 import { TablaComponent } from './tabla/tabla.component';
 import { ProductoService } from '../services/producto.service';
 import { CambioPrecioService } from '../services/cambio-precio.service';
+import { Dialog } from '@angular/cdk/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalAgregarProductoComponent } from './modal-agregar-producto/modal-agregar-producto.component';
 
 @Component({
   selector: 'app-inventario',
@@ -17,15 +20,28 @@ export class InventarioComponent {
   productoRecibido: Producto = ProductoVacio();
   precio: number = 0;
 
-  constructor(private productService: ProductoService, private cambioPrecioService: CambioPrecioService){}
+  constructor(
+    private productService: ProductoService,
+    private cambioPrecioService: CambioPrecioService,
+    public dialog: MatDialog,
+    ) { }
 
   agregarProducto() {
-    this.num = 1;
     this.tipoModal = 'Agregar';
     this.precio = 0;
     this.productoRecibido = ProductoVacio()
-    document.body.classList.toggle('overflow-hidden', true);
+    const dialogRef = this.dialog.open(ModalAgregarProductoComponent)
   }
+
+
+  // modificarProducto(producto: Producto) {
+  //   this.num = 1;
+  //   this.tipoModal = 'Modificar';
+  //   this.productoRecibido = producto;
+  //   this.precio =
+  //     producto.cambioPrecio[producto.cambioPrecio.length - 1].precio;
+  // }
+
 
   modificarProducto(producto: Producto) {
     this.num = 1;
@@ -33,7 +49,6 @@ export class InventarioComponent {
     this.productoRecibido = producto;
     this.precio =
       producto.cambioPrecio[producto.cambioPrecio.length - 1].precio;
-    document.body.classList.toggle('overflow-hidden', true);
   }
 
   cerrarModal() {
