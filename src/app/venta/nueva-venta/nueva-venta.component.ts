@@ -10,6 +10,7 @@ import { ProductoService } from 'src/app/services/producto.service';
 import { VentaService } from 'src/app/services/venta.service';
 import { TablaVentaComponent } from '../tabla-venta/tabla-venta.component';
 import { VentaComponent } from '../venta.component';
+import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-nueva-venta',
   templateUrl: './nueva-venta.component.html',
@@ -20,7 +21,8 @@ export class NuevaVentaComponent implements OnInit {
     private productoService: ProductoService,
     private ventaService: VentaService,
     private detalleVenta: DetalleVentaService,
-    private ventaComp: VentaComponent
+    private ventaComp: VentaComponent,
+    public dialogRef: MatDialogRef<NuevaVentaComponent>
   ) {}
 
   myControl = new FormControl<string | Producto>('');
@@ -31,16 +33,20 @@ export class NuevaVentaComponent implements OnInit {
   cantidad: number = 1;
   subtotal: number;
 
-  print() {
-    const detalle: DetalleVenta = {
-      id: -1,
-      cantidad: this.cantidad,
-      producto: this.productoSeleccionado,
-    };
-    console.log(detalle);
-    this.setDefault();
-    this.ventaComp.agregarDetalle(detalle);
+  close() {
+    this.dialogRef.close();
   }
+
+  // print() {
+  //   const detalle: DetalleVenta = {
+  //     id: -1,
+  //     cantidad: this.cantidad,
+  //     producto: this.productoSeleccionado,
+  //   };
+  //   console.log(detalle);
+  //   this.setDefault();
+  //   this.ventaComp.agregarDetalle(detalle);
+  // }
 
   setDefault() {
     this.productoSeleccionado = ProductoVacio();

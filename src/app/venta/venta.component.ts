@@ -1,7 +1,14 @@
 import { Component } from '@angular/core';
 import { TablaVentaComponent } from './tabla-venta/tabla-venta.component';
 import { Venta, VentaVacia } from '../interfaces/venta.interface';
-import { DetalleVenta } from '../interfaces/detalle-venta.interface';
+import {
+  DetalleVenta,
+  DetalleVentaVacio,
+} from '../interfaces/detalle-venta.interface';
+import { VentaService } from '../services/venta.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalVentaComponent } from './modal-venta/modal-venta.component';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-venta',
@@ -9,12 +16,14 @@ import { DetalleVenta } from '../interfaces/detalle-venta.interface';
   styleUrls: ['./venta.component.css'],
 })
 export class VentaComponent {
-  constructor(private table: TablaVentaComponent) {}
-  venta: Venta = VentaVacia();
+  constructor(
+    private table: TablaVentaComponent,
+    private ventaService: VentaService,
+    public dialog: MatDialog,
+    private formBuilder: FormBuilder
+  ) {}
 
-  agregarDetalle(detalle: DetalleVenta) {
-    this.venta.detalleVenta.push(detalle);
-    this.table.actualizaTabla(this.venta);
-    console.log(this.venta);
+  open() {
+    const dialogRef = this.dialog.open(ModalVentaComponent);
   }
 }

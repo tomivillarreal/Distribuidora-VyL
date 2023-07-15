@@ -1,68 +1,79 @@
-<div
-  class="flex flex-col h-screen w-screen bg-slate-400 border-2 md:h-[500px] md:w-[1000px]"
->
-  <div
-    class="w-full flex justify-center items-center h-20 border-solid border-red-600 border-2"
+<h1 mat-dialog-title>DIALOG</h1>
+
+<div mat-dialog-content>
+  <!-- <div
+    class="flex flex-col h-screen w-screen bg-slate-400 border-2 md:h-[500px] md:w-[1000px]"
   >
-    <h1>Nueva Venta</h1>
+    <div
+      class="w-full flex justify-center items-center h-20 border-solid border-red-600 border-2"
+    >
+      <h1>Nueva Venta</h1>
+    </div>
+
+    <div
+      class="flex flex-row flex-wrap w-full gap-3 border-solid border-red-600 border-2"
+    >
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <mat-label>Seleccione Producto</mat-label>
+          <input
+            [(ngModel)]="productoSeleccionado"
+            (ngModelChange)="[setPrecio(), calcularSubtotal()]"
+            name="Producto"
+            type="text"
+            matInput
+            [formControl]="myControl"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option
+              *ngFor="let producto of filteredProductos | async"
+              [value]="producto"
+            >
+              {{ producto.nombre }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+
+      <form>
+        <mat-form-field class="w-52">
+          <mat-label> Precio</mat-label>
+          <input
+            autocomplete="off"
+            matInput
+            placeholder=""
+            name="precioProducto"
+            [(ngModel)]="precio"
+            (ngModelChange)="calcularSubtotal()"
+          />
+        </mat-form-field>
+      </form>
+
+      <form>
+        <mat-form-field class="w-52">
+          <mat-label>Cantidad</mat-label>
+          <input
+            matInput
+            name="cantidad"
+            [(ngModel)]="cantidad"
+            (ngModelChange)="calcularSubtotal()"
+          />
+        </mat-form-field>
+      </form>
+      <form>
+        <mat-form-field class="w-52">
+          <mat-label>Subtotal</mat-label>
+          <input matInput [(ngModel)]="subtotal" name="subTotal" />
+        </mat-form-field>
+      </form>
+    </div>
   </div>
+</div> -->
 
-  <div class="flex flex-row w-full gap-3 border-solid border-red-600 border-2">
-    <form class="example-form">
-      <mat-form-field class="example-full-width">
-        <mat-label>Seleccione Producto</mat-label>
-        <input
-          [(ngModel)]="productoSeleccionado"
-          (ngModelChange)="[setPrecio(), calcularSubtotal()]"
-          name="Producto"
-          type="text"
-          matInput
-          [formControl]="myControl"
-          [matAutocomplete]="auto"
-        />
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-          <mat-option
-            *ngFor="let producto of filteredProductos | async"
-            [value]="producto"
-          >
-            {{ producto.nombre }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    </form>
+  <div class="w-100 h-100 bg-red-600"></div>
 
-    <form>
-      <mat-form-field class="w-52">
-        <mat-label> Precio</mat-label>
-        <input
-          autocomplete="off"
-          matInput
-          placeholder=""
-          name="precioProducto"
-          [(ngModel)]="precio"
-          (ngModelChange)="calcularSubtotal()"
-        />
-      </mat-form-field>
-    </form>
-
-    <form>
-      <mat-form-field class="w-52">
-        <mat-label>Cantidad</mat-label>
-        <input
-          matInput
-          name="cantidad"
-          [(ngModel)]="cantidad"
-          (ngModelChange)="calcularSubtotal()"
-        />
-      </mat-form-field>
-    </form>
-    <form>
-      <mat-form-field class="w-52">
-        <mat-label>Subtotal</mat-label>
-        <input matInput [(ngModel)]="subtotal" name="subTotal" />
-      </mat-form-field>
-    </form>
-
-    <button class="w-20 h-11 bg-green-50" (click)="print()">Agregar</button>
+  <div mat-dialog-actions>
+    <button (click)="close()">asdsadsadsadsadsadsa</button>
   </div>
 </div>
