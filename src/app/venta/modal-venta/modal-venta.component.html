@@ -1,0 +1,49 @@
+<h1 mat-dialog-title>Nuevo Detalle</h1>
+<div mat-dialog-content>
+  <div class="flex flex-row flex-wrap w-full gap-3">
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Seleccione Producto</mat-label>
+        <input name="Producto" type="text" matInput />
+        <!-- <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option
+              *ngFor="let producto of filteredProductos | async"
+              [value]="producto"
+            >
+              {{ producto.nombre }}
+            </mat-option>
+          </mat-autocomplete> -->
+      </mat-form-field>
+    </form>
+
+    <form>
+      <mat-form-field class="w-52">
+        <mat-label>Precio</mat-label>
+        <input
+          autocomplete="off"
+          matInput
+          placeholder=""
+          name="precioProducto"
+        />
+      </mat-form-field>
+    </form>
+
+    <form>
+      <mat-form-field class="w-52">
+        <mat-label>Cantidad</mat-label>
+        <input matInput name="cantidad" />
+      </mat-form-field>
+    </form>
+    <form>
+      <mat-form-field class="w-52">
+        <mat-label>Subtotal</mat-label>
+        <input matInput name="subTotal" />
+      </mat-form-field>
+    </form>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="cerrar()">Cerrar</button>
+  <button mat-raised-button (click)="agregarDetalle()">console log</button>
+</div>
