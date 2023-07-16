@@ -5,23 +5,13 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import { DetalleVenta } from 'src/app/interfaces/detalle-venta.interface';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Venta, VentaVacia } from 'src/app/interfaces/venta.interface';
 import { Producto } from 'src/app/interfaces/producto.interface';
 import { ProductoService } from 'src/app/services/producto.service';
 import { VentaService } from 'src/app/services/venta.service';
 import { Observable, map, startWith } from 'rxjs';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
-import { Subscription, toArray } from 'rxjs';
-import { CambioPrecioService } from 'src/app/services/cambio-precio.service';
-import { MatDialog } from '@angular/material/dialog';
+import { NuevaVentaComponent } from '../nueva-venta/nueva-venta.component';
 
 @Component({
   selector: 'app-modal-venta',
@@ -30,18 +20,25 @@ import { MatDialog } from '@angular/material/dialog';
 export class ModalVentaComponent implements OnInit {
   detalleForm: FormGroup;
   venta: Venta = VentaVacia();
-  detalle: any = [];
   productos: Producto[];
   myControl = new FormControl<string | Producto>('');
   filteredProductos: Observable<Producto[]>;
   productoSeleccionado: Producto;
   dataSource: ['Lavandina', 100, 1, 100];
   displayedColumns: ['producto', 'precio', 'cantidad', 'subTotal'];
+  totalVenta: number;
+  detalle: any = [{
+    producto: null,
+    cantidad: 0,
+    precio: 0,
+    subTotal:0
+  }];
   constructor(
     public dialogRef: MatDialogRef<ModalVentaComponent>,
     private formBuilder: FormBuilder,
     private productoService: ProductoService,
-    public ventaService: VentaService
+    private ventaService: VentaService,
+    public dialog: MatDialog
   ) {
     this.detalle = [];
   }
@@ -62,11 +59,12 @@ export class ModalVentaComponent implements OnInit {
     });
   }
 
-  // setDefault() {
-  //   this.productoSeleccionado = ProductoVacio();
-  //   this.precio = 0;
-  //   this.cantidad = 1;
-  // }
+  calcularTotal(){
+    this.totalVenta = 0;
+    for(let detalle of this.detalle){
+      this.totalVenta += detalle.subTotal
+    }
+  }
 
   initForm() {
     this.detalleForm = this.formBuilder.group({
@@ -104,18 +102,20 @@ export class ModalVentaComponent implements OnInit {
   }
 
   agregarDetalle() {
-    console.log(this.detalleForm.get('producto')?.value);
-    console.log(this.detalleForm.value);
+    // console.log(this.detalleForm.get('producto')?.value);
+    // console.log(this.detalleForm.value);
     const deta = this.detalleForm.value;
     this.detalle.push(deta);
     this.initForm();
+    this.calcularTotal()
   }
 
   agregarVenta() {
     this.venta.detalleVenta = this.detalle;
-    this.ventaService.crearVenta(this.venta).subscribe((res) => {
-      console.log('Se creo venta');
-    });
+    const dialogRef = this.dialog.open(NuevaVentaComponent, {
+      data: this.detalle
+    })
+
   }
 
   cerrar() {

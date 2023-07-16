@@ -17,8 +17,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class VentaComponent {
   constructor(
-    private table: TablaVentaComponent,
-    private ventaService: VentaService,
     public dialog: MatDialog,
   ) {}
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Inject, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -10,91 +10,64 @@ import { ProductoService } from 'src/app/services/producto.service';
 import { VentaService } from 'src/app/services/venta.service';
 import { TablaVentaComponent } from '../tabla-venta/tabla-venta.component';
 import { VentaComponent } from '../venta.component';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-nueva-venta',
   templateUrl: './nueva-venta.component.html',
-  styleUrls: ['./nueva-venta.component.css'],
 })
-export class NuevaVentaComponent implements OnInit {
+export class NuevaVentaComponent {
+  venta: Venta = VentaVacia()
+  detalle: any;
+  totalVenta: number;
   constructor(
-    private productoService: ProductoService,
     private ventaService: VentaService,
     private detalleVenta: DetalleVentaService,
-    private ventaComp: VentaComponent,
+    @Inject(MAT_DIALOG_DATA)
+    public data: [{
+      producto: Producto,
+      cantidad: number,
+      precio: number,
+      subTotal:number
+    }], 
     public dialogRef: MatDialogRef<NuevaVentaComponent>
-  ) {}
+  ) {
 
-  myControl = new FormControl<string | Producto>('');
-  productos: Producto[];
-  filteredProductos: Observable<Producto[]>;
-  productoSeleccionado: Producto = ProductoVacio();
-  precio: number;
-  cantidad: number = 1;
-  subtotal: number;
+    this.detalle = data
+    this.calcularTotal()
+  }
+
+  calcularTotal(){
+    this.totalVenta = 0;
+    for(let detalle of this.detalle){
+      this.totalVenta += detalle.subTotal
+    }
+  }
+
+  generarVenta(){
+    const nuevaVenta = {
+      ...this.venta,
+      // id: undefined
+    }
+    this.ventaService.crearVenta(nuevaVenta as any).subscribe((res) => {
+      for (const deta of this.detalle) {
+        const detalleEnviar = {
+          ...deta,
+          subTotal: undefined,
+          venta: res
+        }
+        this.detalleVenta.crearDetalleVenta(detalleEnviar).subscribe((res)=> {
+          console.log("Detalle Registrado")
+        })        
+      }
+      console.log("Venta Registrada")
+      this.close()
+    })
+
+
+  }
 
   close() {
     this.dialogRef.close();
   }
 
-  // print() {
-  //   const detalle: DetalleVenta = {
-  //     id: -1,
-  //     cantidad: this.cantidad,
-  //     producto: this.productoSeleccionado,
-  //   };
-  //   console.log(detalle);
-  //   this.setDefault();
-  //   this.ventaComp.agregarDetalle(detalle);
-  // }
-
-  setDefault() {
-    this.productoSeleccionado = ProductoVacio();
-    this.precio = 0;
-    this.cantidad = 1;
   }
-
-  setPrecio() {
-    this.precio =
-      this.productoSeleccionado &&
-      this.productoSeleccionado.cambioPrecio &&
-      this.productoSeleccionado.cambioPrecio.length > 0
-        ? this.productoSeleccionado.cambioPrecio[
-            this.productoSeleccionado.cambioPrecio.length - 1
-          ].precio
-        : 0;
-  }
-
-  calcularSubtotal() {
-    this.subtotal = this.precio * this.cantidad;
-  }
-
-  ngOnInit() {
-    this.productoService.getAllVenta().subscribe((res) => {
-      this.productos = res;
-      this.filteredProductos = this.myControl.valueChanges.pipe(
-        startWith(''),
-        map((value) => {
-          const nombre = typeof value === 'string' ? value : value?.nombre;
-          return nombre
-            ? this._filter(nombre as string)
-            : this.productos.slice();
-        })
-      );
-    });
-  }
-
-  displayFn(product: Producto): string {
-    return product && product.nombre ? product.nombre : '';
-  }
-
-  private _filter(nombre: string): Producto[] {
-    const filterValue = nombre.toLowerCase();
-
-    return this.productos.filter(
-      (producto) =>
-        producto.nombre.toLowerCase().includes(filterValue) ||
-        producto.id.toString() === filterValue
-    );
-  }
-}
