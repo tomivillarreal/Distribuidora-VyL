@@ -1,43 +1,42 @@
-<div mat-dialog-title>Producto</div>
-<div mat-dialog-content class="flex flex-row flex-wrap w-full">
-  
-       <div class="h-fit flex flex-col items-center w-full" id="div-fotoProducto">
-        <div
-          class="w-[150px] h-[150px] md:w-[300px] md:h-[300px] border-solid border-2"
-        >
-          <!-- <img [src]="producto.foto" alt="" autocomplete="off" /> -->
-        </div>
-        <input class="w-fit h-fit" type="file" value="" alt="" #fotoProducto />
-      </div> 
+<div mat-dialog-title>{{ tipoModal }} Producto</div>
+
+<div
+  mat-dialog-content
+  class="flex flex-col h-screen w-screen flex-wrap md:h-max md:w-[1000px]"
+>
+  <div class="flex flex-col md:flex-row m-6">
+    <div class="h-fit flex flex-col items-center w-full" id="div-fotoProducto">
+      <div
+        class="w-[150px] h-[150px] md:w-[300px] md:h-[300px] border-solid border-2"
+      >
+        <img [src]="productoRecibido.foto" alt="" autocomplete="off" />
+      </div>
+      <input class="w-fit h-fit" type="file" value="" alt="" #fotoProducto />
+    </div>
+
+    <div
+      class="flex flex-col md:flex-row md:flex-wrap md:mt-10 items-center md:justify-between w-full"
+    >
       <form>
-        <mat-form-field >
+        <mat-form-field class="w-52">
           <mat-label>Nombre</mat-label>
           <input
             matInput
             placeholder=""
             #nombreProducto
             name="nombreProducto"
+            [(ngModel)]="productoRecibido.nombre"
             autocomplete="off"
           />
         </mat-form-field>
       </form>
 
-      <form class="">
-        <mat-form-field >
-          <mat-label>Descripcion</mat-label>
-          <input
-            matInput
-            placeholder=""
-            name="descripcionProducto"
-            #descripcionProducto
-            autocomplete="off"
-          />
-        </mat-form-field>
-      </form>
-
-      <mat-form-field>
+      <mat-form-field class="h-20 w-52">
         <mat-label>Categoria</mat-label>
-        <mat-select #categoriaProducto [(ngModel)]="categoria">
+        <mat-select
+          #categoriaProducto
+          [(ngModel)]="productoRecibido.categoria.id"
+        >
           <mat-option
             *ngFor="let categoria of categorias"
             [value]="categoria.id"
@@ -47,14 +46,29 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field >
+      <form class="">
+        <mat-form-field class="h-20 w-52">
+          <mat-label>Descripcion</mat-label>
+          <input
+            matInput
+            placeholder=""
+            name="descripcionProducto"
+            [(ngModel)]="productoRecibido.descripcion"
+            #descripcionProducto
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </form>
+
+      <mat-form-field class="h-20 w-52">
         <mat-label>Estante</mat-label>
-        <mat-select #estanteProducto [(ngModel)]="estante">
+        <mat-select #estanteProducto [(ngModel)]="productoRecibido.estante.id">
           <mat-option *ngFor="let estante of estantes" [value]="estante.id">
             {{ estante.nombre }}
           </mat-option>
         </mat-select>
       </mat-form-field>
+
       <form class="">
         <mat-form-field class="h-20 w-52">
           <mat-label>Precio</mat-label>
@@ -63,7 +77,9 @@
             placeholder=""
             name="precioProducto"
             [(ngModel)]="
-            productoRecibido.cambioPrecio[productoRecibido.cambioPrecio.length - 1].precio
+              productoRecibido.cambioPrecio[
+                productoRecibido.cambioPrecio.length - 1
+              ].precio
             "
             #precioProducto
             maxlength="10"
@@ -72,16 +88,13 @@
           />
         </mat-form-field>
       </form>
+    </div>
+  </div>
 
+  <div mat-dialog-actions>
+    <button mat-raised-button (click)="cerrarModal()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="guardar()">
+      Guardar
+    </button>
+  </div>
 </div>
-<div mat-dialog-actions>
-    <button
-    (click)="cerrarModal()"
-    class="w-32 h-14 flex items-center justify-center border-solid border-black rounded text-black border-2 text-lg"
-  >
-    Cancelar
-  </button>
-</div>
-
-
-

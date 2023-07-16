@@ -14,10 +14,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { Producto } from 'src/app/interfaces/producto.interface';
+import { Producto, ProductoVacio } from 'src/app/interfaces/producto.interface';
 import { ProductoService } from 'src/app/services/producto.service';
 import { Subscription, toArray } from 'rxjs';
 import { CambioPrecioService } from 'src/app/services/cambio-precio.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalAgregarProductoComponent } from '../modal-agregar-producto/modal-agregar-producto.component';
 
 @Component({
   selector: 'app-tabla',
@@ -60,7 +62,8 @@ export class TablaComponent implements OnInit {
 
   constructor(
     private productService: ProductoService,
-    private cambioPrecioService: CambioPrecioService
+    private cambioPrecioService: CambioPrecioService,
+    public dialog: MatDialog
   ) {}
   ngOnInit(): void {
     this.actualizaTabla();
@@ -80,7 +83,16 @@ export class TablaComponent implements OnInit {
   }
 
   agregarProducto() {
-    this.eventoModal.emit();
+    const dialogRef = this.dialog.open(ModalAgregarProductoComponent, {
+      data: {
+        producto: ProductoVacio(),
+        tipoModal: 'Agregar',
+        ultimoPrecio: -1,
+      },
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      this.actualizaTabla();
+    });
   }
 
   modificarProducto(id: number) {
@@ -89,18 +101,28 @@ export class TablaComponent implements OnInit {
     );
     // @ts-ignore
     if (productoEncontrado) {
-      this.eventoModificarProducto.emit(productoEncontrado);
+      // this.eventoModificarProducto.emit(productoEncontrado);
+      const dialogRef = this.dialog.open(ModalAgregarProductoComponent, {
+        data: {
+          producto: productoEncontrado,
+          tipoModal: 'Modificar',
+          ultimoPrecio:
+            productoEncontrado.cambioPrecio[
+              productoEncontrado.cambioPrecio.length - 1
+            ].precio,
+        },
+      });
     }
   }
 
   eliminarProducto(id: number) {
-    console.log('Eliminar');
+    console.log('Eliminar ID:', id);
     this.cambioPrecioService.borrarCambioPreciosProducto(id).subscribe(() => {
-      console.log('Se elimino');
-    });
-    this.productService.eliminarProducto(id).subscribe((res) => {
-      console.log('Se elimino');
-      this.actualizaTabla();
+      console.log('Se elimino Cambio Precio');
+      this.productService.eliminarProducto(id).subscribe((res) => {
+        console.log('Se elimino Producto');
+        this.actualizaTabla();
+      });
     });
   }
 

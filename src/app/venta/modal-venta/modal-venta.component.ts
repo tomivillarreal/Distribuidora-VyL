@@ -1,23 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, OnChanges } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DetalleVenta } from 'src/app/interfaces/detalle-venta.interface';
 import { Venta, VentaVacia } from 'src/app/interfaces/venta.interface';
 import { Producto } from 'src/app/interfaces/producto.interface';
 import { ProductoService } from 'src/app/services/producto.service';
 import { VentaService } from 'src/app/services/venta.service';
-import { Observable, map, startWith } from 'rxjs'; 
-import { MatInput } from '@angular/material/input';
-import { Form } from '@angular/forms';
+import { Observable, map, startWith } from 'rxjs';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
-import { MatSelectModule } from '@angular/material/select';
-import { Categoria } from 'src/app/interfaces/categoria.interface';
-import { CategoriaService } from 'src/app/services/categoria.service';
-import { EstanteService } from 'src/app/services/estante.service';
-import { Estante } from 'src/app/interfaces/estante.interface';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { Subscription, toArray } from 'rxjs';
+import { CambioPrecioService } from 'src/app/services/cambio-precio.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-modal-venta',
@@ -26,12 +30,13 @@ import { Estante } from 'src/app/interfaces/estante.interface';
 export class ModalVentaComponent implements OnInit {
   detalleForm: FormGroup;
   venta: Venta = VentaVacia();
-  detalle: DetalleVenta[];
+  detalle: any = [];
   productos: Producto[];
   myControl = new FormControl<string | Producto>('');
   filteredProductos: Observable<Producto[]>;
   productoSeleccionado: Producto;
-
+  dataSource: ['Lavandina', 100, 1, 100];
+  displayedColumns: ['producto', 'precio', 'cantidad', 'subTotal'];
   constructor(
     public dialogRef: MatDialogRef<ModalVentaComponent>,
     private formBuilder: FormBuilder,
@@ -55,7 +60,6 @@ export class ModalVentaComponent implements OnInit {
         })
       );
     });
-
   }
 
   // setDefault() {
@@ -64,38 +68,47 @@ export class ModalVentaComponent implements OnInit {
   //   this.cantidad = 1;
   // }
 
-  // setPrecio() {
-  //   this.precio =
-  //     this.productoSeleccionado &&
-  //     this.productoSeleccionado.cambioPrecio &&
-  //     this.productoSeleccionado.cambioPrecio.length > 0
-  //       ? this.productoSeleccionado.cambioPrecio[
-  //           this.productoSeleccionado.cambioPrecio.length - 1
-  //         ].precio
-  //       : 0;
-  // }
-
-  // calcularSubtotal() {
-  //   this.subtotal = this.precio * this.cantidad;
-  // }
-
   initForm() {
     this.detalleForm = this.formBuilder.group({
-      cantidad: [0, Validators.required],
+      cantidad: [1, Validators.required],
       producto: [null, Validators.required],
       precio: [0, Validators.required],
+      subTotal: [0, Validators.required],
+    });
+
+    this.detalleForm.get('producto')?.valueChanges.subscribe((valor) => {
+      const precio =
+        valor && valor.cambioPrecio && valor.cambioPrecio.length > 0
+          ? valor.cambioPrecio[valor.cambioPrecio.length - 1].precio
+          : 0;
+      this.detalleForm.patchValue({
+        precio: precio,
+      });
+    });
+
+    this.detalleForm.get('cantidad')?.valueChanges.subscribe((valor) => {
+      const precio = this.detalleForm.get('precio')?.value;
+      const subTotal = valor * precio;
+      this.detalleForm.patchValue({
+        subTotal: subTotal,
+      });
+    });
+
+    this.detalleForm.get('precio')?.valueChanges.subscribe((valor) => {
+      const cantidad = this.detalleForm.get('cantidad')?.value;
+      const subTotal = valor * cantidad;
+      this.detalleForm.patchValue({
+        subTotal: subTotal,
+      });
     });
   }
 
   agregarDetalle() {
-    const detalle: DetalleVenta = {
-      cantidad: this.detalleForm.value.cantidad,
-      producto: this.detalleForm.value.producto,
-    };
-
-    console.log(detalle);
-    this.detalle.push(detalle);
-    // this.detalle.push(this.detalleForm.value);
+    console.log(this.detalleForm.get('producto')?.value);
+    console.log(this.detalleForm.value);
+    const deta = this.detalleForm.value;
+    this.detalle.push(deta);
+    this.initForm();
   }
 
   agregarVenta() {
@@ -121,5 +134,16 @@ export class ModalVentaComponent implements OnInit {
         producto.nombre.toLowerCase().includes(filterValue) ||
         producto.id.toString() === filterValue
     );
+  }
+
+  modificar(id: number) {
+    console.log('modificar', id);
+  }
+
+  eliminar(id: number) {
+    console.log('eliminar', id);
+    this.detalle.splice(id, 1);
+
+    // this.detalle =  this.detalle.filter(item => item !== id);
   }
 }

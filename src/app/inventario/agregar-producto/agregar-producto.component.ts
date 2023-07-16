@@ -49,15 +49,15 @@ export class AgregarProductoComponent {
       .subscribe((estante) => (this.estantes = Object.values(estante)));
   }
 
-  cerrarModal() {
-    this.inventario.cerrarModal();
-  }
+  // cerrarModal() {
+  //   this.inventario.cerrarModal();
+  // }
 
-  guardarProducto(producto: Producto) {
-    if (this.valor === 'Modificar') {
-      this.inventario.postModificacionProducto(producto);
-    } else if (this.valor === 'Agregar') {
-      this.inventario.postProducto(producto);
-    }
-  }
+  // guardarProducto(producto: Producto) {
+  //   if (this.valor === 'Modificar') {
+  //     this.inventario.postModificacionProducto(producto);
+  //   } else if (this.valor === 'Agregar') {
+  //     this.inventario.postProducto(producto);
+  //   }
+  // }
 }

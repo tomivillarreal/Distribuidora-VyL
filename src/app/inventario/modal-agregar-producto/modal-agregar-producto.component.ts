@@ -11,42 +11,115 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
+import { InventarioComponent } from '../inventario.component';
+import { ProductoService } from 'src/app/services/producto.service';
+import { CambioPrecio } from 'src/app/interfaces/cambio-precio.interface';
+import { CambioPrecioService } from 'src/app/services/cambio-precio.service';
 
 @Component({
   selector: 'app-modal-agregar-producto',
   templateUrl: './modal-agregar-producto.component.html',
 })
-export class ModalAgregarProductoComponent implements OnInit{
-  @Input() parametros: any;
+export class ModalAgregarProductoComponent implements OnInit {
   categorias: Categoria[] = [];
   estantes: Estante[] = [];
   productoRecibido: Producto = ProductoVacio();
   categoria: Categoria;
-  estante: Estante;  
+  estante: Estante;
+  tipoModal: string;
+  precio: number;
+
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      producto: Producto;
+      tipoModal: string;
+      ultimoPrecio: number;
+    },
     private categoriaService: CategoriaService,
     private estanteService: EstanteService,
-    public dialogRef : DialogRef
+    public dialogRef: DialogRef,
+    private productService: ProductoService,
+    private cambioPrecioService: CambioPrecioService
   ) {
-
-    // this.parametros = data
+    this.productoRecibido = data.producto;
+    this.tipoModal = data.tipoModal;
+    this.precio = data.ultimoPrecio;
   }
 
   ngOnInit(): void {
     this.categoriaService
-    .getAll()
-    .subscribe((categoria) => (this.categorias = Object.values(categoria)));
-  this.estanteService
-    .getAll()
-    .subscribe((estante) => (this.estantes = Object.values(estante)));
+      .getAll()
+      .subscribe((categoria) => (this.categorias = Object.values(categoria)));
+    this.estanteService
+      .getAll()
+      .subscribe((estante) => (this.estantes = Object.values(estante)));
   }
 
   cerrarModal() {
     this.dialogRef.close();
   }
 
-  setProducto(producto:Producto){
-    this.productoRecibido = producto;
+  guardar() {
+    if (this.tipoModal === 'Agregar') {
+      const nuevoProducto = {
+        ...this.productoRecibido,
+        id: undefined,
+        categoria: +this.productoRecibido.categoria.id,
+        estante: +this.productoRecibido.estante.id,
+      };
+
+      this.productService
+        .crearProducto(nuevoProducto as any)
+        .subscribe((res) => {
+          const cambioPrecio = {
+            precio:
+              this.productoRecibido.cambioPrecio[
+                this.productoRecibido.cambioPrecio.length - 1
+              ].precio,
+            producto: res,
+          };
+
+          this.cambioPrecioService
+            .crearCambioPrecio(cambioPrecio as any)
+            .subscribe((res) => {
+              console.log('Se registro cambio precio');
+              this.cerrarModal();
+            });
+        });
+    } else if (this.tipoModal === 'Modificar') {
+      console.log('Modificar');
+      const cambioPrecio = {
+        precio:
+          this.productoRecibido.cambioPrecio[
+            this.productoRecibido.cambioPrecio.length - 1
+          ].precio,
+        producto: this.productoRecibido,
+      };
+      const nuevoProducto = {
+        ...this.productoRecibido,
+        categoria: +this.productoRecibido.categoria.id,
+        estante: +this.productoRecibido.estante.id,
+        cambioPrecio: undefined,
+      };
+
+      this.productService
+        .modificarProducto(
+          this.productoRecibido.id as any,
+          nuevoProducto as any
+        )
+        .subscribe();
+
+      if (cambioPrecio.precio != this.precio) {
+        this.cambioPrecioService
+          .crearCambioPrecio(cambioPrecio as any)
+          .subscribe((res) => {
+            console.log('Se registro cambio precio');
+            this.cerrarModal();
+          });
+      } else {
+        this.cerrarModal();
+      }
+    }
   }
 }

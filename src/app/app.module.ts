@@ -28,10 +28,11 @@ import { VentaComponent } from './venta/venta.component';
 import { NuevaVentaComponent } from './venta/nueva-venta/nueva-venta.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { TablaVentaComponent } from './venta/tabla-venta/tabla-venta.component';
-import { VentaGeneradaComponent } from './venta/venta-generada/venta-generada.component';
 import { ModalVentaComponent } from './venta/modal-venta/modal-venta.component';
 import { ModalAgregarProductoComponent } from './inventario/modal-agregar-producto/modal-agregar-producto.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
   { path: 'inventario', component: InventarioComponent },
@@ -54,10 +55,8 @@ const routes: Routes = [
     VentaComponent,
     NuevaVentaComponent,
     TablaVentaComponent,
-    VentaGeneradaComponent,
     ModalVentaComponent,
     ModalAgregarProductoComponent,
-    
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -84,6 +83,8 @@ const routes: Routes = [
     MatButtonModule,
     MatSnackBarModule,
     MatSelectModule,
+    MatMenuModule,
+    MatIconModule,
     NgFor,
     AsyncPipe,
   ],
