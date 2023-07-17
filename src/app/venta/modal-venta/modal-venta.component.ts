@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -27,12 +27,14 @@ export class ModalVentaComponent implements OnInit {
   dataSource: ['Lavandina', 100, 1, 100];
   displayedColumns: ['producto', 'precio', 'cantidad', 'subTotal'];
   totalVenta: number;
-  detalle: any = [{
-    producto: null,
-    cantidad: 0,
-    precio: 0,
-    subTotal:0
-  }];
+  detalle: any = [
+    {
+      producto: null,
+      cantidad: 0,
+      precio: 0,
+      subTotal: 0,
+    },
+  ];
   constructor(
     public dialogRef: MatDialogRef<ModalVentaComponent>,
     private formBuilder: FormBuilder,
@@ -45,6 +47,10 @@ export class ModalVentaComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.initFilter();
+  }
+
+  initFilter() {
     this.productoService.getAllVenta().subscribe((res) => {
       this.productos = res;
       this.filteredProductos = this.myControl.valueChanges.pipe(
@@ -58,22 +64,20 @@ export class ModalVentaComponent implements OnInit {
       );
     });
   }
-
-  calcularTotal(){
+  calcularTotal() {
     this.totalVenta = 0;
-    for(let detalle of this.detalle){
-      this.totalVenta += detalle.subTotal
+    for (let detalle of this.detalle) {
+      this.totalVenta += detalle.subTotal;
     }
   }
 
   initForm() {
     this.detalleForm = this.formBuilder.group({
       cantidad: [1, Validators.required],
-      producto: [null, Validators.required],
+      producto: this.myControl,
       precio: [0, Validators.required],
       subTotal: [0, Validators.required],
     });
-
     this.detalleForm.get('producto')?.valueChanges.subscribe((valor) => {
       const precio =
         valor && valor.cambioPrecio && valor.cambioPrecio.length > 0
@@ -101,21 +105,38 @@ export class ModalVentaComponent implements OnInit {
     });
   }
 
+  setForm(
+    cantidad: number,
+    producto: Producto,
+    precio: number,
+    subTotal: number
+  ) {
+    this.detalleForm.setValue({
+      cantidad: cantidad,
+      producto: producto,
+      precio: precio,
+      subTotal: subTotal,
+    });
+  }
+
   agregarDetalle() {
-    // console.log(this.detalleForm.get('producto')?.value);
-    // console.log(this.detalleForm.value);
     const deta = this.detalleForm.value;
     this.detalle.push(deta);
     this.initForm();
-    this.calcularTotal()
+    this.myControl.reset();
+    this.calcularTotal();
   }
 
   agregarVenta() {
     this.venta.detalleVenta = this.detalle;
     const dialogRef = this.dialog.open(NuevaVentaComponent, {
-      data: this.detalle
-    })
-
+      data: this.detalle,
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res != 'Cancelar') {
+        this.cerrar();
+      }
+    });
   }
 
   cerrar() {
@@ -138,11 +159,16 @@ export class ModalVentaComponent implements OnInit {
 
   modificar(id: number) {
     console.log('modificar', id);
+    const deta = this.detalle[id];
+    console.log(deta);
+    this.setForm(deta.cantidad, deta.producto, deta.precio, deta.subTotal);
+    this.eliminar(id);
   }
 
   eliminar(id: number) {
     console.log('eliminar', id);
     this.detalle.splice(id, 1);
+    this.calcularTotal();
 
     // this.detalle =  this.detalle.filter(item => item !== id);
   }

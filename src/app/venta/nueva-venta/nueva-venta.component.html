@@ -1,38 +1,37 @@
-<div mat-dialog-title>
-  Registrar Venta
-</div>
+<div mat-dialog-title>Registrar Venta</div>
 
-<div mat-dialog-content class="w-[1000px]">
-
-
+<div mat-dialog-content>
   <mat-form-field class="w-full">
     <mat-label>Descripcion</mat-label>
     <input
       matInput
       name="cantidad"
-      [(ngModel)] = "venta.descripcion"
+      [(ngModel)]="venta.descripcion"
       autocomplete="off"
     />
   </mat-form-field>
+  <div class="overflow-x-auto">
+    <table class="min-w-[400px] align-middle text-center">
+      <tr>
+        <th>Producto</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>SubTotal</th>
+      </tr>
+      <tr *ngFor="let detalle of detalle; let indice = index">
+        <td>{{ detalle.producto?.nombre }}</td>
+        <td>{{ detalle.precio }}</td>
+        <td>{{ detalle.cantidad }}</td>
+        <td>{{ detalle.subTotal }}</td>
+      </tr>
+    </table>
+  </div>
 
-
-  <table class="w-full">
-    <tr>
-      <th>Producto</th>
-      <th>Precio</th>
-      <th>Cantidad</th>
-      <th>SubTotal</th>
-    </tr>
-    <tr *ngFor="let detalle of detalle; let indice = index">
-      <td>{{ detalle.producto?.nombre }}</td>
-      <td>{{ detalle.precio }}</td>
-      <td>{{ detalle.cantidad }}</td>
-      <td>{{ detalle.subTotal }}</td>
-    </tr>
-  </table>
-  <h1 class="p-5">Total: {{totalVenta}}</h1>
+  <h1 class="p-5">Total: {{ totalVenta }}</h1>
 </div>
 <div mat-dialog-actions [align]="'end'">
   <button mat-raised-button (click)="close()">Cancelar</button>
-  <button mat-raised-button color="primary" (click)="generarVenta()">Registrar Venta</button>
+  <button mat-raised-button color="primary" (click)="generarVenta()">
+    Registrar Venta
+  </button>
 </div>

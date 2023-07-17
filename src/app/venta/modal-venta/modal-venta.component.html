@@ -1,16 +1,17 @@
 <h1 mat-dialog-title>Nuevo Detalle</h1>
 <div mat-dialog-content>
-  <div class="flex flex-col flex-wrap w-full">
+  <div class="flex flex-col flex-wrap">
     <form [formGroup]="detalleForm">
-      <mat-form-field class="example-full-width">
+      <mat-form-field>
         <mat-label>Seleccione Producto</mat-label>
         <input
           type="text"
           matInput
-          formControlName="producto"
           [matAutocomplete]="auto"
+          formControlName="producto"
         />
         <!-- [formControl]="myControl" -->
+        <!-- formControlName="producto" -->
 
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
           <mat-option
@@ -50,49 +51,54 @@
         />
       </mat-form-field>
     </form>
+    <div>
+      <button mat-raised-button color="warn" (click)="agregarDetalle()">
+        Agregar Detalle
+      </button>
+    </div>
+  </div>
+  <div class="overflow-x-auto p-5">
+    <table class="min-w-[400px] w-full align-middle text-center">
+      <tr>
+        <th>Producto</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>SubTotal</th>
+        <th>Acciones</th>
+      </tr>
+      <tr *ngFor="let detalle of detalle; let indice = index">
+        <td>{{ detalle.producto?.nombre }}</td>
+        <td>{{ detalle.precio }}</td>
+        <td>{{ detalle.cantidad }}</td>
+        <td>{{ detalle.subTotal }}</td>
+        <td>
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="modificar(indice)">
+              <span>Modificar</span>
+            </button>
+            <button mat-menu-item (click)="eliminar(indice)">
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
+        </td>
+      </tr>
+    </table>
   </div>
 
-  <table class="w-full">
-    <tr>
-      <th>Producto</th>
-      <th>Precio</th>
-      <th>Cantidad</th>
-      <th>SubTotal</th>
-      <th>Acciones</th>
-    </tr>
-    <tr *ngFor="let detalle of detalle; let indice = index">
-      <td>{{ detalle.producto?.nombre }}</td>
-      <td>{{ detalle.precio }}</td>
-      <td>{{ detalle.cantidad }}</td>
-      <td>{{ detalle.subTotal }}</td>
-      <td>
-        <button
-          mat-icon-button
-          [matMenuTriggerFor]="menu"
-          aria-label="Example icon-button with a menu"
-        >
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="modificar(indice)">
-            <span>Modificar</span>
-          </button>
-          <button mat-menu-item (click)="eliminar(indice)">
-            <span>Eliminar</span>
-          </button>
-        </mat-menu>
-      </td>
-    </tr>
-  </table>
-  <h1 class="p-5">Total: {{totalVenta}}</h1>
+  <h2 class="p-5">Total: {{ totalVenta }}</h2>
 </div>
 
 <div mat-dialog-actions [align]="'end'">
   <button mat-raised-button (click)="cerrar()">Cerrar</button>
-  <button mat-raised-button color="primary" (click)="agregarDetalle()">
-    Agregar Detalle
-  </button>
-  <button mat-raised-button color="primary"(click)="agregarVenta()">
+
+  <button mat-raised-button color="primary" (click)="agregarVenta()">
     Generar Venta
   </button>
 </div>

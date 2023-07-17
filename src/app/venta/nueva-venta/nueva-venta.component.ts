@@ -16,58 +16,55 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   templateUrl: './nueva-venta.component.html',
 })
 export class NuevaVentaComponent {
-  venta: Venta = VentaVacia()
+  venta: Venta = VentaVacia();
   detalle: any;
   totalVenta: number;
   constructor(
     private ventaService: VentaService,
     private detalleVenta: DetalleVentaService,
     @Inject(MAT_DIALOG_DATA)
-    public data: [{
-      producto: Producto,
-      cantidad: number,
-      precio: number,
-      subTotal:number
-    }], 
+    public data: [
+      {
+        producto: Producto;
+        cantidad: number;
+        precio: number;
+        subTotal: number;
+      }
+    ],
     public dialogRef: MatDialogRef<NuevaVentaComponent>
   ) {
-
-    this.detalle = data
-    this.calcularTotal()
+    this.detalle = data;
+    this.calcularTotal();
   }
 
-  calcularTotal(){
+  calcularTotal() {
     this.totalVenta = 0;
-    for(let detalle of this.detalle){
-      this.totalVenta += detalle.subTotal
+    for (let detalle of this.detalle) {
+      this.totalVenta += detalle.subTotal;
     }
   }
 
-  generarVenta(){
+  generarVenta() {
     const nuevaVenta = {
       ...this.venta,
-      // id: undefined
-    }
+    };
     this.ventaService.crearVenta(nuevaVenta as any).subscribe((res) => {
       for (const deta of this.detalle) {
         const detalleEnviar = {
           ...deta,
           subTotal: undefined,
-          venta: res
-        }
-        this.detalleVenta.crearDetalleVenta(detalleEnviar).subscribe((res)=> {
-          console.log("Detalle Registrado")
-        })        
+          venta: res,
+        };
+        this.detalleVenta.crearDetalleVenta(detalleEnviar).subscribe((res) => {
+          console.log('Detalle Registrado');
+        });
       }
-      console.log("Venta Registrada")
-      this.close()
-    })
-
-
+      console.log('Venta Registrada');
+      this.dialogRef.close();
+    });
   }
 
   close() {
-    this.dialogRef.close();
+    this.dialogRef.close('Cancelar');
   }
-
-  }
+}
