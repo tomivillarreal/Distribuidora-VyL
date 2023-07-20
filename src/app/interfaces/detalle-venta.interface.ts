@@ -3,9 +3,9 @@ import { Venta, VentaVacia } from './venta.interface';
 
 export interface DetalleVenta {
   id: number;
-  cantidad: number | null;
+  cantidad: number ;
   producto: Producto | null;
-  precio: number | null;
+  precio: number ;
   venta: Venta | null;
 }
 

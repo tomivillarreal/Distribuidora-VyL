@@ -34,7 +34,7 @@
     <ng-container matColumnDef="total">
       <th class="" mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
       <td class="" mat-cell *matCellDef="let row">
-        {{ "1" }}
+        {{ row.totalVenta }}
       </td>
     </ng-container>
 
@@ -42,7 +42,7 @@
     <ng-container matColumnDef="acciones">
       <th class="" mat-header-cell *matHeaderCellDef mat-sort-header>Accion</th>
       <td class="" mat-cell *matCellDef="let row">
-        <button mat-raised-button color="primary" (click)="openDetalle(row.id)">
+        <button mat-raised-button color="primary" (click)="openDetalle(row)">
           Detalle
         </button>
       </td>

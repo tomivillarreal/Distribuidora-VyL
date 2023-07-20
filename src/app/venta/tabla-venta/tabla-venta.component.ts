@@ -18,6 +18,7 @@ import { VentaService } from 'src/app/services/venta.service';
 import { DetalleVentaService } from 'src/app/services/detalle-venta.service';
 import { ModalVentaComponent } from '../modal-venta/modal-venta.component';
 import { ModalDetalleComponent } from '../modal-detalle/modal-detalle.component';
+import { DetalleVenta } from 'src/app/interfaces/detalle-venta.interface';
 
 @Component({
   selector: 'app-tabla-venta',
@@ -59,16 +60,28 @@ export class TablaVentaComponent implements OnInit {
 
   actualizaTabla() {
     this.ventaService.getAll().subscribe((listaProductos) => {
-      this.detalleVentaService.getAll().subscribe((res) => {
-        console.log(res);
-      });
+      // this.detalleVentaService.getAll().subscribe((res) => {
+      // });
 
-      console.log(listaProductos);
       this.venta = listaProductos;
+
+      this.venta = this.venta.map((v) => {
+          let total: number = 0;
+          v.detalleVenta.forEach((res) => {
+            total += res.precio * res.cantidad
+          })
+          return {
+            ...v,
+            totalVenta:total
+          }
+      })
+
       const ventas = Array.from(
         { length: this.venta.length },
         (_, k) => this.venta[k]
       );
+
+
       this.dataSource = new MatTableDataSource(ventas);
       this.setPaginator();
       console.log('Se actualizo la tabla');
@@ -82,17 +95,29 @@ export class TablaVentaComponent implements OnInit {
     });
   }
 
-  openDetalle(id: number) {
-    console.log(id);
-    this.detalleVentaService.getByIdVenta(id).subscribe((res) => {
-      console.log(res);
+  openDetalle(venta: Venta) {
+    this.detalleVentaService.getByIdVenta(venta.id).subscribe((res) => {
       const dialogRef = this.dialog.open(ModalDetalleComponent, {
         data: res,
       });
       dialogRef.afterClosed().subscribe((result) => {
         this.actualizaTabla();
       });
+      console.log(res)
     });
+    // console.log("ventaaaaaa")
+    // console.log(venta)
+    // console.log(venta.detalleVenta)
+    // const detalle = venta.detalleVenta
+    // const idVenta = venta.id
+    // const dialogRef = this.dialog.open(ModalDetalleComponent, {
+    //   data: {...detalle,
+    //   id: idVenta}
+    // });
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   this.actualizaTabla();
+    // });
+
   }
 
   agregarProducto() {}

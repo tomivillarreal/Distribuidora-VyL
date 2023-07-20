@@ -172,4 +172,5 @@ export class ModalVentaComponent implements OnInit {
 
     // this.detalle =  this.detalle.filter(item => item !== id);
   }
+
 }

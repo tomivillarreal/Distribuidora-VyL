@@ -52,7 +52,7 @@
       </mat-form-field>
     </form>
     <div>
-      <button mat-raised-button color="warn" (click)="agregarDetalle()">
+      <button mat-raised-button color="warn" [disabled]="detalleForm.get('producto')?.errors?.['required']" (click)="agregarDetalle()">
         Agregar Detalle
       </button>
     </div>
@@ -98,7 +98,7 @@
 <div mat-dialog-actions [align]="'end'">
   <button mat-raised-button (click)="cerrar()">Cerrar</button>
 
-  <button mat-raised-button color="primary" (click)="agregarVenta()">
+  <button mat-raised-button color="primary" [disabled]="detalle.length <= 0" (click)="agregarVenta()">
     Generar Venta
   </button>
 </div>
