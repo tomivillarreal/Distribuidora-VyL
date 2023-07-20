@@ -1,11 +1,11 @@
-<button mat-raised-button color="primary" (click)="open()">Nueva venta</button>
+<button mat-raised-button color="primary" (click)="open()">Nueva Compra</button>
 
 <div class="h-full overflow-x-auto w-full mat-elevation-z8" id="div-table">
   <table mat-table [dataSource]="dataSource" matSort class="w-auto">
     <!-- ID Column -->
     <ng-container matColumnDef="id">
       <th class="" mat-header-cell *matHeaderCellDef mat-sort-header>
-        Nro Venta
+        Nro Compra
       </th>
       <td class="" mat-cell *matCellDef="let row">
         {{ row.id }}
@@ -34,20 +34,9 @@
     <ng-container matColumnDef="total">
       <th class="" mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
       <td class="" mat-cell *matCellDef="let row">
-        {{ "1" }}
+        {{ "" }}
       </td>
     </ng-container>
-
-    <!-- Columna Descripcion -->
-    <ng-container matColumnDef="acciones">
-      <th class="" mat-header-cell *matHeaderCellDef mat-sort-header>Accion</th>
-      <td class="" mat-cell *matCellDef="let row">
-        <button mat-raised-button color="primary" (click)="openDetalle(row.id)">
-          Detalle
-        </button>
-      </td>
-    </ng-container>
-
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>

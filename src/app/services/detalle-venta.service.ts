@@ -17,4 +17,8 @@ export class DetalleVentaService {
   crearDetalleVenta(detalleVenta: DetalleVenta) {
     return this.httpClient.post(this.url, detalleVenta);
   }
+
+  getByIdVenta(id: number): Observable<DetalleVenta[]> {
+    return this.httpClient.get<DetalleVenta[]>(this.url + '/venta' + id);
+  }
 }

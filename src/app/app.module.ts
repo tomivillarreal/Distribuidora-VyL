@@ -27,12 +27,16 @@ import { CompraComponent } from './compra/compra.component';
 import { VentaComponent } from './venta/venta.component';
 import { NuevaVentaComponent } from './venta/nueva-venta/nueva-venta.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { TablaVentaComponent } from './venta/tabla-venta/tabla-venta.component';
 import { ModalVentaComponent } from './venta/modal-venta/modal-venta.component';
 import { ModalAgregarProductoComponent } from './inventario/modal-agregar-producto/modal-agregar-producto.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { ModalCompraComponent } from './compra/modal-compra/modal-compra.component';
+import { NuevaCompraComponent } from './compra/nueva-compra/nueva-compra.component';
+import { TablaVentaComponent } from './venta/tabla-venta/tabla-venta.component';
+import { TablaCompraComponent } from './compra/tabla-compra/tabla-compra.component';
+import { ModalDetalleComponent } from './venta/modal-detalle/modal-detalle.component';
 
 const routes: Routes = [
   { path: 'inventario', component: InventarioComponent },
@@ -54,9 +58,11 @@ const routes: Routes = [
     CompraComponent,
     VentaComponent,
     NuevaVentaComponent,
-    TablaVentaComponent,
     ModalVentaComponent,
     ModalAgregarProductoComponent,
+    ModalCompraComponent,
+    NuevaCompraComponent,
+    ModalDetalleComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -69,6 +75,8 @@ const routes: Routes = [
     MatSortModule,
     BrowserAnimationsModule,
     TablaComponent,
+    TablaVentaComponent,
+    TablaCompraComponent,
     AgregarProductoComponent,
     CommonModule,
     HttpClientModule,
@@ -88,7 +96,7 @@ const routes: Routes = [
     NgFor,
     AsyncPipe,
   ],
-  providers: [ProductoService, TablaVentaComponent],
+  providers: [ProductoService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

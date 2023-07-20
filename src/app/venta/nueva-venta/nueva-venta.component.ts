@@ -1,15 +1,8 @@
-import { Component, Inject, OnInit, SimpleChanges } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { Producto, ProductoVacio } from 'src/app/interfaces/producto.interface';
+import { Component, Inject } from '@angular/core';
+import { Producto } from 'src/app/interfaces/producto.interface';
 import { Venta, VentaVacia } from 'src/app/interfaces/venta.interface';
-import { DetalleVenta } from 'src/app/interfaces/detalle-venta.interface';
 import { DetalleVentaService } from 'src/app/services/detalle-venta.service';
-import { ProductoService } from 'src/app/services/producto.service';
 import { VentaService } from 'src/app/services/venta.service';
-import { TablaVentaComponent } from '../tabla-venta/tabla-venta.component';
-import { VentaComponent } from '../venta.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-nueva-venta',

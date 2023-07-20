@@ -16,11 +16,5 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./venta.component.css'],
 })
 export class VentaComponent {
-  constructor(
-    public dialog: MatDialog,
-  ) {}
-
-  open() {
-    const dialogRef = this.dialog.open(ModalVentaComponent);
-  }
+  constructor(public dialog: MatDialog) {}
 }

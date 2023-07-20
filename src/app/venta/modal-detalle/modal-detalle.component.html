@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Detalle compra Nro: {{ detalle[0].venta.id }}</h1>
+<div mat-dialog-content>
+  <div class="overflow-x-auto">
+    <table class="min-w-[400px] align-middle text-center">
+      <tr>
+        <th>Producto</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>SubTotal</th>
+      </tr>
+      <tr *ngFor="let detalle of detalle; let indice = index">
+        <td>{{ detalle.producto?.nombre }}</td>
+        <td>{{ detalle.precio }}</td>
+        <td>{{ detalle.cantidad }}</td>
+        <td>{{ detalle.subTotal }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <h1 class="p-5">Total: {{ totalVenta }}</h1>
+</div>
+<div mat-dialog-actions [align]="'end'">
+  <button mat-raised-button (click)="close()">Cancelar</button>
+</div>

@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  ViewChild,
-  Output,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, ViewChild, Input, OnInit } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -40,9 +33,6 @@ import { ModalAgregarProductoComponent } from '../modal-agregar-producto/modal-a
 export class TablaComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @Output() eventoModificarProducto: EventEmitter<Producto> =
-    new EventEmitter<Producto>();
-  @Output() eventoModal = new EventEmitter();
   @Input() actualizarTabla: any;
   displayedColumns: string[] = [
     'id',
@@ -126,15 +116,6 @@ export class TablaComponent implements OnInit {
     });
   }
 
-  esResponsive() {
-    const ancho =
-      window.innerWidth ||
-      document.documentElement.clientWidth ||
-      document.body.clientWidth;
-    if (ancho > 768) {
-      this.aplicarRecorte = !this.aplicarRecorte;
-    }
-  }
   setPaginator() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

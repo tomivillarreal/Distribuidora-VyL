@@ -1,0 +1,102 @@
+<h1 mat-dialog-title>Nuevo Detalle</h1>
+<div mat-dialog-content>
+  <div class="flex flex-col flex-wrap">
+    <form [formGroup]="detalleForm">
+      <mat-form-field>
+        <mat-label>Seleccione Producto</mat-label>
+        <input
+          type="text"
+          matInput
+          [matAutocomplete]="auto"
+          formControlName="producto"
+        />
+
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option
+            *ngFor="let producto of filteredProductos | async"
+            [value]="producto"
+          >
+            {{ producto.nombre }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field class="w-52">
+        <mat-label>Precio</mat-label>
+        <input
+          formControlName="precio"
+          autocomplete="off"
+          matInput
+          placeholder=""
+          name="precioProducto"
+        />
+      </mat-form-field>
+      <mat-form-field class="w-52">
+        <mat-label>Cantidad</mat-label>
+        <input
+          formControlName="cantidad"
+          matInput
+          name="cantidad"
+          autocomplete="off"
+        />
+      </mat-form-field>
+      <mat-form-field class="w-52">
+        <mat-label>Subtotal</mat-label>
+        <input
+          matInput
+          name="subTotal"
+          autocomplete="off"
+          formControlName="subTotal"
+        />
+      </mat-form-field>
+    </form>
+    <div>
+      <button mat-raised-button color="warn" (click)="agregarDetalle()">
+        Agregar Detalle
+      </button>
+    </div>
+  </div>
+  <div class="overflow-x-auto p-5">
+    <table class="min-w-[400px] w-full align-middle text-center">
+      <tr>
+        <th>Producto</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>SubTotal</th>
+        <th>Acciones</th>
+      </tr>
+      <tr *ngFor="let detalle of detalle; let indice = index">
+        <td>{{ detalle.producto?.nombre }}</td>
+        <td>{{ detalle.precio }}</td>
+        <td>{{ detalle.cantidad }}</td>
+        <td>{{ detalle.subTotal }}</td>
+        <td>
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="modificar(indice)">
+              <span>Modificar</span>
+            </button>
+            <button mat-menu-item (click)="eliminar(indice)">
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <h2 class="p-5">Total: {{ totalCompra }}</h2>
+</div>
+
+<div mat-dialog-actions [align]="'end'">
+  <button mat-raised-button (click)="cerrar()">Cerrar</button>
+
+  <button mat-raised-button color="primary" (click)="agregarVenta()">
+    Generar Compra
+  </button>
+</div>
