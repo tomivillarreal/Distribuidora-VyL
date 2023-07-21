@@ -37,6 +37,7 @@ import { NuevaCompraComponent } from './compra/nueva-compra/nueva-compra.compone
 import { TablaVentaComponent } from './venta/tabla-venta/tabla-venta.component';
 import { TablaCompraComponent } from './compra/tabla-compra/tabla-compra.component';
 import { ModalDetalleComponent } from './venta/modal-detalle/modal-detalle.component';
+import { ModalDetalleCompraComponent } from './compra/modal-detalle-compra/modal-detalle-compra.component';
 
 const routes: Routes = [
   { path: 'inventario', component: InventarioComponent },
@@ -63,6 +64,7 @@ const routes: Routes = [
     ModalCompraComponent,
     NuevaCompraComponent,
     ModalDetalleComponent,
+    ModalDetalleCompraComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

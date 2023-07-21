@@ -9,9 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { DetalleVentaService as DetalleCompraService } from 'src/app/services/detalle-venta.service';
 import { CompraService } from 'src/app/services/compra.service';
 import { ModalCompraComponent } from '../modal-compra/modal-compra.component';
+import { ModalDetalleCompraComponent } from '../modal-detalle-compra/modal-detalle-compra.component';
+import { DetalleCompraService } from 'src/app/services/detalle-compra.service';
 
 @Component({
   selector: 'app-tabla-compra',
@@ -32,7 +33,13 @@ import { ModalCompraComponent } from '../modal-compra/modal-compra.component';
 export class TablaCompraComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = ['id', 'fecha', 'descripcion', 'total'];
+  displayedColumns: string[] = [
+    'id',
+    'fecha',
+    'descripcion',
+    'total',
+    'acciones',
+  ];
   dataSource: MatTableDataSource<Compra>;
   compra: Compra[];
 
@@ -76,6 +83,20 @@ export class TablaCompraComponent implements OnInit {
       this.actualizaTabla();
     });
   }
+
+  openDetalle(compra: Compra) {
+    this.detalleCompraService.getByIdCompra(compra.id).subscribe((res) => {
+      console.log(res);
+      const dialogRef = this.dialog.open(ModalDetalleCompraComponent, {
+        data: res,
+      });
+      dialogRef.afterClosed().subscribe((result) => {
+        this.actualizaTabla();
+      });
+      console.log(res);
+    });
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

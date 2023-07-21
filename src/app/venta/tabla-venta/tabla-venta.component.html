@@ -33,9 +33,7 @@
     <!-- Columna Descripcion -->
     <ng-container matColumnDef="total">
       <th class="" mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
-      <td class="" mat-cell *matCellDef="let row">
-        {{ row.totalVenta }}
-      </td>
+      <td class="" mat-cell *matCellDef="let row">${{ row.totalVenta }}</td>
     </ng-container>
 
     <!-- Columna Descripcion -->

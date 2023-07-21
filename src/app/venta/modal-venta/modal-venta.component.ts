@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Venta, VentaVacia } from 'src/app/interfaces/venta.interface';
-import { Producto } from 'src/app/interfaces/producto.interface';
+import { Producto, ProductoVacio } from 'src/app/interfaces/producto.interface';
 import { ProductoService } from 'src/app/services/producto.service';
 import { VentaService } from 'src/app/services/venta.service';
 import { Observable, map, startWith } from 'rxjs';
@@ -27,6 +27,8 @@ export class ModalVentaComponent implements OnInit {
   dataSource: ['Lavandina', 100, 1, 100];
   displayedColumns: ['producto', 'precio', 'cantidad', 'subTotal'];
   totalVenta: number;
+  stockProducto: number;
+  selectedOption: Producto;
   detalle: any = [
     {
       producto: null,
@@ -73,18 +75,19 @@ export class ModalVentaComponent implements OnInit {
 
   initForm() {
     this.detalleForm = this.formBuilder.group({
-      cantidad: [1, Validators.required],
+      cantidad: [null, Validators.required],
       producto: this.myControl,
-      precio: [0, Validators.required],
-      subTotal: [0, Validators.required],
+      precio: [null, Validators.required],
+      subTotal: [null, Validators.required],
     });
     this.detalleForm.get('producto')?.valueChanges.subscribe((valor) => {
       const precio =
         valor && valor.cambioPrecio && valor.cambioPrecio.length > 0
           ? valor.cambioPrecio[valor.cambioPrecio.length - 1].precio
-          : 0;
+          : '';
       this.detalleForm.patchValue({
         precio: precio,
+        cantidad: 1,
       });
     });
 
@@ -104,7 +107,36 @@ export class ModalVentaComponent implements OnInit {
       });
     });
   }
+  onSelectChange($event: Event) {
+    console.log('Se selecciono');
+    console.log(this.selectedOption);
+    console.log(this.selectedOption?.stock_disponible);
 
+    this.stockProducto = this.selectedOption?.stock_disponible ?? 0;
+    const cantidadControl = this.detalleForm.get('cantidad');
+
+    if (cantidadControl) {
+      cantidadControl.setValidators([
+        Validators.required,
+        Validators.max(this.stockProducto),
+      ]);
+      cantidadControl.updateValueAndValidity();
+    }
+  }
+  setStock() {
+    const nuevoValorMaximo = 10;
+
+    // Ahora, vamos a establecer el FormControl con un nuevo conjunto de Validators que incluyan el nuevo valor máximo
+    const cantidadControl = this.detalleForm.get('cantidad');
+
+    if (cantidadControl) {
+      cantidadControl.setValidators([
+        Validators.required,
+        Validators.max(nuevoValorMaximo),
+      ]);
+      cantidadControl.updateValueAndValidity();
+    }
+  }
   setForm(
     cantidad: number,
     producto: Producto,
@@ -120,11 +152,30 @@ export class ModalVentaComponent implements OnInit {
   }
 
   agregarDetalle() {
-    const deta = this.detalleForm.value;
-    this.detalle.push(deta);
+    let deta = this.detalleForm.value;
+    deta = {
+      precio: +deta.precio,
+      cantidad: +deta.cantidad,
+      subTotal: +deta.subTotal,
+      producto: deta.producto,
+    };
+    const valor = this.estaDetalle(deta);
+    if (valor != -1) {
+      this.detalle[valor].cantidad += deta.cantidad;
+      this.detalle[valor].subTotal += deta.subTotal;
+    } else this.detalle.push(deta);
     this.initForm();
     this.myControl.reset();
     this.calcularTotal();
+  }
+
+  estaDetalle(deta: any): number {
+    for (let index = 0; index < this.detalle.length; index++) {
+      if (this.detalle[index].producto === deta.producto) {
+        return index;
+      }
+    }
+    return -1;
   }
 
   agregarVenta() {
@@ -172,5 +223,4 @@ export class ModalVentaComponent implements OnInit {
 
     // this.detalle =  this.detalle.filter(item => item !== id);
   }
-
 }

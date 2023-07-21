@@ -8,7 +8,7 @@ export interface Producto {
   descripcion: string;
   estante: Estante;
   categoria: Categoria;
-  stock: number;
+  stock_disponible: number;
   cambioPrecio: [CambioPrecio];
   foto: string;
 }
@@ -19,7 +19,7 @@ export const ProductoVacio = (): Producto => ({
   descripcion: '',
   estante: EstanteVacio(),
   categoria: CategoriaVacio(),
-  stock: 0,
+  stock_disponible: 0,
   foto: '../../assets/images/logo.png',
   cambioPrecio: [CambioPrecioVacio()],
 });

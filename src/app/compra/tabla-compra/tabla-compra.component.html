@@ -37,6 +37,17 @@
         {{ "" }}
       </td>
     </ng-container>
+
+    <!-- Columna Descripcion -->
+    <ng-container matColumnDef="acciones">
+      <th class="" mat-header-cell *matHeaderCellDef mat-sort-header>Accion</th>
+      <td class="" mat-cell *matCellDef="let row">
+        <button mat-raised-button color="primary" (click)="openDetalle(row)">
+          Detalle
+        </button>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
