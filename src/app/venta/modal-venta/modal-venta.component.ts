@@ -12,6 +12,7 @@ import { ProductoService } from 'src/app/services/producto.service';
 import { VentaService } from 'src/app/services/venta.service';
 import { Observable, map, startWith } from 'rxjs';
 import { NuevaVentaComponent } from '../nueva-venta/nueva-venta.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-modal-venta',
@@ -42,7 +43,8 @@ export class ModalVentaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private productoService: ProductoService,
     private ventaService: VentaService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
     this.detalle = [];
   }
@@ -109,12 +111,14 @@ export class ModalVentaComponent implements OnInit {
   }
   onSelectChange($event: Event) {
     console.log('Se selecciono');
-    console.log(this.selectedOption);
-    console.log(this.selectedOption?.stock_disponible);
-
+    if (this.selectedOption?.stock_disponible === 0) {
+      this.snackBar.open(`No hay stock de ${this.selectedOption.nombre}`, '', {
+        duration: 2000,
+      });
+      // alert('No hay stock del producto');
+    }
     this.stockProducto = this.selectedOption?.stock_disponible ?? 0;
     const cantidadControl = this.detalleForm.get('cantidad');
-
     if (cantidadControl) {
       cantidadControl.setValidators([
         Validators.required,
@@ -123,20 +127,7 @@ export class ModalVentaComponent implements OnInit {
       cantidadControl.updateValueAndValidity();
     }
   }
-  setStock() {
-    const nuevoValorMaximo = 10;
 
-    // Ahora, vamos a establecer el FormControl con un nuevo conjunto de Validators que incluyan el nuevo valor máximo
-    const cantidadControl = this.detalleForm.get('cantidad');
-
-    if (cantidadControl) {
-      cantidadControl.setValidators([
-        Validators.required,
-        Validators.max(nuevoValorMaximo),
-      ]);
-      cantidadControl.updateValueAndValidity();
-    }
-  }
   setForm(
     cantidad: number,
     producto: Producto,
@@ -160,10 +151,35 @@ export class ModalVentaComponent implements OnInit {
       producto: deta.producto,
     };
     const valor = this.estaDetalle(deta);
+
     if (valor != -1) {
-      this.detalle[valor].cantidad += deta.cantidad;
-      this.detalle[valor].subTotal += deta.subTotal;
-    } else this.detalle.push(deta);
+      const stockMaximo = deta.producto.stock_disponible;
+      const stockPedido = this.detalle[valor].cantidad + deta.cantidad;
+      console.log(deta.producto);
+      console.log(stockMaximo);
+      console.log(stockPedido);
+
+      if (stockMaximo < stockPedido) {
+        console.log('Se supero el stock maximo');
+        this.detalle[valor].cantidad = stockMaximo;
+        this.detalle[valor].subTotal = stockMaximo * this.detalle[valor].precio;
+        this.snackBar.open(
+          `Se supero el stock por lo que se ha establecido a ${stockMaximo}`,
+          '',
+          {
+            duration: 2000,
+          }
+        );
+      } else {
+        console.log('No se supero el stock maximo');
+        this.detalle[valor].cantidad += deta.cantidad;
+        this.detalle[valor].subTotal += deta.subTotal;
+      }
+    } else {
+      console.log('Se agrega nuevo producto al detalle');
+      this.detalle.push(deta);
+    }
+
     this.initForm();
     this.myControl.reset();
     this.calcularTotal();

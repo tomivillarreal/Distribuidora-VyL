@@ -3,6 +3,10 @@ import { CategoriaService } from '../services/categoria.service';
 import { EstanteService } from '../services/estante.service';
 import { Categoria, CategoriaVacio } from '../interfaces/categoria.interface';
 import { Estante, EstanteVacio } from '../interfaces/estante.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalCategoriaComponent } from './modal-categoria/modal-categoria.component';
+import { Dialog } from '@angular/cdk/dialog';
+import { ModalEstanteComponent } from './modal-estante/modal-estante.component';
 
 @Component({
   selector: 'app-utilidades',
@@ -15,45 +19,40 @@ export class UtilidadesComponent {
   objeto: any;
   constructor(
     private categoriaService: CategoriaService,
-    private estanteService: EstanteService
+    private estanteService: EstanteService,
+    public dialog: MatDialog
   ) {}
   crearEstante() {
-    this.num = 1;
-    this.tipoModal = 'Estante';
-    this.objeto = EstanteVacio();
-    document.body.classList.toggle('overflow-hidden', true);
+    this.dialog.open(ModalEstanteComponent);
   }
 
   crearCategoria() {
-    this.num = 1;
-    this.tipoModal = 'Categoria';
-    this.objeto = CategoriaVacio();
-    document.body.classList.toggle('overflow-hidden', true);
+    this.dialog.open(ModalCategoriaComponent);
   }
-  cerrarModal() {
-    this.num = 0;
-    document.body.classList.toggle('overflow-hidden', false);
-  }
+  // cerrarModal() {
+  //   this.num = 0;
+  //   document.body.classList.toggle('overflow-hidden', false);
+  // }
 
-  postCategoria(objeto: Categoria) {
-    const categoria = {
-      ...objeto,
-      id: 0,
-    };
-    this.categoriaService.crear(categoria).subscribe(() => {
-      console.log('Se registro');
-      this.cerrarModal();
-    });
-  }
+  // postCategoria(objeto: Categoria) {
+  //   const categoria = {
+  //     ...objeto,
+  //     id: 0,
+  //   };
+  //   this.categoriaService.crear(categoria).subscribe(() => {
+  //     console.log('Se registro');
+  //     this.cerrarModal();
+  //   });
+  // }
 
-  postEstante(objeto: Estante) {
-    const estante = {
-      ...objeto,
-      id: 0,
-    };
-    this.estanteService.crear(estante).subscribe(() => {
-      console.log('Se registro');
-      this.cerrarModal();
-    });
-  }
+  // postEstante(objeto: Estante) {
+  //   const estante = {
+  //     ...objeto,
+  //     id: 0,
+  //   };
+  //   this.estanteService.crear(estante).subscribe(() => {
+  //     console.log('Se registro');
+  //     this.cerrarModal();
+  //   });
+  // }
 }

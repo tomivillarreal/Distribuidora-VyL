@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Compra, CompraVacia } from 'src/app/interfaces/compra.interface';
 import { CompraService } from 'src/app/services/compra.service';
 import { DetalleCompraService } from 'src/app/services/detalle-compra.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-nueva-compra',
   templateUrl: './nueva-compra.component.html',
@@ -15,6 +16,7 @@ export class NuevaCompraComponent {
   constructor(
     private compraService: CompraService,
     private detalleCompraService: DetalleCompraService,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA)
     public data: [
       {
@@ -56,6 +58,7 @@ export class NuevaCompraComponent {
       }
       console.log('Compra Registrada');
       this.dialogRef.close();
+      this.snackBar.open('Compra registrada', '', { duration: 1000 });
     });
   }
 

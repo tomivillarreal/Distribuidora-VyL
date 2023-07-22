@@ -27,18 +27,18 @@ export class ModalComponent {
 
   constructor(private utilidades: UtilidadesComponent) {}
 
-  cerrarModalModal() {
-    console.log('Cerrar');
-    this.utilidades.cerrarModal();
-  }
+  // cerrarModalModal() {
+  //   console.log('Cerrar');
+  //   this.utilidades.cerrarModal();
+  // }
 
-  guardar() {
-    if (this.tipoModal == 'Categoria') {
-      this.utilidades.postCategoria(this.objeto);
-    } else if (this.tipoModal == 'Estante') {
-      this.utilidades.postEstante(this.objeto);
-    }
-  }
+  // guardar() {
+  //   if (this.tipoModal == 'Categoria') {
+  //     this.utilidades.postCategoria(this.objeto);
+  //   } else if (this.tipoModal == 'Estante') {
+  //     this.utilidades.postEstante(this.objeto);
+  //   }
+  // }
 
   // crearEstante() {
   //   nombre;

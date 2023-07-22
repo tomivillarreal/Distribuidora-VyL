@@ -36,6 +36,7 @@ export class TablaCompraComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
     'fecha',
+    'hora',
     'descripcion',
     'total',
     'acciones',
@@ -56,6 +57,17 @@ export class TablaCompraComponent implements OnInit {
     this.compraService.getAll().subscribe((listaCompras) => {
       // this.detalleCompraService.getAll().subscribe((res) => {});
       this.compra = listaCompras;
+      this.compra = this.compra.map((v) => {
+        let total: number = 0;
+        v.detalleCompra.forEach((res) => {
+          total += res.precio * res.cantidad;
+        });
+        return {
+          ...v,
+          totalCompra: total,
+        };
+      });
+
       const compras = Array.from(
         { length: this.compra.length },
         (_, k) => this.compra[k]

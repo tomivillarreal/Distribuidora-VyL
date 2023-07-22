@@ -4,27 +4,37 @@
   <table mat-table [dataSource]="dataSource" matSort class="w-auto">
     <!-- ID Column -->
     <ng-container matColumnDef="id">
-      <th class="" mat-header-cell *matHeaderCellDef mat-sort-header>
+      <th
+        class="hidden md:table-cell"
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+      >
         Nro Venta
       </th>
-      <td class="" mat-cell *matCellDef="let row">
+      <td class="hidden md:table-cell" mat-cell *matCellDef="let row">
         {{ row.id }}
       </td>
     </ng-container>
 
     <!-- Columna Fecha -->
     <ng-container matColumnDef="fecha">
-      <th class="" mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+      <th class="" mat-header-cell *matHeaderCellDef>Fecha</th>
       <td class="" mat-cell *matCellDef="let row">
-        {{ row.createdAt }}
+        {{ row.createdAt.substring(0, 10) }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="hora">
+      <th class="" mat-header-cell *matHeaderCellDef>Hora</th>
+      <td class="" mat-cell *matCellDef="let row">
+        {{ row.createdAt.substring(11, 16) }}
       </td>
     </ng-container>
 
     <!-- Columna Descripcion -->
     <ng-container matColumnDef="descripcion">
-      <th class="" mat-header-cell *matHeaderCellDef mat-sort-header>
-        Descripcion
-      </th>
+      <th class="" mat-header-cell *matHeaderCellDef>Descripcion</th>
       <td class="" mat-cell *matCellDef="let row">
         {{ row.descripcion }}
       </td>
@@ -32,13 +42,13 @@
 
     <!-- Columna Descripcion -->
     <ng-container matColumnDef="total">
-      <th class="" mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
+      <th class="" mat-header-cell *matHeaderCellDef>Total</th>
       <td class="" mat-cell *matCellDef="let row">${{ row.totalVenta }}</td>
     </ng-container>
 
     <!-- Columna Descripcion -->
     <ng-container matColumnDef="acciones">
-      <th class="" mat-header-cell *matHeaderCellDef mat-sort-header>Accion</th>
+      <th class="" mat-header-cell *matHeaderCellDef>Accion</th>
       <td class="" mat-cell *matCellDef="let row">
         <button mat-raised-button color="primary" (click)="openDetalle(row)">
           Detalle
@@ -56,3 +66,4 @@
     class="w-full"
   ></mat-paginator>
 </div>
+<h1 class="p-5">Total vendido: {{ totalVendido }}</h1>

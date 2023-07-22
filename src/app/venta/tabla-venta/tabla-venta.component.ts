@@ -42,12 +42,14 @@ export class TablaVentaComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
     'fecha',
+    'hora',
     'descripcion',
     'total',
     'acciones',
   ];
   dataSource: MatTableDataSource<Venta>;
   venta: Venta[];
+  totalVendido: number;
 
   constructor(
     private ventaService: VentaService,
@@ -62,25 +64,24 @@ export class TablaVentaComponent implements OnInit {
     this.ventaService.getAll().subscribe((listaProductos) => {
       // this.detalleVentaService.getAll().subscribe((res) => {
       // });
-
+      this.totalVendido = 0;
       this.venta = listaProductos;
-
       this.venta = this.venta.map((v) => {
-          let total: number = 0;
-          v.detalleVenta.forEach((res) => {
-            total += res.precio * res.cantidad
-          })
-          return {
-            ...v,
-            totalVenta:total
-          }
-      })
+        let total: number = 0;
+        v.detalleVenta.forEach((res) => {
+          total += res.precio * res.cantidad;
+          this.totalVendido += total;
+        });
+        return {
+          ...v,
+          totalVenta: total,
+        };
+      });
 
       const ventas = Array.from(
         { length: this.venta.length },
         (_, k) => this.venta[k]
       );
-
 
       this.dataSource = new MatTableDataSource(ventas);
       this.setPaginator();
@@ -103,7 +104,7 @@ export class TablaVentaComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result) => {
         this.actualizaTabla();
       });
-      console.log(res)
+      console.log(res);
     });
     // console.log("ventaaaaaa")
     // console.log(venta)
@@ -117,7 +118,6 @@ export class TablaVentaComponent implements OnInit {
     // dialogRef.afterClosed().subscribe((result) => {
     //   this.actualizaTabla();
     // });
-
   }
 
   agregarProducto() {}

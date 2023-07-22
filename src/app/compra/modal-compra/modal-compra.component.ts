@@ -40,7 +40,6 @@ export class ModalCompraComponent implements OnInit {
     public dialogRef: MatDialogRef<ModalCompraComponent>,
     private formBuilder: FormBuilder,
     private productoService: ProductoService,
-    private compraService: CompraService,
     public dialog: MatDialog
   ) {
     this.detalle = [];
@@ -74,10 +73,10 @@ export class ModalCompraComponent implements OnInit {
 
   initForm() {
     this.detalleForm = this.formBuilder.group({
-      cantidad: [1, Validators.required],
+      cantidad: [null, Validators.required],
       producto: this.myControl,
-      precio: [0, Validators.required],
-      subTotal: [0, Validators.required],
+      precio: [null, Validators.required],
+      subTotal: [null, Validators.required],
     });
 
     this.detalleForm.get('cantidad')?.valueChanges.subscribe((valor) => {
@@ -119,7 +118,7 @@ export class ModalCompraComponent implements OnInit {
     this.calcularTotal();
   }
 
-  agregarVenta() {
+  agregarCompra() {
     this.compra.detalleCompra = this.detalle;
     const dialogRef = this.dialog.open(NuevaCompraComponent, {
       data: this.detalle,

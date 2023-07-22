@@ -4,6 +4,7 @@ import { Venta, VentaVacia } from 'src/app/interfaces/venta.interface';
 import { DetalleVentaService } from 'src/app/services/detalle-venta.service';
 import { VentaService } from 'src/app/services/venta.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-nueva-venta',
   templateUrl: './nueva-venta.component.html',
@@ -15,6 +16,7 @@ export class NuevaVentaComponent {
   constructor(
     private ventaService: VentaService,
     private detalleVenta: DetalleVentaService,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA)
     public data: [
       {
@@ -54,6 +56,7 @@ export class NuevaVentaComponent {
       }
       console.log('Venta Registrada');
       this.dialogRef.close();
+      this.snackBar.open('Venta registrada', '', { duration: 1000 });
     });
   }
 
