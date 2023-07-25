@@ -40,6 +40,7 @@ import { ModalDetalleComponent } from './venta/modal-detalle/modal-detalle.compo
 import { ModalDetalleCompraComponent } from './compra/modal-detalle-compra/modal-detalle-compra.component';
 import { ModalEstanteComponent } from './utilidades/modal-estante/modal-estante.component';
 import { ModalCategoriaComponent } from './utilidades/modal-categoria/modal-categoria.component';
+import { PdfComponent } from './listados/pdf/pdf.component';
 
 const routes: Routes = [
   { path: 'inventario', component: InventarioComponent },
@@ -69,6 +70,7 @@ const routes: Routes = [
     ModalDetalleCompraComponent,
     ModalEstanteComponent,
     ModalCategoriaComponent,
+    PdfComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

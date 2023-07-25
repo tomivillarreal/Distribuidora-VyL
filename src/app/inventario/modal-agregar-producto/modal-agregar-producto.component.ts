@@ -97,7 +97,8 @@ export class ModalAgregarProductoComponent implements OnInit {
         producto: this.productoRecibido,
       };
       const nuevoProducto = {
-        ...this.productoRecibido,
+        nombre: this.productoRecibido.nombre,
+        descripcion: this.productoRecibido.descripcion,
         categoria: +this.productoRecibido.categoria.id,
         estante: +this.productoRecibido.estante.id,
         cambioPrecio: undefined,

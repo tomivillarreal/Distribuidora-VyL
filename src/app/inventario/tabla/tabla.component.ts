@@ -62,6 +62,7 @@ export class TablaComponent implements OnInit {
   actualizaTabla() {
     this.productService.getAll().subscribe((listaProductos) => {
       this.productos = listaProductos;
+      console.log(this.productos);
       const productos = Array.from(
         { length: this.productos.length },
         (_, k) => this.productos[k]
@@ -100,7 +101,11 @@ export class TablaComponent implements OnInit {
             productoEncontrado.cambioPrecio[
               productoEncontrado.cambioPrecio.length - 1
             ].precio,
+          // ultimoPrecio: productoEncontrado.cambioPrecio[0].precio,
         },
+      });
+      dialogRef.afterClosed().subscribe((res) => {
+        this.actualizaTabla();
       });
     }
   }

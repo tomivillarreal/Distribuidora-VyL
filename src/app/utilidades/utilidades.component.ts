@@ -17,11 +17,7 @@ export class UtilidadesComponent {
   num: number = 0;
   tipoModal: string;
   objeto: any;
-  constructor(
-    private categoriaService: CategoriaService,
-    private estanteService: EstanteService,
-    public dialog: MatDialog
-  ) {}
+  constructor(public dialog: MatDialog) {}
   crearEstante() {
     this.dialog.open(ModalEstanteComponent);
   }
