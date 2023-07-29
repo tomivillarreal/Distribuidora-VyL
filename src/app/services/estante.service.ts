@@ -48,8 +48,8 @@ export class EstanteService {
       for (const fila of this.datos) {
         const id = fila.id.toString();
         // const precio = fila.cambioPrecio[fila.cambioPrecio.length - 1].precio;
-        const precio = fila.cambioPrecio[0].precio;
-        tablaPdf.push([id, fila.nombre, fila.descripcion, precio]);
+        const precio = fila.cambioPrecio[fila.cambioPrecio.length - 1].precio;
+        tablaPdf.push([id, fila.nombre, fila.descripcion, `$${precio}`]);
       }
       const data: any = {
         info: {
@@ -58,22 +58,32 @@ export class EstanteService {
         },
         content: [
           {
-            text: `${nombre}`,
-            style: 'header',
+            image: 'logo',
+            width: 100,
+            alignment: 'right',
           },
-
           {
-            text: `Fecha ${date.getDate()}/${
+            text: `${nombre}`,
+            style: 'subheader',
+            alignment: 'left',
+          },
+          {
+            text: `Fecha: ${date.getDate()}/${
               date.getMonth() + 1
             }/${date.getFullYear()}`,
             style: 'subheader',
             alignment: 'left',
           },
+          // {
+          //   text: `${nombre}`,
+          //   style: 'header',
+          // },
           {
             table: {
               body: tablaPdf,
               alignment: 'center',
             },
+            margin: [0, 40, 0, 0],
           },
         ],
         styles: {
@@ -81,18 +91,22 @@ export class EstanteService {
             fontSize: 18,
             bold: true,
             alignment: 'center',
-            margin: [0, 0, 0, 80],
+            margin: [0, 0, 0, 0],
           },
 
           subheader: {
             fontSize: 14,
-            margin: [0, 0, 0, 40],
+            margin: [0, 0, 0, 0],
           },
           tableHeader: {
             bold: true,
             fontSize: 13,
             color: 'black',
           },
+        },
+        images: {
+          // logo: 'https://picsum.photos/id/1080/367/267',
+          logo: 'http://localhost:8000/imagen/logo.png',
         },
       };
 

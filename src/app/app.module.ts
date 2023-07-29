@@ -41,6 +41,7 @@ import { ModalDetalleCompraComponent } from './compra/modal-detalle-compra/modal
 import { ModalEstanteComponent } from './utilidades/modal-estante/modal-estante.component';
 import { ModalCategoriaComponent } from './utilidades/modal-categoria/modal-categoria.component';
 import { PdfComponent } from './listados/pdf/pdf.component';
+import { TablaCategoriaComponent } from './utilidades/tabla-categoria/tabla-categoria.component';
 
 const routes: Routes = [
   { path: 'inventario', component: InventarioComponent },
@@ -85,6 +86,7 @@ const routes: Routes = [
     TablaComponent,
     TablaVentaComponent,
     TablaCompraComponent,
+    TablaCategoriaComponent,
     AgregarProductoComponent,
     CommonModule,
     HttpClientModule,

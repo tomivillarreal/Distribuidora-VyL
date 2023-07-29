@@ -9,9 +9,40 @@
       <div
         class="w-[150px] h-[150px] md:w-[300px] md:h-[300px] border-solid border-2"
       >
-        <img [src]="productoRecibido.foto" alt="" autocomplete="off" />
+        <img
+          [src]="productoRecibido.foto"
+          alt=""
+          autocomplete="off"
+          class="aspect-square"
+        />
       </div>
-      <input class="w-fit h-fit" type="file" value="" alt="" #fotoProducto />
+      <!-- <input
+        class="w-fit h-fit"
+        type="file"
+        value=""
+        alt=""
+        #fotoProducto
+        [(ngModel)]="imagen"
+      /> -->
+
+      <!-- <form
+        action="/file"
+        method="post"
+        enctype="multipart/form-data"
+        id="formImagen"
+      >
+        <input type="file" name="image" id="image" />
+        <button type="submit">Subir imagen</button>
+      </form> -->
+
+      <form #fileUploadForm>
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          [(ngModel)]="imagen"
+          id="formImagen"
+        />
+      </form>
     </div>
 
     <div

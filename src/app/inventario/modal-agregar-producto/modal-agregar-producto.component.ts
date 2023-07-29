@@ -15,7 +15,7 @@ import { InventarioComponent } from '../inventario.component';
 import { ProductoService } from 'src/app/services/producto.service';
 import { CambioPrecio } from 'src/app/interfaces/cambio-precio.interface';
 import { CambioPrecioService } from 'src/app/services/cambio-precio.service';
-
+import { emitDistinctChangesOnlyDefaultValue } from '@angular/compiler';
 @Component({
   selector: 'app-modal-agregar-producto',
   templateUrl: './modal-agregar-producto.component.html',
@@ -28,7 +28,8 @@ export class ModalAgregarProductoComponent implements OnInit {
   estante: Estante;
   tipoModal: string;
   precio: number;
-
+  imagen: any;
+  selectedFile: File | null = null;
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: {
@@ -60,67 +61,231 @@ export class ModalAgregarProductoComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  guardar() {
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      const fileURL = URL.createObjectURL(this.selectedFile);
+      this.productoRecibido.foto = fileURL;
+    }
+  }
+
+  async guardar() {
+    let formData;
+    let foto: any;
+
     if (this.tipoModal === 'Agregar') {
-      const nuevoProducto = {
+      const cambioPrecio =
+        this.productoRecibido.cambioPrecio[
+          this.productoRecibido.cambioPrecio.length - 1
+        ].precio;
+
+      let nuevoProducto = {
         ...this.productoRecibido,
         id: undefined,
         categoria: +this.productoRecibido.categoria.id,
         estante: +this.productoRecibido.estante.id,
       };
 
-      this.productService
-        .crearProducto(nuevoProducto as any)
-        .subscribe((res) => {
-          const cambioPrecio = {
-            precio:
-              this.productoRecibido.cambioPrecio[
-                this.productoRecibido.cambioPrecio.length - 1
-              ].precio,
-            producto: res,
-          };
-
-          this.cambioPrecioService
-            .crearCambioPrecio(cambioPrecio as any)
+      if (!this.selectedFile) {
+        foto = '/logo.png';
+        nuevoProducto = { ...nuevoProducto, foto: foto };
+        this.productService
+          .crearProducto(nuevoProducto as any, cambioPrecio)
+          .subscribe((res) => {
+            this.cerrarModal();
+          });
+      } else {
+        formData = new FormData();
+        formData.append('file', this.selectedFile as any);
+        this.productService.subirImagen(formData).subscribe((res) => {
+          foto = res;
+          nuevoProducto = { ...nuevoProducto, foto: foto.nombre };
+          this.productService
+            .crearProducto(nuevoProducto as any, cambioPrecio)
             .subscribe((res) => {
-              console.log('Se registro cambio precio');
               this.cerrarModal();
             });
         });
-    } else if (this.tipoModal === 'Modificar') {
-      console.log('Modificar');
-      const cambioPrecio = {
-        precio:
-          this.productoRecibido.cambioPrecio[
-            this.productoRecibido.cambioPrecio.length - 1
-          ].precio,
-        producto: this.productoRecibido,
-      };
-      const nuevoProducto = {
+      }
+    } else {
+      const cambioPrecio =
+        +this.productoRecibido.cambioPrecio[
+          this.productoRecibido.cambioPrecio.length - 1
+        ].precio;
+
+      let nuevoProducto = {
         nombre: this.productoRecibido.nombre,
         descripcion: this.productoRecibido.descripcion,
         categoria: +this.productoRecibido.categoria.id,
         estante: +this.productoRecibido.estante.id,
-        cambioPrecio: undefined,
+        foto: foto,
       };
 
-      this.productService
-        .modificarProducto(
-          this.productoRecibido.id as any,
-          nuevoProducto as any
-        )
-        .subscribe();
-
-      if (cambioPrecio.precio != this.precio) {
-        this.cambioPrecioService
-          .crearCambioPrecio(cambioPrecio as any)
+      if (!this.selectedFile) {
+        this.productService
+          .modificarProducto(
+            this.productoRecibido.id as any,
+            nuevoProducto as any,
+            cambioPrecio
+          )
           .subscribe((res) => {
-            console.log('Se registro cambio precio');
             this.cerrarModal();
           });
       } else {
-        this.cerrarModal();
+        formData = new FormData();
+        formData.append('file', this.selectedFile as any);
+        this.productService.subirImagen(formData).subscribe((res) => {
+          foto = res;
+          nuevoProducto = { ...nuevoProducto, foto: foto.nombre };
+          this.productService
+            .modificarProducto(
+              this.productoRecibido.id as any,
+              nuevoProducto as any,
+              cambioPrecio as any
+            )
+            .subscribe((res) => {
+              this.cerrarModal();
+            });
+        });
       }
     }
   }
+
+  // CASI TERMINADO
+
+  // if (!this.selectedFile) {
+  //   console.error('No se ha seleccionado ningún archivo.');
+  //   foto = 'imagen/logo.png';
+  // } else {
+  //   formData = new FormData();
+  //   formData.append('file', this.selectedFile as any);
+  //   foto = await this.subirImagenYContinuar(formData);
+  //   console.log('se subio foto');
+  // }
+
+  // if (this.tipoModal === 'Agregar') {
+  //   console.log('Agregar');
+  //   const cambioPrecio =
+  //     this.productoRecibido.cambioPrecio[
+  //       this.productoRecibido.cambioPrecio.length - 1
+  //     ].precio;
+
+  //   const nuevoProducto = {
+  //     ...this.productoRecibido,
+  //     id: undefined,
+  //     categoria: +this.productoRecibido.categoria.id,
+  //     estante: +this.productoRecibido.estante.id,
+  //     foto: foto,
+  //   };
+
+  //   this.productService
+  //     .crearProducto(nuevoProducto as any, cambioPrecio)
+  //     .subscribe((res) => {
+  //       console.log('Se registro');
+  //       this.cerrarModal();
+  //     });
+  // } else if (this.tipoModal === 'Modificar') {
+  //   console.log('Modificar');
+  //   const cambioPrecio =
+  //     +this.productoRecibido.cambioPrecio[
+  //       this.productoRecibido.cambioPrecio.length - 1
+  //     ].precio;
+
+  //   const nuevoProducto = {
+  //     nombre: this.productoRecibido.nombre,
+  //     descripcion: this.productoRecibido.descripcion,
+  //     categoria: +this.productoRecibido.categoria.id,
+  //     estante: +this.productoRecibido.estante.id,
+  //     foto: foto,
+  //   };
+
+  //   this.productService
+  //     .modificarProducto(
+  //       this.productoRecibido.id as any,
+  //       nuevoProducto as any,
+  //       cambioPrecio as any
+  //     )
+  //     .subscribe((res) => {
+  //       this.cerrarModal();
+  //     });
+  // }
+
+  // VIEJO
+
+  // const miSuscripcion = this.productService.subirImagen(formData).subscribe(
+  //   (valor) => {
+  //     // Callback para el caso de éxito
+  //     foto = valor;
+  //   },
+  //   (error) => {
+  //     foto = this.productoRecibido.foto;
+  //     console.error('Error al obtener la respuesta:', error);
+  //   },
+  //   () => {
+  //     console.log('La suscripción se completó.');
+  //     if (this.tipoModal === 'Agregar') {
+  //       const nuevoProducto = {
+  //         ...this.productoRecibido,
+  //         id: undefined,
+  //         categoria: +this.productoRecibido.categoria.id,
+  //         estante: +this.productoRecibido.estante.id,
+  //         foto: `${foto.nombre}`,
+  //       };
+
+  //       this.productService
+  //         .crearProducto(nuevoProducto as any)
+  //         .subscribe((res) => {
+  //           const cambioPrecio = {
+  //             precio:
+  //               this.productoRecibido.cambioPrecio[
+  //                 this.productoRecibido.cambioPrecio.length - 1
+  //               ].precio,
+  //             producto: res,
+  //           };
+
+  //           this.cambioPrecioService
+  //             .crearCambioPrecio(cambioPrecio as any)
+  //             .subscribe((res) => {
+  //               console.log('Se registro cambio precio');
+  //               this.cerrarModal();
+  //             });
+  //         });
+  //     } else if (this.tipoModal === 'Modificar') {
+  //       console.log('Modificar');
+  //       const cambioPrecio = {
+  //         precio:
+  //           this.productoRecibido.cambioPrecio[
+  //             this.productoRecibido.cambioPrecio.length - 1
+  //           ].precio,
+  //         producto: this.productoRecibido,
+  //       };
+  //       const nuevoProducto = {
+  //         nombre: this.productoRecibido.nombre,
+  //         descripcion: this.productoRecibido.descripcion,
+  //         categoria: +this.productoRecibido.categoria.id,
+  //         estante: +this.productoRecibido.estante.id,
+  //         cambioPrecio: undefined,
+  //         foto: `${foto.nombre}`,
+  //       };
+
+  //       this.productService
+  //         .modificarProducto(
+  //           this.productoRecibido.id as any,
+  //           nuevoProducto as any
+  //         )
+  //         .subscribe();
+
+  //       if (cambioPrecio.precio != this.precio) {
+  //         this.cambioPrecioService
+  //           .crearCambioPrecio(cambioPrecio as any)
+  //           .subscribe((res) => {
+  //             console.log('Se registro cambio precio');
+  //             this.cerrarModal();
+  //           });
+  //       } else {
+  //         this.cerrarModal();
+  //       }
+  //     }
+  //   }
+  // );
 }

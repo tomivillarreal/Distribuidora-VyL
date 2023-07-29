@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Producto } from '../interfaces/producto.interface';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, tap } from 'rxjs';
+import { Observable, Subject, max, tap } from 'rxjs';
 import { CambioPrecioService } from './cambio-precio.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { CambioPrecio } from '../interfaces/cambio-precio.interface';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 @Injectable({
@@ -27,11 +28,25 @@ export class ProductoService {
   getOne(id: number) {
     return this.httpClient.get(this.url + '/' + id);
   }
-  crearProducto(producto: Producto) {
-    return this.httpClient.post(this.url, producto);
+  crearProducto(producto: Partial<Producto>, cambioPrecio: number) {
+    const body = {
+      param1: producto,
+      param2: cambioPrecio,
+    };
+
+    return this.httpClient.post(this.url, body);
   }
-  modificarProducto(id: number, productoModificado: Producto) {
-    return this.httpClient.put(this.url + '/' + id, productoModificado);
+  modificarProducto(
+    id: number,
+    productoModificado: Producto,
+    cambioPrecio: number
+  ) {
+    const body = {
+      param1: productoModificado,
+      param2: cambioPrecio,
+    };
+
+    return this.httpClient.put(this.url + '/' + id, body);
   }
   eliminarProducto(id: number) {
     return this.httpClient.delete(this.url + '/' + id);
@@ -43,6 +58,10 @@ export class ProductoService {
 
   getProductoByCategoria(id: number) {
     return this.httpClient.get(this.url + '/categoria/' + id);
+  }
+
+  subirImagen(imagen: any) {
+    return this.httpClient.post('http://localhost:8000/file', imagen);
   }
 
   generarListado() {
@@ -59,7 +78,7 @@ export class ProductoService {
           // 'Estante',
           // 'Categoria',
 
-          { text: 'ID Producto', style: 'tableHeader' },
+          { text: 'ID', style: 'tableHeader' },
           { text: 'Producto', style: 'tableHeader' },
           { text: 'Descripcion', style: 'tableHeader' },
           { text: 'Precio', style: 'tableHeader' },
@@ -76,7 +95,7 @@ export class ProductoService {
           id,
           fila.nombre,
           fila.descripcion,
-          precio,
+          `$${precio}`,
           fila.stock_disponible,
           fila.estante.nombre,
           fila.categoria.nombre,
@@ -89,8 +108,9 @@ export class ProductoService {
         },
         content: [
           {
-            text: `Inventario`,
-            style: 'header',
+            image: 'logo',
+            width: 100,
+            alignment: 'right',
           },
           {
             text: `Fecha ${date.getDate()}/${
@@ -100,9 +120,15 @@ export class ProductoService {
             alignment: 'left',
           },
           {
+            text: `Inventario`,
+            style: 'header',
+          },
+
+          {
             table: {
               body: tablaPdf,
             },
+            alignment: 'center',
           },
         ],
         styles: {
@@ -110,18 +136,22 @@ export class ProductoService {
             fontSize: 18,
             bold: true,
             alignment: 'center',
-            margin: [0, 0, 0, 80],
+            margin: [0, 0, 0, 20],
           },
 
           subheader: {
             fontSize: 14,
-            margin: [0, 0, 0, 40],
+            margin: [0, 0, 0, 20],
           },
           tableHeader: {
             bold: true,
             fontSize: 13,
             color: 'black',
           },
+        },
+        images: {
+          // logo: 'https://picsum.photos/id/1080/367/267',
+          logo: 'http://localhost:8000/imagen/logo.png',
         },
       };
 

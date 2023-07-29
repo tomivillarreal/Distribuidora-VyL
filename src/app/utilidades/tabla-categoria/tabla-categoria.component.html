@@ -1,0 +1,41 @@
+<div class="h-full overflow-x-auto w-full mat-elevation-z8" id="div-table">
+  <table mat-table [dataSource]="dataSource" matSort class="w-auto">
+    <!-- ID Column -->
+    <ng-container matColumnDef="nombre">
+      <th
+        class="hidden md:table-cell"
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+      >
+        Nombre
+      </th>
+      <td class="hidden md:table-cell" mat-cell *matCellDef="let row">
+        {{ row.nombre }}
+      </td>
+    </ng-container>
+
+    <!-- Columna Descripcion -->
+    <ng-container matColumnDef="descripcion">
+      <th class="" mat-header-cell *matHeaderCellDef>Descripcion</th>
+      <td class="" mat-cell *matCellDef="let row">
+        {{ row.descripcion }}
+      </td>
+    </ng-container>
+
+    <!-- Columna Descripcion -->
+    <ng-container matColumnDef="acciones">
+      <th class="" mat-header-cell *matHeaderCellDef>Accion</th>
+      <td class="" mat-cell *matCellDef="let row"></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10]"
+    aria-label="Select page of users"
+    class="w-full"
+  ></mat-paginator>
+</div>

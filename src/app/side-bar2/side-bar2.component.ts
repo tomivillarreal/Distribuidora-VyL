@@ -10,7 +10,7 @@ import { EventEmitter } from '@angular/core';
 export class SideBar2Component {
   @Output() eventoListado = new EventEmitter();
   @Output() eventoInventario = new EventEmitter();
-
+  urlLogo: string = 'http://localhost:8000/imagen/logo.png';
   aplicarTransicion: boolean = false;
 
   cambiarEstilos() {
