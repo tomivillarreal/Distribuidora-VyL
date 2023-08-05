@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CategoriaService } from '../services/categoria.service';
 import { EstanteService } from '../services/estante.service';
 import { Categoria, CategoriaVacio } from '../interfaces/categoria.interface';
@@ -18,13 +18,11 @@ export class UtilidadesComponent {
   tipoModal: string;
   objeto: any;
   constructor(public dialog: MatDialog) {}
+
   crearEstante() {
     this.dialog.open(ModalEstanteComponent);
   }
 
-  crearCategoria() {
-    this.dialog.open(ModalCategoriaComponent);
-  }
   // cerrarModal() {
   //   this.num = 0;
   //   document.body.classList.toggle('overflow-hidden', false);

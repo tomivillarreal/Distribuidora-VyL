@@ -8,16 +8,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { CategoriaService } from 'src/app/services/categoria.service';
-import {
-  Categoria,
-  CategoriaVacio,
-} from 'src/app/interfaces/categoria.interface';
-import { ModalCategoriaComponent } from '../modal-categoria/modal-categoria.component';
+import { EstanteService } from 'src/app/services/estante.service';
+import { Estante, EstanteVacio } from 'src/app/interfaces/estante.interface';
+import { ModalEstanteComponent } from '../modal-estante/modal-estante.component';
 
 @Component({
-  selector: 'app-tabla-categoria',
-  templateUrl: './tabla-categoria.component.html',
+  selector: 'app-tabla-estante',
+  templateUrl: './tabla-estante.component.html',
   standalone: true,
   imports: [
     MatFormFieldModule,
@@ -30,15 +27,21 @@ import { ModalCategoriaComponent } from '../modal-categoria/modal-categoria.comp
     MatButtonModule,
   ],
 })
-export class TablaCategoriaComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+export class TablaEstanteComponent implements OnInit {
+  @Component({
+    selector: 'app-tabla-categoria',
+    templateUrl: './tabla-categoria.component.html',
+    standalone: true,
+  })
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   displayedColumns: string[] = ['nombre', 'descripcion', 'acciones'];
-  dataSource: MatTableDataSource<Categoria>;
-  categoria: Categoria[];
+  dataSource: MatTableDataSource<Estante>;
+  estante: Estante[];
 
   constructor(
-    private categoriaService: CategoriaService,
+    private estanteService: EstanteService,
     public dialog: MatDialog
   ) {}
 
@@ -47,11 +50,11 @@ export class TablaCategoriaComponent implements OnInit {
   }
 
   actualizaTabla() {
-    this.categoriaService.getAll().subscribe((res) => {
-      this.categoria = res as any;
+    this.estanteService.getAll().subscribe((res) => {
+      this.estante = res as any;
       const ventas = Array.from(
-        { length: this.categoria.length },
-        (_, k) => this.categoria[k]
+        { length: this.estante.length },
+        (_, k) => this.estante[k]
       );
 
       this.dataSource = new MatTableDataSource(ventas);
@@ -60,26 +63,27 @@ export class TablaCategoriaComponent implements OnInit {
     });
   }
 
-  crearCategoria() {
-    const dialogCategoria = this.dialog.open(ModalCategoriaComponent, {
+  crearEstante() {
+    const dialogEstante = this.dialog.open(ModalEstanteComponent, {
       data: {
-        categoria: CategoriaVacio(),
+        estante: EstanteVacio(),
         tipo: 'Crear',
       },
     });
-    dialogCategoria.afterClosed().subscribe((res) => {
+    dialogEstante.afterClosed().subscribe((res) => {
       this.actualizaTabla();
     });
   }
 
-  openCategoria(categoria: Categoria) {
-    const dialogCategoria = this.dialog.open(ModalCategoriaComponent, {
+  openEstante(estante: Estante) {
+    const dialogEstante = this.dialog.open(ModalEstanteComponent, {
       data: {
-        categoria: categoria,
+        estante: estante,
         tipo: 'Modificar',
       },
     });
-    dialogCategoria.afterClosed().subscribe((res) => {
+
+    dialogEstante.afterClosed().subscribe((res) => {
       this.actualizaTabla();
     });
   }

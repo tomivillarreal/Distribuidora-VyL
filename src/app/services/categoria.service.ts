@@ -31,6 +31,10 @@ export class CategoriaService {
     return this.httpCliente.post(this.url, cat);
   }
 
+  updateEstante(id: number, categoria: Categoria) {
+    return this.httpCliente.put(this.url + '/' + id, categoria);
+  }
+
   generarListado(id: number, nombre: string) {
     this.productoService.getProductoByCategoria(id).subscribe((res) => {
       this.datos = res;

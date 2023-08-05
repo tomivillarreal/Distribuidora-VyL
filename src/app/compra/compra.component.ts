@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalCompraComponent } from './modal-compra/modal-compra.component';
 import { MatDialog } from '@angular/material/dialog';
-import { TablaCompraComponent } from './tabla-compra/tabla-compra.component';
 
 @Component({
   selector: 'app-compra',

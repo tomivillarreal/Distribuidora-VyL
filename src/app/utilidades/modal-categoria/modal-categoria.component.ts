@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CategoriaVacio } from 'src/app/interfaces/categoria.interface';
+import { Categoria } from 'src/app/interfaces/categoria.interface';
 import { CategoriaService } from 'src/app/services/categoria.service';
 
 @Component({
@@ -13,6 +13,11 @@ export class ModalCategoriaComponent implements OnInit {
   categoriaForm: any;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      categoria: Categoria;
+      tipo: string;
+    },
     public dialogRef: MatDialogRef<ModalCategoriaComponent>,
     private formBuilder: FormBuilder,
     private categoriaService: CategoriaService,
@@ -21,8 +26,8 @@ export class ModalCategoriaComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoriaForm = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      descripcion: [''],
+      nombre: [this.data.categoria.nombre, Validators.required],
+      descripcion: [this.data.categoria.descripcion],
     });
   }
 
@@ -30,14 +35,22 @@ export class ModalCategoriaComponent implements OnInit {
     const datos = this.categoriaForm.value;
     console.log(datos);
     if (this.categoriaForm.valid) {
-      this.categoriaService.crear(datos).subscribe(() => {
-        console.log('Se registro');
+      if (this.data.tipo == 'Crear') {
+        this.categoriaService.crear(datos).subscribe(() => {
+          console.log('Se registro');
+        });
+      } else if (this.data.tipo == 'Modificar') {
+        this.categoriaService
+          .updateEstante(this.data.categoria.id, datos)
+          .subscribe(() => {
+            console.log('Se registro');
+          });
         this.cerrarModal();
-      });
-    } else {
-      this.snackBar.open(`Complete el campo Nombre`, '', {
-        duration: 2000,
-      });
+      } else {
+        this.snackBar.open(`Complete el campo Nombre`, '', {
+          duration: 2000,
+        });
+      }
     }
   }
   cerrarModal() {

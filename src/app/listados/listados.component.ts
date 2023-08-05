@@ -4,7 +4,6 @@ import { CategoriaService } from '../services/categoria.service';
 import { EstanteService } from '../services/estante.service';
 import { Categoria } from '../interfaces/categoria.interface';
 import { Estante } from '../interfaces/estante.interface';
-import { PdfComponent } from './pdf/pdf.component';
 
 @Component({
   selector: 'app-listados',

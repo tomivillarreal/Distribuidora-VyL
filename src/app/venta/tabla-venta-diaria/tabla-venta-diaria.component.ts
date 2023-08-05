@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, Input } from '@angular/core';
 import { Venta } from 'src/app/interfaces/venta.interface';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -11,12 +11,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { VentaService } from 'src/app/services/venta.service';
 import { DetalleVentaService } from 'src/app/services/detalle-venta.service';
+import { ModalVentaComponent } from '../modal-venta/modal-venta.component';
 import { ModalDetalleComponent } from '../modal-detalle/modal-detalle.component';
 
 @Component({
-  selector: 'app-tabla-venta',
-  templateUrl: './tabla-venta.component.html',
-  styleUrls: ['./tabla-venta.component.css'],
+  selector: 'app-tabla-venta-diaria',
+  templateUrl: './tabla-venta-diaria.component.html',
   standalone: true,
   imports: [
     MatFormFieldModule,
@@ -29,7 +29,7 @@ import { ModalDetalleComponent } from '../modal-detalle/modal-detalle.component'
     MatButtonModule,
   ],
 })
-export class TablaVentaComponent implements OnInit {
+export class TablaVentaDiariaComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   displayedColumns: string[] = [
@@ -42,6 +42,7 @@ export class TablaVentaComponent implements OnInit {
   ];
   dataSource: MatTableDataSource<Venta>;
   venta: Venta[];
+  totalVendido: number;
 
   constructor(
     private ventaService: VentaService,
@@ -53,14 +54,16 @@ export class TablaVentaComponent implements OnInit {
   }
 
   actualizaTabla() {
-    this.ventaService.getAll().subscribe((listaProductos) => {
+    this.ventaService.getAllHoy().subscribe((listaProductos) => {
       // this.detalleVentaService.getAll().subscribe((res) => {
       // });
+      this.totalVendido = 0;
       this.venta = listaProductos;
       this.venta = this.venta.map((v) => {
         let total: number = 0;
         v.detalleVenta.forEach((res) => {
           total += res.precio * res.cantidad;
+          this.totalVendido += total;
         });
         return {
           ...v,
@@ -76,6 +79,13 @@ export class TablaVentaComponent implements OnInit {
       this.dataSource = new MatTableDataSource(ventas);
       this.setPaginator();
       console.log('Se actualizo la tabla');
+    });
+  }
+
+  open() {
+    const dialogRef = this.dialog.open(ModalVentaComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      this.actualizaTabla();
     });
   }
 

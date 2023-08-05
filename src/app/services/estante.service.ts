@@ -30,6 +30,10 @@ export class EstanteService {
     return this.httpCliente.post(this.url, estante);
   }
 
+  updateEstante(id: number, estante: Estante) {
+    return this.httpCliente.put(this.url + '/' + id, estante);
+  }
+
   generarListado(id: number, nombre: string) {
     this.productoService.getProductoByEstante(id).subscribe((res) => {
       this.datos = res;

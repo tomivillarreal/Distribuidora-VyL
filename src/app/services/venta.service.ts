@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Venta } from '../interfaces/venta.interface';
 
 @Injectable({
@@ -15,5 +15,9 @@ export class VentaService {
   }
   crearVenta(venta: Venta) {
     return this.httpClient.post(this.url, venta);
+  }
+
+  getAllHoy(): Observable<Venta[]> {
+    return this.httpClient.get<Venta[]>(this.url + '/hoy');
   }
 }

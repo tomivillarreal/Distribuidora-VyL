@@ -1,11 +1,9 @@
-import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Producto, ProductoVacio } from '../interfaces/producto.interface';
 import { TablaComponent } from './tabla/tabla.component';
 import { ProductoService } from '../services/producto.service';
 import { CambioPrecioService } from '../services/cambio-precio.service';
-import { Dialog } from '@angular/cdk/dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalAgregarProductoComponent } from './modal-agregar-producto/modal-agregar-producto.component';
 
 @Component({
   selector: 'app-inventario',

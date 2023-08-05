@@ -1,4 +1,4 @@
-import { Component, Input, Inject, ElementRef, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Categoria } from 'src/app/interfaces/categoria.interface';
 import { CategoriaService } from 'src/app/services/categoria.service';
 import { EstanteService } from 'src/app/services/estante.service';
@@ -6,16 +6,8 @@ import { Estante } from 'src/app/interfaces/estante.interface';
 import { DialogRef } from '@angular/cdk/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Producto, ProductoVacio } from 'src/app/interfaces/producto.interface';
-import { MatInput } from '@angular/material/input';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
-import { InventarioComponent } from '../inventario.component';
 import { ProductoService } from 'src/app/services/producto.service';
-import { CambioPrecio } from 'src/app/interfaces/cambio-precio.interface';
 import { CambioPrecioService } from 'src/app/services/cambio-precio.service';
-import { emitDistinctChangesOnlyDefaultValue } from '@angular/compiler';
 @Component({
   selector: 'app-modal-agregar-producto',
   templateUrl: './modal-agregar-producto.component.html',
@@ -40,8 +32,7 @@ export class ModalAgregarProductoComponent implements OnInit {
     private categoriaService: CategoriaService,
     private estanteService: EstanteService,
     public dialogRef: DialogRef,
-    private productService: ProductoService,
-    private cambioPrecioService: CambioPrecioService
+    private productService: ProductoService
   ) {
     this.productoRecibido = data.producto;
     this.tipoModal = data.tipoModal;

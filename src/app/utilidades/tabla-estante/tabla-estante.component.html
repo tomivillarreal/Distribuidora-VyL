@@ -2,9 +2,9 @@
   mat-raised-button
   color=""
   class="text-white text-lg flex items-center justify-center bg-green-500 h-16"
-  (click)="crearCategoria()"
+  (click)="crearEstante()"
 >
-  Crear Categoria
+  Crear Estante
 </button>
 
 <div class="h-full overflow-x-auto w-full mat-elevation-z8" id="div-table">
@@ -36,9 +36,7 @@
     <ng-container matColumnDef="acciones">
       <th class="" mat-header-cell *matHeaderCellDef>Accion</th>
       <td class="" mat-cell *matCellDef="let row">
-        <button mat-raised-button color="" (click)="openCategoria(row)">
-          Modificar
-        </button>
+        <button mat-raised-button (click)="openEstante(row)">Modificar</button>
       </td>
     </ng-container>
 

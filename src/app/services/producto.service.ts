@@ -5,7 +5,6 @@ import { Observable, Subject, max, tap } from 'rxjs';
 import { CambioPrecioService } from './cambio-precio.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { CambioPrecio } from '../interfaces/cambio-precio.interface';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 @Injectable({

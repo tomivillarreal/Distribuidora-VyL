@@ -11,8 +11,6 @@ import { ProductoService } from 'src/app/services/producto.service';
 import { Observable, map, startWith } from 'rxjs';
 import { NuevaCompraComponent } from '../nueva-compra/nueva-compra.component';
 import { Compra, CompraVacia } from 'src/app/interfaces/compra.interface';
-import { CompraService } from 'src/app/services/compra.service';
-import { TablaCompraComponent } from '../tabla-compra/tabla-compra.component';
 
 @Component({
   selector: 'app-modal-compra',

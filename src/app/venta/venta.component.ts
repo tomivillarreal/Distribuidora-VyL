@@ -1,14 +1,5 @@
 import { Component } from '@angular/core';
-import { TablaVentaComponent } from './tabla-venta/tabla-venta.component';
-import { Venta, VentaVacia } from '../interfaces/venta.interface';
-import {
-  DetalleVenta,
-  DetalleVentaVacio,
-} from '../interfaces/detalle-venta.interface';
-import { VentaService } from '../services/venta.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalVentaComponent } from './modal-venta/modal-venta.component';
-import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-venta',
