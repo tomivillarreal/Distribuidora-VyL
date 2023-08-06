@@ -59,7 +59,6 @@ export class TablaCategoriaComponent implements OnInit {
       console.log('Se actualizo la tabla');
     });
   }
-
   crearCategoria() {
     const dialogCategoria = this.dialog.open(ModalCategoriaComponent, {
       data: {

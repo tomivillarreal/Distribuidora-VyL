@@ -45,12 +45,12 @@ export class ModalCategoriaComponent implements OnInit {
           .subscribe(() => {
             console.log('Se registro');
           });
-        this.cerrarModal();
-      } else {
-        this.snackBar.open(`Complete el campo Nombre`, '', {
-          duration: 2000,
-        });
       }
+      this.cerrarModal();
+    } else {
+      this.snackBar.open(`Complete el campo Nombre`, '', {
+        duration: 2000,
+      });
     }
   }
   cerrarModal() {

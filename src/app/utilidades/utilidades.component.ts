@@ -19,9 +19,9 @@ export class UtilidadesComponent {
   objeto: any;
   constructor(public dialog: MatDialog) {}
 
-  crearEstante() {
-    this.dialog.open(ModalEstanteComponent);
-  }
+  // crearEstante() {
+  //   this.dialog.open(ModalEstanteComponent);
+  // }
 
   // cerrarModal() {
   //   this.num = 0;

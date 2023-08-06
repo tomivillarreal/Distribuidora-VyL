@@ -16,15 +16,15 @@
     #input
     class="text-base w-100 h-14 md:w-96 md:text-lg input border-b-2"
   />
-  <!-- <app-button-agregar-producto (eventoBoton)="llamarFuncionModal()" ></app-button-agregar-producto> -->
+
   <button
-    mat-raised-button
-    color="primary"
-    (click)="agregarProducto()"
-    class="flex justify-center items-center text-white w-full h-14 text-base bg-color1 md:w-56 md:text-lg"
-  >
-    Agregar Producto
-  </button>
+mat-raised-button
+color="primary"
+(click)="agregarProducto()"
+>
+Agregar Producto
+</button>
+
 </div>
 
 <div class="mat-elevation-z8 h-full" id="div-table">
@@ -170,4 +170,7 @@
     [pageSizeOptions]="[5, 10]"
     aria-label="Select page of users"
   ></mat-paginator>
+
+  
 </div>
+

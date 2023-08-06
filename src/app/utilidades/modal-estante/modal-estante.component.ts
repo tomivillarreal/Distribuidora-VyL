@@ -47,7 +47,6 @@ export class ModalEstanteComponent implements OnInit {
             console.log('Se registro');
           });
       }
-
       this.cerrarModal();
     } else {
       this.snackBar.open(`Complete el campo Nombre`, '', {
