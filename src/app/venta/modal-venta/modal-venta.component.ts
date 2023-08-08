@@ -109,6 +109,7 @@ export class ModalVentaComponent implements OnInit {
       });
     });
   }
+
   onSelectChange($event: Event) {
     console.log('Se selecciono');
     if (this.selectedOption?.stock_disponible === 0) {

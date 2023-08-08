@@ -7,7 +7,7 @@ import { DialogRef } from '@angular/cdk/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Producto, ProductoVacio } from 'src/app/interfaces/producto.interface';
 import { ProductoService } from 'src/app/services/producto.service';
-import { CambioPrecioService } from 'src/app/services/cambio-precio.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-modal-agregar-producto',
   templateUrl: './modal-agregar-producto.component.html',
@@ -16,11 +16,10 @@ export class ModalAgregarProductoComponent implements OnInit {
   categorias: Categoria[] = [];
   estantes: Estante[] = [];
   productoRecibido: Producto = ProductoVacio();
-  categoria: Categoria;
-  estante: Estante;
   tipoModal: string;
   precio: number;
   imagen: any;
+  productoForm: FormGroup;
   selectedFile: File | null = null;
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -29,6 +28,7 @@ export class ModalAgregarProductoComponent implements OnInit {
       tipoModal: string;
       ultimoPrecio: number;
     },
+    private formBuilder: FormBuilder,
     private categoriaService: CategoriaService,
     private estanteService: EstanteService,
     public dialogRef: DialogRef,
@@ -46,6 +46,29 @@ export class ModalAgregarProductoComponent implements OnInit {
     this.estanteService
       .getAll()
       .subscribe((estante) => (this.estantes = Object.values(estante)));
+
+    this.productoForm = this.formBuilder.group({
+      nombre: [this.data.producto.nombre, Validators.required],
+      descripcion: [this.data.producto.descripcion],
+      estante: [
+        this.data.producto.estante.id !== -1
+          ? this.data.producto.estante.id
+          : null,
+        Validators.required,
+      ],
+      categoria: [
+        this.data.producto.categoria.id !== -1
+          ? this.data.producto.categoria.id
+          : null,
+        Validators.required,
+      ],
+      precio: [
+        this.data.producto.cambioPrecio[
+          this.data.producto.cambioPrecio.length - 1
+        ].precio,
+        Validators.required,
+      ],
+    });
   }
 
   cerrarModal() {
@@ -61,20 +84,36 @@ export class ModalAgregarProductoComponent implements OnInit {
   }
 
   async guardar() {
+    let deta = this.productoForm.value;
+    deta = {
+      nombre: deta.nombre,
+      descripcion: deta.descripcion,
+      estante: deta.estante,
+      categoria: deta.categoria,
+      precio: +deta.precio,
+    };
+
     let formData;
     let foto: any;
 
     if (this.tipoModal === 'Agregar') {
-      const cambioPrecio =
-        this.productoRecibido.cambioPrecio[
-          this.productoRecibido.cambioPrecio.length - 1
-        ].precio;
+      // const cambioPrecio =
+      //   this.productoRecibido.cambioPrecio[
+      //     this.productoRecibido.cambioPrecio.length - 1
+      //   ].precio;
+
+      const cambioPrecio = deta.precio;
+
+      // let nuevoProducto = {
+      //   ...this.productoRecibido,
+      //   id: undefined,
+      //   categoria: +this.productoRecibido.categoria.id,
+      //   estante: +this.productoRecibido.estante.id,
+      // };
 
       let nuevoProducto = {
-        ...this.productoRecibido,
+        ...deta,
         id: undefined,
-        categoria: +this.productoRecibido.categoria.id,
-        estante: +this.productoRecibido.estante.id,
       };
 
       if (!this.selectedFile) {
@@ -99,16 +138,26 @@ export class ModalAgregarProductoComponent implements OnInit {
         });
       }
     } else {
-      const cambioPrecio =
-        +this.productoRecibido.cambioPrecio[
-          this.productoRecibido.cambioPrecio.length - 1
-        ].precio;
+      // const cambioPrecio =
+      //   +this.productoRecibido.cambioPrecio[
+      //     this.productoRecibido.cambioPrecio.length - 1
+      //   ].precio;
 
-      let nuevoProducto = {
-        nombre: this.productoRecibido.nombre,
-        descripcion: this.productoRecibido.descripcion,
-        categoria: +this.productoRecibido.categoria.id,
-        estante: +this.productoRecibido.estante.id,
+      const cambioPrecio = deta.precio;
+
+      // let nuevoProducto = {
+      //   nombre: this.productoRecibido.nombre,
+      //   descripcion: this.productoRecibido.descripcion,
+      //   categoria: +this.productoRecibido.categoria.id,
+      //   estante: +this.productoRecibido.estante.id,
+      //   foto: foto,
+      // };
+
+      let productoModificado = {
+        nombre: deta.nombre,
+        descripcion: deta.descripcion,
+        categoria: deta.categoria,
+        estante: deta.estante,
         foto: foto,
       };
 
@@ -116,7 +165,7 @@ export class ModalAgregarProductoComponent implements OnInit {
         this.productService
           .modificarProducto(
             this.productoRecibido.id as any,
-            nuevoProducto as any,
+            productoModificado as any,
             cambioPrecio
           )
           .subscribe((res) => {
@@ -127,11 +176,11 @@ export class ModalAgregarProductoComponent implements OnInit {
         formData.append('file', this.selectedFile as any);
         this.productService.subirImagen(formData).subscribe((res) => {
           foto = res;
-          nuevoProducto = { ...nuevoProducto, foto: foto.nombre };
+          productoModificado = { ...productoModificado, foto: foto.nombre };
           this.productService
             .modificarProducto(
               this.productoRecibido.id as any,
-              nuevoProducto as any,
+              productoModificado as any,
               cambioPrecio as any
             )
             .subscribe((res) => {

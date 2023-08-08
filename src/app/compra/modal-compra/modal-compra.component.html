@@ -26,8 +26,10 @@
           formControlName="precio"
           autocomplete="off"
           matInput
+          onFocus="if (this.value=='0') this.value='';"
           placeholder=""
           name="precioProducto"
+          type="number"
         />
       </mat-form-field>
       <mat-form-field class="w-52">

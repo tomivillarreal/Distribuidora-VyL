@@ -30,5 +30,12 @@
 
 <div mat-dialog-actions>
   <button mat-raised-button (click)="cerrarModal()">Cancelar</button>
-  <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="guardar()"
+    [disabled]="!this.categoriaForm.valid"
+  >
+    Guardar
+  </button>
 </div>

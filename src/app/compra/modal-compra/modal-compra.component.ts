@@ -73,7 +73,7 @@ export class ModalCompraComponent implements OnInit {
     this.detalleForm = this.formBuilder.group({
       cantidad: [null, Validators.required],
       producto: this.myControl,
-      precio: [null, Validators.required],
+      precio: [0, Validators.required],
       subTotal: [null, Validators.required],
     });
 

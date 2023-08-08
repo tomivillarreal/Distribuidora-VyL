@@ -35,20 +35,18 @@
         <button type="submit">Subir imagen</button>
       </form> -->
 
-      <form #fileUploadForm>
-        <input
-          type="file"
-          (change)="onFileSelected($event)"
-          [(ngModel)]="imagen"
-          id="formImagen"
-        />
-      </form>
+      <input
+        type="file"
+        (change)="onFileSelected($event)"
+        [(ngModel)]="imagen"
+        id="formImagen"
+      />
     </div>
 
     <div
       class="flex flex-col md:flex-row md:flex-wrap md:mt-10 items-center md:justify-between w-full"
     >
-      <form>
+      <form #fileUploadForm [formGroup]="productoForm">
         <mat-form-field class="w-52">
           <mat-label>Nombre</mat-label>
           <input
@@ -56,67 +54,70 @@
             placeholder=""
             #nombreProducto
             name="nombreProducto"
-            [(ngModel)]="productoRecibido.nombre"
+            type="text"
             autocomplete="off"
+            formControlName="nombre"
           />
+          <!-- [(ngModel)]="productoRecibido.nombre" -->
         </mat-form-field>
-      </form>
 
-      <mat-form-field class="h-20 w-52">
-        <mat-label>Categoria</mat-label>
-        <mat-select
-          #categoriaProducto
-          [(ngModel)]="productoRecibido.categoria.id"
-        >
-          <mat-option
-            *ngFor="let categoria of categorias"
-            [value]="categoria.id"
-          >
-            {{ categoria.nombre }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field class="h-20 w-52">
+          <mat-label>Categoria</mat-label>
+          <mat-select #categoriaProducto formControlName="categoria">
+            <!-- [(ngModel)]="productoRecibido.categoria.id" -->
 
-      <form class="">
+            <mat-option
+              *ngFor="let categoria of categorias"
+              [value]="categoria.id"
+            >
+              {{ categoria.nombre }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <mat-form-field class="h-20 w-52">
           <mat-label>Descripcion</mat-label>
           <input
+            type="text"
             matInput
             placeholder=""
             name="descripcionProducto"
-            [(ngModel)]="productoRecibido.descripcion"
             #descripcionProducto
             autocomplete="off"
+            formControlName="descripcion"
           />
+          <!-- [(ngModel)]="productoRecibido.descripcion" -->
         </mat-form-field>
-      </form>
 
-      <mat-form-field class="h-20 w-52">
-        <mat-label>Estante</mat-label>
-        <mat-select #estanteProducto [(ngModel)]="productoRecibido.estante.id">
-          <mat-option *ngFor="let estante of estantes" [value]="estante.id">
-            {{ estante.nombre }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field class="h-20 w-52">
+          <mat-label>Estante</mat-label>
+          <mat-select #estanteProducto formControlName="estante">
+            <!-- [(ngModel)]="productoRecibido.estante.id" -->
 
-      <form class="">
+            <mat-option *ngFor="let estante of estantes" [value]="estante.id">
+              {{ estante.nombre }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <mat-form-field class="h-20 w-52">
           <mat-label>Precio</mat-label>
           <input
             matInput
             placeholder=""
             name="precioProducto"
-            [(ngModel)]="
-              productoRecibido.cambioPrecio[
-                productoRecibido.cambioPrecio.length - 1
-              ].precio
-            "
             #precioProducto
             maxlength="10"
             onFocus="if (this.value=='0') this.value='';"
             autocomplete="off"
+            formControlName="precio"
+            type="number"
           />
+          <!-- [(ngModel)]="
+          productoRecibido.cambioPrecio[
+            productoRecibido.cambioPrecio.length - 1
+          ].precio
+        "  -->
         </mat-form-field>
       </form>
     </div>
@@ -125,7 +126,12 @@
 
   <div mat-dialog-actions>
     <button mat-raised-button (click)="cerrarModal()">Cancelar</button>
-    <button mat-raised-button color="primary" (click)="guardar()">
+    <button
+      [disabled]="!this.productoForm.valid"
+      mat-raised-button
+      color="primary"
+      (click)="guardar()"
+    >
       Guardar
     </button>
   </div>
